@@ -1,0 +1,14 @@
+{
+  "name": "knogen-work-archive",
+  "version": "1.0.0",
+  "private": true,
+  "description": "诺知工作档案：项目、成果与待续研究",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "start": "node scripts/serve.mjs",
+    "build": "node scripts/build.mjs",
+    "data": "node scripts/sync-data.mjs",
+    "check": "node scripts/check.mjs"
+  },
+  "engines": { "node": ">=20" }
+}

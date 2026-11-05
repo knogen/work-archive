@@ -1,0 +1,3 @@
+* text=auto eol=lf
+# Preserve original exported attachments byte for byte, including SVG figures.
+assets/** -text -diff
