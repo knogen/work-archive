@@ -139,6 +139,10 @@ for a in attachments:
     if pathlib.Path(a['name']).suffix.lower() not in ('.docx','.pptx','.xlsx','.pdf','.txt','.doc','.svg'): continue
     if re.search('密码|口令|住址|房间|vpn|v.p.n',a['name'],re.I):continue
     families[family_key(a['name'])].append(a)
+summary_paths=[ROOT/f'editorial/document-summaries-{i}.json' for i in range(1,4)]
+if not all(p.is_file() for p in summary_paths):
+    raise SystemExit('Read and review document summaries before rebuilding the library (editorial/document-summaries-1..3.json).')
+document_summaries={s['id']:s for p in summary_paths for s in read(p)}
 library=[]
 bundled={};budget=36_000_000
 integrity_cache={}
@@ -193,6 +197,31 @@ for family,versions in families.items():
         f['description']='选取较早且通过完整性校验的副本；较新现存副本损坏。'+reason
     library.append(f)
     all_ids.update(v['messageId'] for v in versions)
+figures=[f for f in library if f['extension']=='.svg' and f['url']]
+readable_library=[]
+for f in library:
+    summary=document_summaries.get(f['id'])
+    if not summary or not summary.get('include') or not summary.get('summary','').strip():continue
+    source_item=next((v for v in attachments if v['messageId']==summary['messageId'] and v['available']),None)
+    if not source_item or source_item.get('sha256')!=summary['sourceSha256']:
+        raise SystemExit('Summary source changed or is not readable: '+f['name'])
+    if f['messageId']!=source_item['messageId']:f['url']=None
+    f.update(name=source_item['name'],date=source_item['date'],messageId=source_item['messageId'],available=True,summary=summary['summary'],keyPoints=summary.get('keyPoints',[]),summaryCaveat=summary.get('caveat',''),readScope=summary['readScope'].replace('；长文取首末段，未声称逐页审阅','；选读正文首尾段落').replace('PDF 全文；选读正文首尾段落','PDF 正文首尾段落'),sourceSha256=summary['sourceSha256'])
+    f['versions']=[v for v in f['versions'] if v['available']]
+    f['description']=''
+    readable_library.append(f)
+deduplicated={}
+for f in sorted(readable_library,key=lambda f:f['date'],reverse=True):
+    fingerprint=f['sourceSha256']
+    if fingerprint not in deduplicated:
+        deduplicated[fingerprint]=f
+    else:
+        kept=deduplicated[fingerprint]
+        kept['projectIds']=sorted(set(kept['projectIds']+f['projectIds']))
+        old_ids={v['messageId'] for v in kept['versions']}
+        kept['versions'].extend(v for v in f['versions'] if v['messageId'] not in old_ids)
+        kept['versions'].sort(key=lambda v:(v['date'],v['messageId']))
+library=list(deduplicated.values())
 blocked={'m00370','m08504','m08510','m08511','m09650'}
 evidence={}
 for mid in sorted(all_ids):
@@ -236,11 +265,12 @@ def clean_refs(x):
 for x in [projects,questions,events]:clean_refs(x)
 status=inventory['resource_status']
 meta=dict(source=inventory['source'],start=inventory['start'][:10],end=inventory['end'][:10],exportCount=9917,parsedCount=len(messages),years=inventory['years'],resourceStatus=status,resourceTotal=sum(status.values()),voiceCount=inventory['resource_kinds']['voice'],generated='2026-11-05',sourceSha256=hashlib.sha256((SOURCE/inventory['source']).read_bytes()).hexdigest(),limitations=['时间头解析包含合并转发中的旧消息；网站统计为解析条目，并非顶层消息精确总数。','大部分原图仍为加密文件；未恢复图像内容，语音未做转写。','部分后期文稿缺失，代表材料只能选择最近可读副本，不能确认最终定稿。','对“已解决”采用保守证据标准；跨年研究问题需持续人工复核。','原文中的方法名、数值与测度结论均作为历史工作记录，不等于本次重新验证过的科学结论。'])
-data=dict(meta=meta,projects=projects,questions=questions,events=events,library=sorted(library,key=lambda f:f['date'],reverse=True),evidence=evidence)
+data=dict(meta=meta,projects=projects,questions=questions,events=events,library=sorted(library,key=lambda f:f['date'],reverse=True),figures=figures,evidence=evidence)
 meta['damagedRepresentativeGroups']=sum(f['integrity']=='damaged' for f in library)
 meta['limitations'].append('下载已检查 Office 文件的 ZIP/CRC 完整性；这不代表文档中的每一幅图表或每个科学结论已经重新验证。')
 # Quarantine obsolete generated assets; original export files remain untouched.
 active_urls={f['url'] for f in library if f.get('url')}
+active_urls.update(f['url'] for f in figures if f.get('url'))
 active_urls.update(a['url'] for m in evidence.values() for a in m['assets'] if a.get('url'))
 for p in (ROOT/'assets').iterdir():
     if p.is_file() and p.relative_to(ROOT).as_posix() not in active_urls:

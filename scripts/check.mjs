@@ -22,6 +22,14 @@ await walk(a);
 for(const event of a.events){assert.match(event.date,/^\d{4}-\d{2}-\d{2}$/);assert.ok(event.evidence.length,`uncited event ${event.title}`);}
 for(const q of a.questions){assert.ok(q.attempts.length,`no attempts ${q.id}`);assert.ok(q.nextSteps.length,`no next steps ${q.id}`);assert.ok(q.evidence.length,`uncited question ${q.id}`);}
 for(const p of a.projects){const ds=p.milestones.map(m=>m.date);assert.deepEqual(ds,[...ds].sort(),`chronological milestones ${p.id}`);}
+for(const f of a.library){
+  assert.ok(f.available&&f.summary?.trim().length>=40,`library entry must have a substantive document summary: ${f.id}`);
+  assert.ok(['.docx','.pdf','.pptx','.xlsx','.txt'].includes(f.extension),`unsupported library material: ${f.id}`);
+  assert.ok(f.readScope&&/^[a-f0-9]{64}$/.test(f.sourceSha256),'summary must retain its reading scope and source fingerprint');
+  assert.ok(a.evidence[f.messageId],`summary source citation missing: ${f.id}`);
+  assert.ok(f.versions.every(v=>v.available),'missing documents must not appear in library version lists');
+}
+assert.equal(new Set(a.library.map(f=>f.sourceSha256)).size,a.library.length,'identical document copies must share one library entry');
 for(const id of ['m00370','m08504','m08510','m08511','m09650'])assert.ok(!a.evidence[id],`private source leaked ${id}`);
 for(const [id,m] of Object.entries(a.evidence)){
   assert.ok(!/(?<!\d)1[3-9]\d{9}(?!\d)/.test(m.text.replace(/https?:\/\/[^\s<>]+/g,'')),`unredacted mobile number ${id}`);
