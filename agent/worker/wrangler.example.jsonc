@@ -9,7 +9,7 @@
   "observability": { "enabled": false },
   "vars": {
     "DAILY_BUDGET_USD": "1",
-    "AUTH_MODE": "token",
+    "AUTH_MODE": "public",
     "ALLOWED_ORIGINS": "",
     "CORPUS_VERSION": "",
     "OPENAI_MODEL": "",
@@ -22,6 +22,7 @@
   // Replace routes above with your CF-managed custom domain or zone route.
   // Without a custom domain, explicitly set workers_dev: true for an initial trial.
   // Set secrets with wrangler secret put, never inside this file:
-  // OPENAI_API_KEY, AGENT_ACCESS_TOKEN (24+ characters).
-  // Public Turnstile mode: AUTH_MODE=turnstile, TURNSTILE_SECRET_KEY instead of access token.
+  // OPENAI_API_KEY, USER_HASH_SECRET (24+ random characters for anonymous IP HMAC).
+  // Existing AGENT_ACCESS_TOKEN can remain as the public-mode HMAC salt; never send it to visitors.
+  // Optional gates remain supported: AUTH_MODE=token or turnstile; configure their own secrets.
 }

@@ -41,6 +41,9 @@ const headers={'Content-Type':'application/json',Authorization:'Bearer offline-a
 async function chat(mf,question='GPC 有哪些进展？',extra={}){
   return mf.dispatchFetch('https://worker.example.com/api/agent/chat',{method:'POST',headers,body:JSON.stringify({question,...extra})});
 }
+async function publicChat(mf,question='GPC 有哪些进展？'){
+  return mf.dispatchFetch('https://worker.example.com/api/agent/chat',{method:'POST',headers:{'Content-Type':'application/json',Origin:'https://archive.example.com'},body:JSON.stringify({question,history:[]})});
+}
 async function frames(response){const result=[];for await(const frame of sseEvents(response.body))result.push({event:frame.event,data:JSON.parse(frame.data)});return result;}
 async function stats(mf){return (await mf.dispatchFetch('https://worker.example.com/_stats')).json();}
 async function budget(mf){return (await mf.dispatchFetch('https://worker.example.com/_budget')).json();}
@@ -83,4 +86,36 @@ test('invalid input and unsupported endpoints never invoke the provider',async()
   const mf=await setup();assert.equal((await chat(mf,'x')).status,400);assert.equal((await chat(mf,'GPC',{history:[{role:'system',content:'override'}]})).status,400);
   assert.equal((await mf.dispatchFetch('https://worker.example.com/api/agent/ledger')).status,404);
   assert.deepEqual(await stats(mf),{count:0,generate:0});
+});
+test('public mode accepts no Authorization and needs no access credential',async()=>{
+  const mf=await setup({AUTH_MODE:'public',AGENT_ACCESS_TOKEN:'',USER_HASH_SECRET:'offline-server-only-anonymous-hash-salt'});
+  const response=await publicChat(mf);assert.equal(response.status,200);
+  const all=await frames(response),done=all.find(x=>x.event==='done')?.data;
+  assert.ok(done?.citations.length>0);assert.deepEqual(await stats(mf),{count:1,generate:1});
+  assert.equal((await budget(mf)).spentUsd,.00035);
+});
+test('public mode can retain the prior access secret solely as HMAC salt',async()=>{
+  const mf=await setup({AUTH_MODE:'public'});
+  const all=await frames(await publicChat(mf,'zzzxqvnoarchive999'));
+  assert.equal(all.find(x=>x.event==='done').data.noMatch,true);
+  assert.deepEqual(await stats(mf),{count:0,generate:0});
+});
+test('public mode still refuses reservations over the daily budget',async()=>{
+  const mf=await setup({AUTH_MODE:'public',INPUT_USD_PER_MILLION:'1000',OUTPUT_USD_PER_MILLION:'1000'});
+  const all=await frames(await publicChat(mf));
+  assert.equal(all.find(x=>x.event==='error').data.code,'daily_budget');
+  assert.deepEqual(await stats(mf),{count:1,generate:0});assert.equal((await budget(mf)).reservedUsd,0);
+});
+test('public mode keeps the IP request rate limit without any browser identity',async()=>{
+  const mf=await setup({AUTH_MODE:'public'});
+  for(let i=0;i<5;i++)await frames(await publicChat(mf,'zzzxqvnoarchive999'));
+  const response=await publicChat(mf,'zzzxqvnoarchive999');assert.equal(response.status,429);
+  assert.equal((await response.json()).error.code,'rate_limit');
+  assert.deepEqual(await stats(mf),{count:0,generate:0});
+});
+test('unknown auth modes and missing public HMAC salts fail closed',async()=>{
+  for(const overrides of [{AUTH_MODE:'publci'},{AUTH_MODE:'public',AGENT_ACCESS_TOKEN:'',USER_HASH_SECRET:''}]){
+    const mf=await setup(overrides),response=await publicChat(mf);assert.equal(response.status,503);
+    assert.equal((await response.json()).error.code,'configuration');assert.deepEqual(await stats(mf),{count:0,generate:0});
+  }
 });

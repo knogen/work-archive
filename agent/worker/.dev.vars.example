@@ -1,4 +1,6 @@
 # Local development only. Copy to .dev.vars (ignored). Never put an OpenAI key in frontend files.
 OPENAI_API_KEY=
-AGENT_ACCESS_TOKEN=
+USER_HASH_SECRET=
+# Optional token mode only; also accepted as an existing public-mode HMAC salt.
+# AGENT_ACCESS_TOKEN=
 # TURNSTILE_SECRET_KEY=

@@ -6,11 +6,11 @@
 
 - 原静态站点继续使用 Cloudflare Pages，正式来源为 `https://work-archive.knogen.com`，同时保留 `https://work-archive.pages.dev`。
 - 独立 Worker：`work-archive-agent`，地址为 [work-archive-agent.ider001.workers.dev](https://work-archive-agent.ider001.workers.dev)。
-- 本次代码发布版本：`54c264df-bbf2-4603-ae61-ce45fe1c90d8`。后续在控制台保存 secrets 可能产生新版本，不影响此处记录的首次代码发布事实。
+- 首次代码发布版本：`54c264df-bbf2-4603-ae61-ce45fe1c90d8`。取消访问口令的模块通过 Cloudflare 控制台更新，Active 代码版本前缀为 `2d0ad9be`，随后已保存并部署 `AUTH_MODE=public`。控制台保存变量或 secrets 可能继续产生新版本。
 - 专用私有 KV：`work-archive-agent-corpus`，namespace ID 为 `ddf02407496d40adb93962df0fb0c9d7`，绑定名 `ARCHIVE_CORPUS`。
 - KV 已上传 `corpus:2faa09b23364166702fe`；语料包含 1,417 节点、1,110 条证据、11 个主题入口和 80 个月份。
 - 已通过 `v1` / `new_sqlite_classes: ["BudgetLedger"]` 注册 SQLite Durable Object 类，绑定名为 `BUDGET_LEDGER`。代码固定使用 `archive-global-budget-v1` 对象名，后续不要通过改名重置账本。
-- 已创建独立问答访问口令并经标准输入写入 Worker 的 `AGENT_ACCESS_TOKEN` secret。该口令只保存在本地忽略文件 `.local/agent-access-token.txt`，没有写入公开前端、Git 或日志。
+- 已取消访问口令，访客无需 `Authorization`、口令或 Turnstile 即可提问。保留的 `AGENT_ACCESS_TOKEN` secret 现在仅作为服务端 IP HMAC 盐值，不再用于 public 模式的访问校验，不发送给浏览器。沿用旧盐值可保留既有 IP 频次记录；本地忽略文件和服务端秘密没有被删除、打印或提交到 Git。
 - OpenAI key 由用户在 Cloudflare 控制台自行填写。开发流程没有读取其值，也没有通过 CLI 设置它。
 
 ## 已部署的非秘密配置
@@ -18,7 +18,7 @@
 | 配置 | 值 |
 | --- | --- |
 | `DAILY_BUDGET_USD` | `1`，北京时间零点切日 |
-| `AUTH_MODE` | `token` |
+| `AUTH_MODE` | `public`，无需访问口令 |
 | `ALLOWED_ORIGINS` | `https://work-archive.knogen.com,https://work-archive.pages.dev` |
 | `CORPUS_VERSION` | `2faa09b23364166702fe` |
 | `OPENAI_MODEL` | `gpt-6-luna` |
@@ -31,12 +31,14 @@
 
 ## 验证结果与待完成项
 
-- 后端离线回归 19 项通过，覆盖真实 SQLite DO 的并发预算与结算，以及 Standard tier 和缓存选项固定。
+- 后端离线回归 24 项通过，覆盖真实 SQLite DO 的并发预算与结算、Standard tier 和缓存选项固定，以及无口令 public 模式的召回、预算、IP 频次和配置错误处理。原有 token 与 turnstile 模式继续兼容。
 - Worker 正式上传和触发器发布均成功；未修改其他 Worker、未删除资源、未升级 Cloudflare 订阅。
 - 公网 `GET /api/agent/health` 返回 HTTP 200、`status: "ready"`、正确语料版本和每日 1 美元配置。
 - 正式静态站点来源的 health 响应包含正确 CORS；未获准来源返回 HTTP 403。
 - health 仅核对配置存在性和语料可用性，不验证 OpenAI key 的有效性，也不会调用模型。
-- 此记录落盘时尚未发送真实模型问题。需要在用户确认 key 保存后，以一个小问题验证 OpenAI 访问权限、模型调用、引用和费用结算。
+- 首次上线已完成一条获授权的真实问题验证：输入 3,947、输出 840 tokens，返回 8 个有效引用，按保守费率记账 $0.000914。
+- 取消口令后，以**不带 Authorization** 的无匹配问题验证生产服务，返回 HTTP 200、`noMatch: true`；流程没有进入模型输入计数、预算预留或生成阶段，没有新增模型调用。请求 ID 为 `559e38de-4321-4240-b019-3ea6c4965423`。
+- 该次 public 验证返回的既有账本为已花费 $0.004489、预留 $0、剩余 $0.995511 / $1；账本、IP 限流盐值、DO 名称、namespace 和每日预算均未重置。更改访问模式不清除已发生费用。
 - 前端代码通过原仓库的 `main` 发布到 Pages；前端构建和 Worker 代码发布仍是两个独立流程。
 
 维护说明见 [首次部署教程](agent-deploy.md)，语料范围见 [数据流程](agent-data.md)。

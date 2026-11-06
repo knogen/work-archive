@@ -18,8 +18,13 @@ try{await fs.access(executablePath);}catch{
 }
 const browser=await chromium.launch({headless:true,executablePath});
 const errors=[];
+const requests=[],expectedMode=process.env.AGENT_EXPECT_AUTH_MODE||'public';
+const recordRequest=request=>{
+  if(!request.url().includes('/api/agent/chat'))return;
+  const body=request.postDataJSON();requests.push({authorization:Boolean(request.headers().authorization),challenge:Boolean(body?.turnstileToken)});
+};
 const context=await browser.newContext({viewport:{width:1440,height:1100},deviceScaleFactor:1});
-const page=await context.newPage();page.on('pageerror',error=>errors.push(error.message));
+const page=await context.newPage();page.on('pageerror',error=>errors.push(error.message));page.on('request',recordRequest);
 const base=process.env.AGENT_PREVIEW_URL||'http://127.0.0.1:4174';
 const assertText=async(selector,text)=>assert.ok((await page.locator(selector).textContent()).includes(text));
 const waitDone=async()=>page.locator('.agent-flow[data-status="done"]').last().waitFor({timeout:20000});
@@ -27,6 +32,7 @@ try{
   const initial=await page.goto(base,{waitUntil:'networkidle'});assert.equal(initial.status(),200,'preview homepage must be available');
   await page.locator('.agent-launcher').click();
   await page.waitForFunction(()=>!document.querySelector('.agent-send').disabled);
+  assert.equal(await page.evaluate(()=>window.WORK_ARCHIVE_AGENT.authMode),expectedMode,'preview uses the intended access mode');
   await assertText('.agent-preview-banner','回答为模拟');
   assert.equal(await page.locator('.agent-auth').isVisible(),false,'local preview must not require credentials');
   await page.screenshot({path:path.join(out,'01-desktop-ready.png')});
@@ -81,9 +87,17 @@ try{
   await page.waitForFunction(()=>document.querySelector('#agent-notice').textContent.includes('今日问答预算已用完'));await assertText('#agent-notice','今日问答预算已用完');
   await page.screenshot({path:path.join(out,'04-desktop-budget-limit.png')});
 
+  if(expectedMode==='public'){
+    await page.unroute('**/api/agent/chat');
+    await page.route('**/api/agent/chat',route=>route.fulfill({status:401,contentType:'application/json',body:JSON.stringify({error:{code:'unavailable',message:'问答服务暂时不可用，请稍后重试。'}})}));
+    await page.locator('#agent-question').fill('测试服务错误');await page.locator('.agent-send').click();
+    await page.waitForFunction(()=>document.querySelector('#agent-notice').textContent.includes('问答服务暂时不可用'));
+    assert.equal(await page.locator('.agent-auth').isVisible(),false,'public failures never introduce a passphrase gate');
+  }
+
   // Separate mobile context prevents any reuse of the desktop page's application state.
   const mobile=await browser.newContext({viewport:{width:390,height:844},deviceScaleFactor:1,isMobile:true,hasTouch:true});
-  const phone=await mobile.newPage();phone.on('pageerror',error=>errors.push(error.message));
+  const phone=await mobile.newPage();phone.on('pageerror',error=>errors.push(error.message));phone.on('request',recordRequest);
   await phone.goto(base,{waitUntil:'networkidle'});await phone.locator('.agent-launcher').click();
   await phone.waitForFunction(()=>!document.querySelector('.agent-send').disabled);
   const layout=await phone.locator('#archive-agent').evaluate(el=>({scrollWidth:el.scrollWidth,clientWidth:el.clientWidth,height:el.getBoundingClientRect().height,viewHeight:innerHeight}));
@@ -96,7 +110,11 @@ try{
   await phone.locator('.agent-flow[data-status="done"]').waitFor({timeout:20000});
   await phone.screenshot({path:path.join(out,'07-mobile-completed.png')});
   await mobile.close();
+  if(expectedMode==='public'){
+    assert.ok(requests.length>=3,'public request transport exercised');
+    assert.ok(requests.every(request=>!request.authorization&&!request.challenge),'public requests contain neither Authorization nor challenge tokens');
+  }
   assert.deepEqual(errors,[],'browser runtime errors');
-  console.log(JSON.stringify({ok:true,base,completedStages,screenshots:out,checks:['desktop','mobile','trace','citations','stop','new conversation','budget error','original routes','slash shortcut','XSS rejection','repeated evidence link']}));
+  console.log(JSON.stringify({ok:true,base,authMode:expectedMode,completedStages,screenshots:out,checks:['desktop','mobile','trace','citations','stop','new conversation','budget error','original routes','slash shortcut','XSS rejection','repeated evidence link',...(expectedMode==='public'?['public without credentials','no Authorization header','public error without passphrase']:[])]}));
 }catch(error){await page.screenshot({path:path.join(out,'failure.png')}).catch(()=>{});console.error(JSON.stringify({errors,url:page.url(),title:await page.title(),body:(await page.locator('body').textContent()).slice(0,500)}));throw error;}
 finally{await browser.close();}

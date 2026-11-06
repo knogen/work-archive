@@ -10,6 +10,7 @@
     "data": "node scripts/sync-data.mjs",
     "check": "node scripts/check.mjs && node scripts/check-backlog.mjs",
     "agent:build": "node scripts/build-agent.mjs",
+    "agent:vendor": "node scripts/build-agent-vendor.mjs",
     "agent:preview": "node scripts/preview-agent.mjs",
     "agent:check": "node --test agent/tests/*.test.mjs",
     "agent:dev": "wrangler dev --config agent/worker/wrangler.jsonc",
@@ -19,7 +20,9 @@
     "node": ">=22.0.0"
   },
   "devDependencies": {
+    "dompurify": "3.4.17",
     "esbuild": "^0.28.2",
+    "marked": "18.1.3",
     "miniflare": "4.20260730.0",
     "playwright": "^1.65.0",
     "wrangler": "4.158.0"

@@ -1,10 +1,10 @@
 (() => {
   'use strict';
   const config=window.WORK_ARCHIVE_AGENT||{},api=String(config.apiBase||'').replace(/\/$/,''),esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const turnstileMode=config.authMode==='turnstile';
+  const authMode=config.authMode||'token',tokenMode=authMode==='token',publicMode=authMode==='public',turnstileMode=authMode==='turnstile';
   // The preview credential is injected only by the loopback demo server, never by the static config.
   const preview=Boolean(config.preview)&&['127.0.0.1','localhost'].includes(location.hostname)&&api.startsWith(`${location.origin}/`);
-  let history=[],accessToken=preview?String(config.demoAccessToken||''):'',abortController=null,challenge='',challengeId=null,busy=false;
+  let history=[],accessToken=preview&&tokenMode?String(config.demoAccessToken||''):'',abortController=null,challenge='',challengeId=null,busy=false,returnState=null;
   const launcher=document.createElement('button');launcher.className='agent-launcher';launcher.type='button';launcher.setAttribute('aria-haspopup','dialog');launcher.setAttribute('aria-controls','archive-agent');
   launcher.innerHTML='<span aria-hidden="true">↗</span> 问档案 <small>ASK</small>';
   const panel=document.createElement('dialog');panel.id='archive-agent';panel.className='agent-panel';panel.setAttribute('aria-labelledby','agent-heading');
@@ -12,11 +12,14 @@
     <div class="agent-scope"><span class="agent-dot" aria-hidden="true"></span><span id="agent-service">${api?'正在检查服务…':'问答服务待连接'}</span><button type="button" class="agent-reset">新对话</button></div>
     ${preview?'<div class="agent-preview-banner"><strong>本地流程演示</strong><span>真实检索与预算流程 · 回答为模拟 · 不调用 OpenAI</span></div>':''}
     <div class="agent-feed" id="agent-feed" role="log" aria-label="档案问答记录" aria-relevant="additions text"><div class="agent-intro"><span class="agent-index">01 / 从记录中寻找</span><h3>把时间、主题和线索<br>连成一个回答。</h3><p>依据已审阅的脱敏工作摘录与文档摘要回答，附可回查的来源。资料截止 <time>${esc(window.WORK_ARCHIVE?.meta?.end||'2026-05-06')}</time>。</p><div class="agent-suggestions"><button type="button">2022 年主要做了哪些工作？</button><button type="button">GPC 有哪些已有尝试和待验证问题？</button><button type="button">知识复杂度研究最后进展到哪里？</button></div></div></div>
-    <div class="agent-auth" ${turnstileMode||accessToken?'hidden':''}><label for="agent-passphrase">问答访问口令</label><div><input id="agent-passphrase" type="password" autocomplete="off" placeholder="输入访问口令" maxlength="200"><button type="button" class="agent-connect">连接</button></div><p>口令仅在本次页面内使用。</p></div>
+    <div class="agent-auth" ${!tokenMode||accessToken?'hidden':''}><label for="agent-passphrase">问答访问口令</label><div><input id="agent-passphrase" type="password" autocomplete="off" placeholder="输入访问口令" maxlength="200"><button type="button" class="agent-connect">连接</button></div><p>口令仅在本次页面内使用。</p></div>
     <div class="agent-challenge" ${turnstileMode?'':'hidden'}></div>
     <form class="agent-form"><label class="sr-only" for="agent-question">向档案提问</label><textarea id="agent-question" rows="2" maxlength="1200" placeholder="例如：这项研究后来有了哪些进展？"></textarea><div class="agent-compose-bottom"><span id="agent-context">全部工作档案</span><button type="button" class="agent-stop" hidden>停止</button><button type="submit" class="agent-send">提问 <span aria-hidden="true">↑</span></button></div></form>
-    <div class="agent-foot"><span id="agent-budget">每日总预算 $1 · 北京时间零点恢复</span><span id="agent-notice" role="status" aria-live="polite"></span></div>`;
+    <div class="agent-foot"><span id="agent-budget">每日共享额度 $1 · 北京时间零点恢复</span><span id="agent-notice" role="status" aria-live="polite"></span></div>`;
   document.body.append(launcher,panel);
+  const returnButton=document.createElement('button');returnButton.type='button';returnButton.className='agent-return';returnButton.hidden=true;returnButton.textContent='← 返回问答';document.body.append(returnButton);
+  const evidenceDialog=document.querySelector('#evidence-dialog'),evidenceReturn=document.createElement('button');evidenceReturn.type='button';evidenceReturn.className='agent-evidence-return';evidenceReturn.hidden=true;evidenceReturn.textContent='← 返回问答';
+  if(evidenceDialog)evidenceDialog.insertBefore(evidenceReturn,document.querySelector('#evidence-content'));
   const $=selector=>panel.querySelector(selector),feed=$('.agent-feed'),input=$('#agent-question'),notice=$('#agent-notice');
   let serviceReady=false;
   function context(){
@@ -30,8 +33,33 @@
     const record=value.projectId?archive?.projects.find(p=>p.id===value.projectId):value.questionId?archive?.questions.find(q=>q.id===value.questionId):null;
     $('#agent-context').textContent=record?`当前档案：${record.title}`:'全部工作档案';
   }
+  function syncReturnControls(){
+    const active=Boolean(returnState&&location.hash===returnState.target);
+    returnButton.hidden=!active||panel.open||Boolean(evidenceDialog?.open);
+    evidenceReturn.hidden=!active||!returnState.target.startsWith('#/evidence/')||!evidenceDialog?.open;
+  }
+  function clearReturnState(){returnState=null;returnButton.hidden=true;evidenceReturn.hidden=true;}
+  function navigateCitation(citation){
+    if(!window.ArchiveMarkdown?.validArchiveCitation(citation))return;
+    // Keep the existing answer DOM and history alive; never serialize and reinsert model HTML.
+    returnState={hash:location.hash,target:citation.href,scrollTop:feed.scrollTop,pageScroll:window.scrollY,answerNodes:[...feed.children]};
+    panel.close();
+    if(location.hash===citation.href&&citation.href.startsWith('#/evidence/'))window.dispatchEvent(new CustomEvent('archive:open-evidence',{detail:citation.href.slice('#/evidence/'.length)}));
+    else location.hash=citation.href;
+    syncReturnControls();
+  }
+  function returnToConversation(){
+    const saved=returnState;if(!saved)return;clearReturnState();
+    if(evidenceDialog?.open)evidenceDialog.close();
+    const reopen=()=>{
+      showContext();if(!panel.open)panel.showModal();
+      requestAnimationFrame(()=>{feed.scrollTo({top:saved.scrollTop,behavior:'instant'});window.scrollTo(0,saved.pageScroll);});
+      syncReturnControls();
+    };
+    if(location.hash!==saved.hash){window.addEventListener('hashchange',reopen,{once:true});location.hash=saved.hash;}else reopen();
+  }
   function refresh(){
-    $('.agent-send').disabled=busy||!serviceReady||(!turnstileMode&&!accessToken)||(turnstileMode&&!challenge);
+    $('.agent-send').disabled=busy||!serviceReady||(tokenMode&&!accessToken)||(turnstileMode&&!challenge);
     $('.agent-stop').hidden=!busy;input.disabled=busy;
     $('.agent-reset').disabled=busy;$('.agent-connect').disabled=busy;
   }
@@ -42,10 +70,10 @@
     try{
       const response=await fetch(`${api}/health`,{cache:'no-store',signal:AbortSignal.timeout(10000)}),data=await response.json();
       if(!response.ok||data.status!=='ready')throw Error(data.error?.message||'问答服务暂不可用。');
-      if(data.authMode!==config.authMode)throw Error('问答访问方式与服务配置不一致。');
+      if(data.authMode!==authMode)throw Error('问答访问方式与服务配置不一致。');
       serviceReady=true;$('#agent-service').textContent=`${preview?'演示已就绪 · ':''}资料截止 ${data.cutoff}`;
-      $('#agent-budget').textContent=`${preview?'演示预算':'每日总预算'} $${data.dailyBudgetUsd} · 北京时间零点恢复`;
-      panel.classList.add('agent-ready');notice.textContent=turnstileMode?'完成人机验证后即可提问。':accessToken?'可以提问了。':'输入访问口令后即可提问。';
+      $('#agent-budget').textContent=`${preview?'演示预算':'每日共享额度'} $${data.dailyBudgetUsd} · 北京时间零点恢复`;
+      panel.classList.add('agent-ready');notice.textContent=turnstileMode?'完成人机验证后即可提问。':publicMode?'可以直接提问，每日额度共享。':accessToken?'可以提问了。':'输入访问口令后即可提问。';
     }catch(error){serviceReady=false;$('#agent-service').textContent='服务暂未就绪';notice.textContent=error.name==='TimeoutError'?'连接超时，请稍后重试。':error.message;}
     refresh();
   }
@@ -66,14 +94,20 @@
     const label=document.createElement('span');label.className='agent-message-label';label.textContent=role==='user'?'你的问题':'档案回答';
     const content=document.createElement('div');content.className='agent-message-text';content.textContent=text;article.append(label,content);feed.append(article);scroll();return {article,content};
   }
+  function renderAnswer(target,text,citations=[]){
+    if(window.ArchiveMarkdown?.render){
+      try{window.ArchiveMarkdown.render(target,text,citations,navigateCitation);return;}catch{ /* Safe plain-text fallback if rendering is unavailable. */ }
+    }
+    target.textContent=text;
+  }
   function sources(article,citations){
     if(!citations?.length)return;
     const list=document.createElement('div');list.className='agent-sources';const title=document.createElement('span');title.textContent='回查来源';list.append(title);
     for(const citation of citations){
       // Only same-site archive routes can become links, even if an endpoint is misconfigured.
-      if(!/^#\/(?:project|question|library|evidence)\/[a-zA-Z0-9-]+$|^#\/timeline(?:\?year=\d{4})?$|^#\/projects$/.test(citation.href))continue;
+      if(!window.ArchiveMarkdown?.validArchiveCitation(citation))continue;
       const a=document.createElement('a');a.href=citation.href;a.textContent=`${citation.date?.slice(0,10)||''} · ${citation.title}`;
-      a.addEventListener('click',()=>{panel.close();if(location.hash===citation.href&&citation.href.startsWith('#/evidence/'))window.dispatchEvent(new CustomEvent('archive:open-evidence',{detail:citation.href.slice('#/evidence/'.length)}));});list.append(a);
+      a.addEventListener('click',event=>{if(event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;event.preventDefault();navigateCitation(citation);});list.append(a);
     }
     article.append(list);
   }
@@ -148,16 +182,16 @@
     busy=true;refresh();notice.textContent='正在查阅档案…';abortController=new AbortController();
     let completed=false,answer='';
     try{
-      const headers={'Content-Type':'application/json'};if(!turnstileMode)headers.Authorization=`Bearer ${accessToken}`;
+      const headers={'Content-Type':'application/json'};if(tokenMode)headers.Authorization=`Bearer ${accessToken}`;
       const response=await fetch(`${api}/chat`,{method:'POST',headers,body:JSON.stringify({question,context:context(),history:historyForRequest(),turnstileToken:challenge||undefined}),signal:abortController.signal});
-      if(!response.ok){const data=await response.json();if(response.status===401&&!turnstileMode){accessToken='';$('.agent-auth').hidden=false;}throw Error(data.error?.message||'提问未成功，请稍后再试。');}
+      if(!response.ok){const data=await response.json();if(response.status===401&&tokenMode){accessToken='';$('.agent-auth').hidden=false;}throw Error(data.error?.message||'提问未成功，请稍后再试。');}
       if(response.headers.get('Content-Type')?.includes('application/json')){
-        const data=await response.json();for(const trace of data.trace||[])flow.update(trace);answer=data.answer;reply.content.textContent=answer;sources(reply.article,data.citations);budget(data.budget);completed=true;
+        const data=await response.json();for(const trace of data.trace||[])flow.update(trace);answer=data.answer;renderAnswer(reply.content,answer,data.citations);sources(reply.article,data.citations);budget(data.budget);completed=true;
       }else{
         for await(const frame of events(response.body)){
           if(frame.type==='trace')flow.update(frame.data);
           if(frame.type==='delta'){answer+=frame.data.text;reply.content.textContent=answer;scroll();}
-          if(frame.type==='done'){answer=frame.data.answer;reply.content.textContent=answer;sources(reply.article,frame.data.citations);budget(frame.data.budget);completed=true;notice.textContent=frame.data.incomplete?'回答未完整生成，可缩小问题范围后再问。':'已附可核对的来源。';}
+          if(frame.type==='done'){answer=frame.data.answer;renderAnswer(reply.content,answer,frame.data.citations);sources(reply.article,frame.data.citations);budget(frame.data.budget);completed=true;notice.textContent=frame.data.incomplete?'回答未完整生成，可缩小问题范围后再问。':'已附可核对的来源。';}
           if(frame.type==='error')throw Error(frame.data.message||'回答中断。');
         }
       }
@@ -172,7 +206,7 @@
       if(!answer)reply.content.textContent='';notice.textContent=message;
     }finally{busy=false;abortController=null;resetChallenge();refresh();scroll();input.focus();}
   }
-  launcher.addEventListener('click',()=>{showContext();panel.showModal();checkService();setupChallenge();input.focus();});
+  launcher.addEventListener('click',()=>{showContext();panel.showModal();syncReturnControls();checkService();setupChallenge();input.focus();});
   $('.agent-close').addEventListener('click',()=>panel.close());
   panel.addEventListener('click',event=>{if(event.target===panel){const r=panel.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)panel.close();}});
   $('.agent-connect').addEventListener('click',()=>{const value=$('#agent-passphrase').value.trim();if(!value){notice.textContent='请输入问答访问口令。';return;}accessToken=value;$('#agent-passphrase').value='';$('.agent-auth').hidden=true;notice.textContent='口令已暂存，提问时会验证。';refresh();input.focus();});
@@ -180,8 +214,10 @@
   $('.agent-form').addEventListener('submit',submit);
   input.addEventListener('keydown',event=>{if(event.key==='Enter'&&!event.shiftKey&&!event.isComposing){event.preventDefault();submit();}});
   $('.agent-stop').addEventListener('click',()=>abortController?.abort());
-  $('.agent-reset').addEventListener('click',()=>{if(busy)return;history=[];feed.querySelectorAll('.agent-message').forEach(x=>x.remove());$('.agent-intro').hidden=false;notice.textContent='已开始新对话。';input.focus();});
+  $('.agent-reset').addEventListener('click',()=>{if(busy)return;clearReturnState();history=[];feed.querySelectorAll('.agent-message').forEach(x=>x.remove());$('.agent-intro').hidden=false;notice.textContent='已开始新对话。';input.focus();});
   $('.agent-suggestions').addEventListener('click',event=>{const button=event.target.closest('button');if(button){input.value=button.textContent;input.focus();}});
-  window.addEventListener('hashchange',showContext);
+  returnButton.addEventListener('click',returnToConversation);evidenceReturn.addEventListener('click',returnToConversation);
+  panel.addEventListener('close',syncReturnControls);evidenceDialog?.addEventListener('close',syncReturnControls);
+  window.addEventListener('hashchange',()=>{showContext();if(returnState&&location.hash!==returnState.target)clearReturnState();syncReturnControls();});
   refresh();
 })();

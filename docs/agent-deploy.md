@@ -24,7 +24,7 @@ npm run agent:preview
 
 打开终端给出的 `http://127.0.0.1:4174`，点击右下角“问档案”，选择示例问题或输入年份/主题。页面将展示解析问题、关键词检索、时间和主题过滤、排序、证据读取、模型输入计数、预算预留与生成的过程。
 
-**本地预览使用真实检索、私有 KV 和 SQLite Durable Object，仅 OpenAI 响应为模拟。不会读取你环境中的 OpenAI key，也不会调用任何外部模型 API。** 回答带有“本地流程演示”标记，只摘录检索到的资料，不新增历史结论。演示费率不是线上模型报价。预览的账本是临时数据，重启后重置；按 `Ctrl+C` 停止预览。演示访问口令仅由该本地服务注入，生产配置不含演示口令或模拟开关。
+**本地预览使用真实检索、私有 KV 和 SQLite Durable Object，仅 OpenAI 响应为模拟。不会读取你环境中的 OpenAI key，也不会调用任何外部模型 API。** 回答带有“本地流程演示”标记，只摘录检索到的资料，不新增历史结论。演示费率不是线上模型报价。预览无需口令，账本是临时数据，重启后重置；按 `Ctrl+C` 停止预览。模拟 API 入口只用于本地测试，生产配置不含模拟开关。
 
 仅查看原静态站点仍可运行 `npm start`，无需密钥；未连接服务时问答模块会提示服务待连接，普通浏览和搜索照常可用。
 
@@ -49,7 +49,7 @@ npx wrangler kv namespace create ARCHIVE_CORPUS
 | 参数 | 填写方式 |
 | --- | --- |
 | `DAILY_BUDGET_USD` | 保持 `"1"`，北京时间零点切日 |
-| `AUTH_MODE` | 第一版建议 `"token"`，访问者输入独立的问答口令 |
+| `AUTH_MODE` | 当前采用 `"public"`，访问者无需口令或人机验证，仍受统一预算与 IP 频次限制 |
 | `ALLOWED_ORIGINS` | 静态站点的完整 origin，如 `https://archive.example.com`；多个用英文逗号分隔，不带末尾 `/` 或页面路径，不允许 `*` |
 | `CORPUS_VERSION` | `npm run agent:build` 输出的 20 位语料版本，也见 `.local/agent-release/privacy-report.json` |
 | `OPENAI_MODEL` | 你的 API Project 可用、支持 Responses API 和输入 token 计数的文本模型 ID |
@@ -69,7 +69,7 @@ npx wrangler kv bulk put .local/agent-release/kv-upload.json --binding ARCHIVE_C
 
 `.local/agent-release/` 被 Git 忽略，也不会由 `npm run build` 复制到 `dist/`。不要手工将该目录加入静态托管。
 
-## 4. 配置 OpenAI key 和问答口令
+## 4. 配置 OpenAI key 和匿名限流秘密
 
 建议创建独立 OpenAI Project，再创建 Restricted key。最小权限为 Responses API 的 Write；若控制台另列 Model capabilities，则启用 Request。Files、Vector Stores、Assistants、Agents、Batch、Usage、管理权限均不需要；代码不列模型，不需要 List models 权限。本系统只请求 `POST /v1/responses/input_tokens` 和 `POST /v1/responses`。控制台显示因账号可能不同，以 [API key 官方指南](https://developers.openai.com/api/docs/guides/api-keys)、[权限指南](https://developers.openai.com/api/docs/guides/rbac) 为准。
 
@@ -77,10 +77,12 @@ npx wrangler kv bulk put .local/agent-release/kv-upload.json --binding ARCHIVE_C
 
 ```sh
 npx wrangler secret put OPENAI_API_KEY --config agent/worker/wrangler.jsonc
-npx wrangler secret put AGENT_ACCESS_TOKEN --config agent/worker/wrangler.jsonc
+npx wrangler secret put USER_HASH_SECRET --config agent/worker/wrangler.jsonc
 ```
 
-`AGENT_ACCESS_TOKEN` 是你自行生成、至少 24 字符的问答访问口令，**不是 OpenAI key**。可以将问答口令交给获准访问的人，OpenAI key 始终留在服务端。浏览器仅在本次页面内存中保留问答口令，不写入 URL、localStorage 或 cookies。全站额度仍由同一个账本控制；同 IP 的用户会共享 20 次/日的频次限制。
+`USER_HASH_SECRET` 是服务端生成、至少 24 字符的随机秘密，**不是 OpenAI key，也不是访问口令**；它仅用于把 IP 转换为 HMAC 匿名标识，不发送给浏览器，不向访客索取。全站额度仍由同一个账本控制；同 IP 的用户会共享 20 次/日的频次限制。
+
+当前线上服务保留原有 `AGENT_ACCESS_TOKEN` secret，仅复用为 public 模式的 HMAC 盐值。public 模式不会校验客户端口令或 `Authorization`，也不启用 Turnstile。保留旧盐值可延续已存在的 IP 频次记录，不能为了取消访问口令而删除它；以后如改用独立 `USER_HASH_SECRET`，应注意 IP 匿名标识会随盐值改变，但全站预算仍保留。
 
 初次创建 Worker 时若 `secret put` 提示脚本不存在，可按 Wrangler 提示创建该名称 Worker 后继续，或先完成第 5 步首次发布（此时缺密钥，服务不会调用模型），再写入 secrets。
 
@@ -88,7 +90,7 @@ npx wrangler secret put AGENT_ACCESS_TOKEN --config agent/worker/wrangler.jsonc
 
 ## 5. 选择域名并发布 Worker
 
-配置模板故意使用 `workers_dev: false` 和空 `routes`，避免误公开未完成的服务。**二者都不修改就不会得到可访问的服务地址。** 首次体验可以先将 `workers_dev` 改为 `true`，保留 `routes: []`；`wrangler deploy` 会输出你的 `https://work-archive-agent.<你的子域>.workers.dev` 地址。保持 `AUTH_MODE: token`，并完成密钥、口令、来源和语料配置后再使用。前端的 `apiBase` 填该地址加 `/api/agent` 即可。
+配置模板故意使用 `workers_dev: false` 和空 `routes`，避免误公开未完成的服务。**二者都不修改就不会得到可访问的服务地址。** 首次体验可以先将 `workers_dev` 改为 `true`，保留 `routes: []`；`wrangler deploy` 会输出你的 `https://work-archive-agent.<你的子域>.workers.dev` 地址。当前 `AUTH_MODE: public` 会公开提供问答，完成模型密钥、匿名限流秘密、来源和语料配置后即可使用。前端的 `apiBase` 填该地址加 `/api/agent` 即可。
 
 有自有域名时，推荐新增一个 API 子域名，比如 `agent.example.com`。保持 `workers_dev: false`，将 `wrangler.jsonc` 顶层现有的 `routes: []` **替换**为：
 
@@ -102,7 +104,7 @@ npx wrangler secret put AGENT_ACCESS_TOKEN --config agent/worker/wrangler.jsonc
 "routes": [{ "pattern": "archive.example.com/api/agent/*", "zone_name": "example.com" }]
 ```
 
-如果静态站点仍托管于 `https://knogen.github.io/work-archive/`，使用独立 API 子域名，`ALLOWED_ORIGINS` 填 `https://knogen.github.io`；不能控制 `github.io` 的 CF 路由。CORS 用于限制浏览器来源，真正的访问验证依赖服务端口令或 Turnstile。
+如果静态站点仍托管于 `https://knogen.github.io/work-archive/`，使用独立 API 子域名，`ALLOWED_ORIGINS` 填 `https://knogen.github.io`；不能控制 `github.io` 的 CF 路由。CORS 只限制浏览器来源，public 模式允许无身份凭证的 API 使用，仍由统一日预算、IP 频次和并发限制控制消耗。
 
 先做本地检查，然后由你发布：
 
@@ -123,7 +125,7 @@ npx wrangler deploy --config agent/worker/wrangler.jsonc
 ```js
 window.WORK_ARCHIVE_AGENT = Object.freeze({
   apiBase: 'https://agent.example.com/api/agent',
-  authMode: 'token',
+  authMode: 'public',
   turnstileSiteKey: '',
 });
 ```
@@ -132,21 +134,21 @@ window.WORK_ARCHIVE_AGENT = Object.freeze({
 
 打开 `https://agent.example.com/api/agent/health` 应显示 `status: "ready"`。若显示未配置，检查上面的变量、secrets、KV 上传和版本是否一致。`health` 不会发送 OpenAI 推理请求，也不返回秘密。
 
-在静态站点侧栏输入问答口令，先用一个小问题检查检索流程、引用、流式回答和剩余额度。真实 OpenAI 调用会计费；当前仓库的自动验证全部使用模拟 API，尚未验证你的账号权限、模型访问或真实网络连通性。
+在静态站点侧栏直接提问，无需口令。先用一个小问题检查检索流程、引用、流式回答和剩余额度。真实 OpenAI 调用会计费；仓库自动化验证使用模拟 API，生产环境的实际验证情况见 [部署记录](agent-deployment-state.md)。
 
 ## 每日预算与故障处理
 
 - 每日上限：按配置价格核算的 1 美元，北京时间零点恢复；同时最多 3 个请求，每个 IP 20 次/日和 5 次/分钟，全站 300 次请求/日。
 - 每题最多一次付费模型生成。先使用 OpenAI 的输入计数接口核对输入，再按输入数加 128 tokens 余量、最大 2,000 输出 tokens 预留费用；输入上限为 12,000 tokens。超过日余额时不会调用生成接口。
-- 使用 SQLite Durable Object 的事务预留，避免并发超卖；完成后按 usage 结算。推理 token 包含在 API 的输出 token 计数中，缓存输入仍按标准价保守计费。
+- 使用 SQLite Durable Object 的事务预留，避免并发超卖；完成后按 usage 结算。推理 token 包含在 API 的输出 token 计数中，缓存输入仍按配置的保守输入单价计费。
 - 网络中断、服务端 5xx、缺少 usage 或放弃的调用按完整预留费用记账；明确的 400/401/403/404/413/422/429 拒绝可以释放预留。账本中的预留到期会自动保守入账，不因浏览器关页而退款。
 - 若真实 usage 超过预留边界，会冻结当日调用并按返回 usage 入账，需要检查模型、费率和计数配置。应用预算不是供应商账单的法律上绝对上限，仍应配合独立 Project 限额。
 - 预算耗尽只暂停问答，静态浏览和搜索照常可用。不要通过重试或重建账本绕过额度；修复后等待次日，或由你明确调整预算。
 - 调用设置 `store:false`，应用不记录问答正文。它不等于供应商零留存，详见 [OpenAI 数据控制](https://developers.openai.com/api/docs/guides/your-data)。DO 保存最多 30 天的请求 ID、每日费用、HMAC 后的 IP 标识与状态，不保存原始 IP、问题、回答或密钥。
 
-## 可选：以后公开给访客
+## 可选访问门槛（当前关闭）
 
-第一版默认使用口令。若公开开放，创建 Cloudflare Turnstile 组件，将静态站点域名加入组件允许的 hostname，并设置：
+当前 public 模式已公开开放，不需要口令或 Turnstile。原有 token 和 turnstile 模式继续兼容，只有以后明确决定增加门槛时才切换。若改用 token，服务端设置 `AUTH_MODE=token`，前端设 `authMode: 'token'`，并配置独立 `AGENT_ACCESS_TOKEN`。若改用 Turnstile，创建组件并将静态站点域名加入允许的 hostname，然后设置：
 
 - Worker `AUTH_MODE` 改为 `turnstile`，用 `wrangler secret put TURNSTILE_SECRET_KEY --config agent/worker/wrangler.jsonc` 保存 secret，长度至少 24 字符。
 - 前端 `authMode` 改为 `turnstile`，公开的 `turnstileSiteKey` 填组件 site key。

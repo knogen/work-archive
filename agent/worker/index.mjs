@@ -34,7 +34,7 @@ async function authenticate(request,body,env,cfg,fetcher) {
   if(cfg.authMode==='token'){
     const value=request.headers.get('Authorization')||'';
     if(!value.startsWith('Bearer ')||!await equalSecret(value.slice(7),cfg.secret))throw new ApiError(401,'unauthorized','请输入正确的问答访问口令。');
-  }else{
+  }else if(cfg.authMode==='turnstile'){
     if(typeof body.turnstileToken!=='string'||body.turnstileToken.length<1||body.turnstileToken.length>2048)throw new ApiError(401,'challenge','请先完成人机验证。');
     const data=new URLSearchParams({secret:cfg.secret,response:body.turnstileToken,remoteip:ip});
     let result;try{

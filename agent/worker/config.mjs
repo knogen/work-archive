@@ -10,9 +10,11 @@ export function number(value,fallback,min,max,label) {
 export function config(env) {
   const dailyMicros=Math.floor(number(env.DAILY_BUDGET_USD,1,0.01,100,'日预算')*1e6);
   const authMode=env.AUTH_MODE||'token';
-  if(!['token','turnstile'].includes(authMode))throw new ApiError(503,'configuration','访问方式尚未配置。');
-  const secret=authMode==='token'?env.AGENT_ACCESS_TOKEN:env.TURNSTILE_SECRET_KEY;
-  if(!secret||secret.length<24)throw new ApiError(503,'configuration','问答访问凭证尚未配置。');
+  if(!['public','token','turnstile'].includes(authMode))throw new ApiError(503,'configuration','访问方式尚未配置。');
+  // Public mode uses this server-only material exclusively as an IP HMAC salt.
+  // Reusing the existing salt preserves per-IP counters when removing the access gate.
+  const secret=authMode==='public'?(env.USER_HASH_SECRET||env.AGENT_ACCESS_TOKEN):authMode==='token'?env.AGENT_ACCESS_TOKEN:env.TURNSTILE_SECRET_KEY;
+  if(!secret||secret.length<24)throw new ApiError(503,'configuration',authMode==='public'?'匿名限流标识尚未配置。':'问答访问凭证尚未配置。');
   const origins=String(env.ALLOWED_ORIGINS||'').split(',').map(x=>x.trim()).filter(Boolean);
   if(!origins.length||origins.includes('*')||origins.some(x=>{try{return new URL(x).origin!==x;}catch{return true;}}))throw new ApiError(503,'configuration','站点来源尚未配置。');
   return {dailyMicros,authMode,secret,origins,perUserDaily:20,perMinute:5,maxConcurrent:3,maxDailyRequests:300,leaseMs:120000};

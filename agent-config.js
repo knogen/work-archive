@@ -3,6 +3,6 @@
 // Never put OPENAI_API_KEY or the access passphrase in this file.
 window.WORK_ARCHIVE_AGENT = Object.freeze({
   apiBase: 'https://work-archive-agent.ider001.workers.dev/api/agent',
-  authMode: 'token',
+  authMode: 'public',
   turnstileSiteKey: '',
 });
