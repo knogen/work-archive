@@ -1108,7 +1108,11 @@
           ],
           "projectId": "disruption",
           "status": "阶段记录",
-          "featured": false
+          "featured": false,
+          "questionIds": [
+            "disruption-wm-q2",
+            "disruption-wm-q2-collection-audit"
+          ]
         },
         {
           "date": "2023-06-26",
@@ -1350,7 +1354,10 @@
           ],
           "projectId": "gpc",
           "status": "阶段记录",
-          "featured": false
+          "featured": false,
+          "questionIds": [
+            "gpc-text-similarity-q1"
+          ]
         }
       ],
       "sourceIds": [
@@ -1732,7 +1739,10 @@
           ],
           "projectId": "network-entropy",
           "status": "阶段记录",
-          "featured": false
+          "featured": false,
+          "questionIds": [
+            "network-entropy-kqi-q2"
+          ]
         }
       ],
       "sourceIds": [
@@ -2245,10 +2255,10 @@
   ],
   "questions": [
     {
-      "title": "学者关系网络怎样保证名单纯净且各学科可比？",
+      "title": "人物名单中的非人物条目与学科归属是否已核验？",
       "attempts": [
         {
-          "text": "尝试从Mathematicians等类别下取五层，但发现会混入定理、奖项和以人命名的事物。",
+          "text": "按类别下五层抽取人物，发现会混入定理、奖项和以人物命名的事物。",
           "evidence": [
             "m00887",
             "m00892",
@@ -2256,7 +2266,7 @@
           ]
         },
         {
-          "text": "改为List of名单、PeopleDB/星座旧代码及补充来源，并记录各学科人数。",
+          "text": "改用各学科List of名单、PeopleDB中的getListOf逻辑及额外类别补充，随后列出分学科人数。",
           "evidence": [
             "m00992",
             "m01011",
@@ -2265,109 +2275,232 @@
           ]
         }
       ],
-      "lastKnown": "截至本段已有人—人和人—学科距离，但部分学科不足2000人，未见完整验收。",
+      "lastKnown": "名单已形成并被用于人物距离展示；已有明确的非人物混入诊断和改取名单的动作。现有记录未提供名单身份准确率、漏收率及学科归属抽检，需核验现存快照，不据此断言现实名单仍未清洗。",
       "nextSteps": [
-        "保留原始名单快照并逐学科抽检身份类型",
-        "为小样本学科单独标注可靠性",
-        "复核旧代码与缺失的人物名单文件"
+        "定位当年名单与PeopleDB代码快照，记录来源和抽取规则。",
+        "分学科抽检人物身份、非人物混入、同名合并及学科归属，单独统计缺失。",
+        "把样本量问题交给关联研究，不以凑够2000人作为身份准确性验收。"
       ],
       "evidence": [
-        "m01131",
-        "m01142",
-        "m01175",
-        "m01176"
+        "m00887",
+        "m00892",
+        "m00895",
+        "m00992",
+        "m01011",
+        "m01019",
+        "m01142"
       ],
       "id": "wiki-research-platform-q1",
       "projectId": "wiki-platform",
       "sourceProjectId": "wiki-research-platform",
       "topicTitle": "Wikipedia 学科关系研究平台",
-      "lastDate": "2020-05-12",
-      "priority": false
+      "lastDate": "2020-04-29",
+      "priority": false,
+      "kind": "data",
+      "status": "audit",
+      "lastDiscussedAt": "2020-04-29",
+      "lastProgressAt": "2020-04-29",
+      "lastArtifactAt": null,
+      "acceptanceCriteria": [
+        "形成可追溯的逐学科名单及抽取版本说明。",
+        "报告分学科人工抽检的非人物比例、误归类与重复情况，并给出修正清单。",
+        "保留无法判定样本；材料缺失时交付明确恢复范围，不伪造准确率。"
+      ],
+      "relatedIds": [
+        "wiki-research-platform-q1-sample-stability",
+        "science-migration-q1"
+      ],
+      "backgroundEvidence": [
+        "m01131"
+      ],
+      "evidenceExcerpts": []
     },
     {
-      "title": "Google知识距离应该按node还是edge、linksin还是linksout计算？",
+      "title": "人物距离的跨学科比较对名单规模是否稳健？",
       "attempts": [
         {
-          "text": "多次比较点/边、入链/出链、去零引用等版本，并于2020-11修复Wiki出链仍按旧点算法计算的错误。",
+          "text": "当时要求每个学科至少2000人，并统计出不同学科从百人以下到两万多人的名单规模。现有记录未显示已进行等样本量或重复抽样实验。",
           "evidence": [
-            "m02280",
-            "m02281",
+            "m01131",
+            "m01142"
+          ]
+        }
+      ],
+      "lastKnown": "已有样本量差异的直接统计；“至少2000人”是当时要求，不是已验证的稳定性阈值。人物距离的抽样稳健性仍需以明确实验判定。",
+      "nextSteps": [
+        "先使用通过身份核验的固定名单，明确人物—人物或人物—学科的比较对象。",
+        "在共同样本范围做多规模、重复抽样及来源覆盖对照。",
+        "报告距离排序随规模的变化和无法稳定比较的学科。"
+      ],
+      "evidence": [
+        "m01131",
+        "m01142"
+      ],
+      "id": "wiki-research-platform-q1-sample-stability",
+      "projectId": "wiki-platform",
+      "sourceProjectId": "wiki-research-platform",
+      "topicTitle": "Wikipedia 学科关系研究平台",
+      "lastDate": "2020-04-29",
+      "priority": false,
+      "kind": "research",
+      "status": "proposed",
+      "lastDiscussedAt": "2020-04-29",
+      "lastProgressAt": "2020-04-29",
+      "lastArtifactAt": null,
+      "acceptanceCriteria": [
+        "固定距离定义、名单版本、抽样单位及种子，保留复算数据。",
+        "给出各样本量下距离与排序的不确定性或敏感性。",
+        "按证据给出可比范围或不能比较的边界，不预设统一人数阈值。"
+      ],
+      "relatedIds": [
+        "wiki-research-platform-q1"
+      ],
+      "backgroundEvidence": [],
+      "evidenceExcerpts": []
+    },
+    {
+      "title": "知识距离的节点集合、边集合及其交集应怎样定义？",
+      "attempts": [
+        {
+          "text": "2020年发现Wiki出链距离仍按旧节点方法计算，改按边后重新部署，结果与平滑程度发生变化。",
+          "evidence": [
             "m02397"
           ]
         },
         {
-          "text": "封闭学术圈、排除历史文学后重新计算，仍出现不同方向的学科聚合顺序。",
+          "text": "2021年再次指出按link计算有问题，边的交集只能来自两个类别共同文章的link。",
           "evidence": [
-            "m03103",
-            "m03108",
-            "m03120"
+            "m03205",
+            "m03206"
           ]
         }
       ],
-      "lastKnown": "2021-04-12明确缺省按node；edge交集存在定义问题，未成为可靠默认。入链与出链的研究含义仍在比较。",
+      "lastKnown": "节点版与边版都曾计算；已有实现错误修复及边交集定义受限的直接诊断。现有证据中的孤立“对”不足以独立证明默认配置，故本条不以该回复确认默认算法。数学定义和实现对应关系需要专项验证。",
       "nextSteps": [
-        "重建每个版本的公式、全集、截断年份和交集定义",
-        "用小型可手算图验证node/edge实现",
-        "把方向差异作为研究问题保留，不做因果结论"
+        "恢复两版计算中节点、边、全集、重复计数与交集的明确集合定义。",
+        "用包含共享节点、共享目标和无重叠类别的可手算小图对照实现。",
+        "区分已修复的实现错误和定义本身是否适用于跨学科测量。"
       ],
       "evidence": [
-        "m02932",
-        "m03120",
+        "m02397",
         "m03205",
-        "m03206",
-        "m03209"
+        "m03206"
       ],
       "id": "wiki-research-platform-q2",
       "projectId": "wiki-platform",
       "sourceProjectId": "wiki-research-platform",
       "topicTitle": "Wikipedia 学科关系研究平台",
       "lastDate": "2021-04-12",
-      "priority": false
+      "priority": false,
+      "kind": "research",
+      "status": "validation",
+      "lastDiscussedAt": "2021-04-12",
+      "lastProgressAt": "2021-04-12",
+      "lastArtifactAt": null,
+      "acceptanceCriteria": [
+        "用集合与有向边符号明确每个变量及交集对象。",
+        "给出手算例子、实现输出和差异说明。",
+        "说明每一版可解释的测量对象或给出不可用反例，不要求两版必须一致。"
+      ],
+      "relatedIds": [
+        "wiki-research-platform-q2-link-direction"
+      ],
+      "backgroundEvidence": [],
+      "evidenceExcerpts": [
+        {
+          "messageId": "m02397",
+          "text": "1.wiki linksout最后算距离的时候算错了，用了老方法，还是算点了。现在改回来了，用边算了，已部署，距离变大了，和MAG规律一样。wiki 用边算的linksout没有点算的平滑了。"
+        }
+      ]
     },
     {
-      "title": "2011/2013 BerkeleyDB与其他年份的边数据是否可比？",
+      "title": "固定距离定义后，入链与出链为何产生不同的学科聚合顺序？",
       "attempts": [
         {
-          "text": "核实重复链接在两类数据库均只计一次，未解释突变。",
+          "text": "比较入链与出链方案：当时列出单文章距离、与MAG相似性、自引比例和稳定性等取舍。",
+          "evidence": [
+            "m02932"
+          ]
+        },
+        {
+          "text": "在去掉历史和文学的Wiki学术圈中比较两种方向，记录阈值下降及文理学科聚合顺序不同。",
+          "evidence": [
+            "m03108",
+            "m03120"
+          ]
+        }
+      ],
+      "lastKnown": "入链和出链的聚合顺序已有对比结果；不同方向所反映的关系，以及观察对集合和实现口径的敏感性尚需验证。有向关系本身不构成因果证据。",
+      "nextSteps": [
+        "依赖节点/边定义核验，固定Wiki版本、学科集合和阈值算法。",
+        "比较入链、出链的集合规模、交集构成及各聚合关键边。",
+        "检验方向差异是否由知识关系、类别覆盖或实现口径驱动。"
+      ],
+      "evidence": [
+        "m02932",
+        "m03108",
+        "m03120"
+      ],
+      "id": "wiki-research-platform-q2-link-direction",
+      "projectId": "wiki-platform",
+      "sourceProjectId": "wiki-research-platform",
+      "topicTitle": "Wikipedia 学科关系研究平台",
+      "lastDate": "2021-03-26",
+      "priority": false,
+      "kind": "research",
+      "status": "validation",
+      "lastDiscussedAt": "2021-03-26",
+      "lastProgressAt": "2021-03-26",
+      "lastArtifactAt": null,
+      "acceptanceCriteria": [
+        "同一数据快照下提供两个方向的可复算结果。",
+        "列出造成聚合顺序变化的具体边和相应集合贡献。",
+        "给出方向解释的成立边界或反例，不仅以图形更平滑判优。"
+      ],
+      "relatedIds": [
+        "wiki-research-platform-q2",
+        "mag-science-mapping-q1-coupling-trend",
+        "wiki-core-consistency-q2"
+      ],
+      "backgroundEvidence": [
+        "m03103"
+      ],
+      "evidenceExcerpts": []
+    },
+    {
+      "title": "2011/2013 Wikipedia引用边能否恢复并通过跨版本一致性核验？",
+      "attempts": [
+        {
+          "text": "核实MySQL和BerkeleyDB中的重复文章链接均只有一条记录；其中stubs类别说明不作为边数据结论。",
           "evidence": [
             "m00482",
             "m00649"
           ]
         },
         {
-          "text": "Top1000—5000、core多版、类层级目视检查改进部分稳定性，但2011/2013路径偏高仍在。",
+          "text": "所有年份Top1000—5000已重算，Core版本改善部分曲线，但2011/2013仍有突变。",
           "evidence": [
             "m00719",
             "m01552"
           ]
         },
         {
-          "text": "2021年确认类和文章数量正常、边数异常，并记录2007—2009与2014后链接表组织方式不同。",
+          "text": "2021年诊断称类与文章数正常、边数异常，并说明2007—2009与2014后链接表组织不同。",
           "evidence": [
             "m02792"
           ]
-        },
-        {
-          "text": "后期有模板链接原因、历史距离重算和季度阈值上线，可更新到2021年后续进展，但未直接证明2011/2013转换错误已全部修正。保留“修复与重算已有进展，专项验收证据不足”，不要沿用早期“完全没有进展”的表述。",
-          "evidence": [
-            "m02792",
-            "m03546",
-            "m03550",
-            "m04049",
-            "m04576",
-            "m04577",
-            "m04580"
-          ]
         }
       ],
-      "lastKnown": "后期已定位模板链接等差异来源，并有历史距离重算和季度数据更新。针对 2011/2013 数据转换是否全部修正，仍缺专项验收证据。",
+      "lastKnown": "已做重复链接和重算诊断，仍缺针对2011/2013引用边的原始快照对照及专项验收记录。2021年其他快照的模板链接差异、后续季度图上线不构成这两年的修复证明。",
       "nextSteps": [
-        "寻找同年份原始dump或MySQL版本",
-        "逐年抽样核对文章ID、分类边、文章引用边",
-        "制作可重复的转换对照和异常报告"
+        "定位2011/2013原始dump、转换程序、数据库表和文章ID映射。",
+        "对文章引用边、分类关系及重复计数分别建立可复算核对样本。",
+        "归档异常原因、修正范围和重算结果；无法恢复的部分明确列出。"
       ],
       "evidence": [
-        "m00696",
+        "m00482",
+        "m00649",
+        "m00719",
         "m01552",
         "m02792"
       ],
@@ -2375,14 +2508,36 @@
       "projectId": "wiki-platform",
       "sourceProjectId": "wiki-core-consistency",
       "topicTitle": "Wikipedia Core 分类与跨年数据一致性治理",
-      "lastDate": "2021-09-10",
-      "priority": false
+      "lastDate": "2021-01-04",
+      "priority": false,
+      "kind": "data",
+      "status": "audit",
+      "lastDiscussedAt": "2021-01-04",
+      "lastProgressAt": "2021-01-04",
+      "lastArtifactAt": null,
+      "acceptanceCriteria": [
+        "明确目标年份、源文件、表结构、转换版本与输出校验值。",
+        "同一批文章在可用来源间的边集合差异可逐项解释。",
+        "形成专项核验报告；无资料时明确不可核验范围，不用其他年份上线代替验收。"
+      ],
+      "relatedIds": [
+        "wiki-core-consistency-q2"
+      ],
+      "backgroundEvidence": [
+        "m00696"
+      ],
+      "evidenceExcerpts": [
+        {
+          "messageId": "m00649",
+          "text": "berkeleyDB也只有一次链接；"
+        }
+      ]
     },
     {
-      "title": "Core和封闭学术圈怎样避免学科外词条扰动？",
+      "title": "封闭学术圈中工程与哲学距离偏近，由哪些词条和分类路径贡献？",
       "attempts": [
         {
-          "text": "尝试core类并集、额外层数、局部黑名单，经济学及生物学稳定性改善。",
+          "text": "在Core研究中扩充类别名匹配，尝试局部黑名单并更新文章、子类统计；当时反馈v3稳定性改善。",
           "evidence": [
             "m01365",
             "m01420",
@@ -2391,7 +2546,7 @@
           ]
         },
         {
-          "text": "封闭学术圈再去掉历史、文学，但工程与哲学仍很近，未得到明确解释。",
+          "text": "封闭学术圈去掉历史与文学后重新计算，工程与哲学仍近，提出检查分类路径或黑名单。",
           "evidence": [
             "m03103",
             "m03108",
@@ -2400,13 +2555,15 @@
           ]
         }
       ],
-      "lastKnown": "截至2021-03仍怀疑分类污染；封闭圈方法已有结果，可靠边界尚待确认。",
+      "lastKnown": "封闭圈已计算且有去掉历史、文学的对照，工程—哲学偏近现象仍被报告。其贡献是否合理、是否存在分类或实现影响尚未判定，不预设偏近必然是污染。",
       "nextSteps": [
-        "保留core规则与黑名单版本",
-        "逐条查看工程—哲学交集中的高贡献词条",
-        "对层数、黑名单和样本规模做敏感性比较"
+        "固定Core规则、黑名单、层数及距离方向，恢复工程—哲学交集。",
+        "按贡献排序核对词条及通向两个学科的分类路径。",
+        "比较保留或移除具体类别后的敏感性，并保留不符合直觉的结果。"
       ],
       "evidence": [
+        "m03103",
+        "m03108",
         "m03118",
         "m03119",
         "m03120"
@@ -2416,13 +2573,34 @@
       "sourceProjectId": "wiki-core-consistency",
       "topicTitle": "Wikipedia Core 分类与跨年数据一致性治理",
       "lastDate": "2021-03-26",
-      "priority": false
+      "priority": false,
+      "kind": "research",
+      "status": "validation",
+      "lastDiscussedAt": "2021-03-26",
+      "lastProgressAt": "2021-03-26",
+      "lastArtifactAt": null,
+      "acceptanceCriteria": [
+        "列出可追溯的高贡献词条、分类路径和所属版本。",
+        "报告规则与层数变化对距离的影响，而非只交一张改后图。",
+        "结论可支持合理交叉、分类影响或实现错误中的任一种，并说明边界。"
+      ],
+      "relatedIds": [
+        "wiki-research-platform-q2-link-direction",
+        "wiki-core-consistency-q1"
+      ],
+      "backgroundEvidence": [
+        "m01365",
+        "m01420",
+        "m01430",
+        "m01524"
+      ],
+      "evidenceExcerpts": []
     },
     {
-      "title": "为什么学科间信息距离变远，而学术圈内部最短路径较稳定或缩短？",
+      "title": "同一学术圈中，知识距离与拓扑路径为何可以呈不同时间趋势？",
       "attempts": [
         {
-          "text": "重算完整学术圈，比较路径、有效直径、密度与度增长。",
+          "text": "更新完整学术圈平均最短路径，并比较平均度、平均路径、最大路径与候选公式，讨论边增长与路径收缩。",
           "evidence": [
             "m04941",
             "m05021",
@@ -2430,39 +2608,67 @@
           ]
         },
         {
-          "text": "阅读Graph Evolution论文，观察Wiki有效直径约4—5。",
+          "text": "观察知识距离变远与网络直径较小的并存现象；报告Wiki早期有效直径较高、后来稳定在4—5附近，密度指标没有明显致密化。",
           "evidence": [
-            "m05071",
-            "m05158",
+            "m05025",
+            "m05026",
+            "m05074",
+            "m05158"
+          ]
+        },
+        {
+          "text": "2022年重提有效直径近常量的观察，继续要求解释；随后BA公式证明资料属于关联理论核验，不在本题冒充机制证据。",
+          "evidence": [
             "m05654"
           ]
         }
       ],
-      "lastKnown": "本期有实测现象和候选解释，没有完成能将Google距离与小世界指标联系起来的证明。",
+      "lastKnown": "已有路径与直径的统计和竞争解释；不能把有效直径后期稳定写成所有年份持续收缩。现有记录未完成同一快照内知识距离和拓扑指标关系的验证。",
       "nextSteps": [
-        "统一有向/无向图、连通分量及跨学科路径口径。",
-        "把语义距离与拓扑距离的定义、分母和可比对象逐项对应。",
-        "用同一历史快照检验致密化与距离变化关系。"
+        "统一有向性、连通分量、有效直径和学科集合，区分早期与成熟期。",
+        "在同一系列快照上复算知识距离、平均路径、有效直径与点边规模。",
+        "用保持节点或边等条件的对照检验候选机制。"
       ],
       "evidence": [
+        "m04941",
+        "m05021",
         "m05025",
         "m05026",
+        "m05035",
         "m05074",
-        "m05655",
-        "m05656"
+        "m05158",
+        "m05654"
       ],
       "id": "academic-distance-q1",
       "projectId": "wiki-platform",
       "sourceProjectId": "academic-distance",
       "topicTitle": "学科距离、学术圈与小世界",
       "lastDate": "2022-03-28",
-      "priority": false
+      "priority": false,
+      "kind": "research",
+      "status": "validation",
+      "lastDiscussedAt": "2022-03-28",
+      "lastProgressAt": "2021-11-26",
+      "lastArtifactAt": null,
+      "acceptanceCriteria": [
+        "提供同一对象、同一时间口径的多指标序列。",
+        "对照实验能够支持或否定明确机制，而非仅列并行趋势。",
+        "区分经验观察、候选解释和定理适用条件。"
+      ],
+      "relatedIds": [
+        "network-entropy-q2",
+        "academic-distance-q2"
+      ],
+      "backgroundEvidence": [
+        "m05071"
+      ],
+      "evidenceExcerpts": []
     },
     {
-      "title": "Wiki/MAG幂律指数应该在哪个区间估计？",
+      "title": "Wiki/MAG度分布的尾部区间与γ应怎样稳健估计？",
       "attempts": [
         {
-          "text": "按季度重算Wiki学术圈幂律，加入整个Wiki与度分布。",
+          "text": "重算历年Wiki幂律并提供度分布页面。",
           "evidence": [
             "m05089",
             "m05096",
@@ -2470,21 +2676,25 @@
           ]
         },
         {
-          "text": "2022年8月发现取100—1000与取到15000会使是否大于2的判断改变。",
+          "text": "比较不同区间后发现取到1000或15000会改变参数是否大于2的判断，继续讨论中段、尾部选择及γ与双对数斜率的区别。",
           "evidence": [
             "m06640",
             "m06648",
-            "m06652"
+            "m06649",
+            "m06652",
+            "m06657",
+            "m06659"
           ]
         }
       ],
-      "lastKnown": "截至8月26日拟合区间尚在讨论，不能固定宣传“Wiki指数<2”或“全Wiki>2”为稳健结论。",
+      "lastKnown": "已有区间敏感性的直接观察，尚未确立统一稳健估计方法。不能固定宣传Wiki指数小于2或全Wiki大于2，也不能把网页上线当作估计方法验证。",
       "nextSteps": [
-        "按可靠方法估计xmin、尾部范围和不确定性。",
-        "比较幂律、对数正态等重尾模型，保留区间敏感性结果。",
-        "统一γ与双对数斜率的标注。"
+        "固定度数、排名曲线和γ之间的定义与换算。",
+        "在原始样本上比较尾部起点、估计范围及候选重尾分布。",
+        "分版本和学科报告参数不确定性与敏感性。"
       ],
       "evidence": [
+        "m06640",
         "m06648",
         "m06649",
         "m06652",
@@ -2496,50 +2706,61 @@
       "sourceProjectId": "academic-distance",
       "topicTitle": "学科距离、学术圈与小世界",
       "lastDate": "2022-08-26",
-      "priority": false
+      "priority": false,
+      "kind": "research",
+      "status": "validation",
+      "lastDiscussedAt": "2022-08-26",
+      "lastProgressAt": "2022-08-26",
+      "lastArtifactAt": null,
+      "acceptanceCriteria": [
+        "明确数据分布、估计器、尾部范围和γ符号。",
+        "交付区间敏感性和不确定性结果，比较至少一种竞争分布。",
+        "支持、拒绝或限定幂律适用范围均可完成验证，不预设γ的大小。"
+      ],
+      "relatedIds": [
+        "mag-science-mapping-q1"
+      ],
+      "backgroundEvidence": [
+        "m05089",
+        "m05096",
+        "m05272"
+      ],
+      "evidenceExcerpts": []
     },
     {
-      "title": "MAG与Wikipedia为什么呈现不同的幂律和学科聚合趋势？",
+      "title": "固定统计口径后，MAG与Wikipedia幂律时间趋势为何不同？",
       "attempts": [
         {
-          "text": "比较linksin/linksout、点/边、去零、文献类型、封闭Wiki等多个版本。",
+          "text": "比较两库幂律及引文方向，提出Wiki学科外内容可能影响观测。",
           "evidence": [
             "m02112",
-            "m02154",
-            "m02297",
-            "m02774",
-            "m03108"
+            "m02154"
           ]
         },
         {
-          "text": "参考引用不平等论文，比对作者Top1%、Gini与单篇论文幂律，发现学科顺序不能简单对应。",
+          "text": "报告MAG与Wiki点边增长、幂律及学术圈规模差异，尝试用增长函数与新增跨学科边解释；推导当时明确尚未想清。",
           "evidence": [
-            "m03259",
+            "m03222",
             "m03260",
-            "m03289"
-          ]
-        },
-        {
-          "text": "提出以点边增长函数、引用膨胀和跨学科新边解释差异，但明确部分尚未想清楚。",
-          "evidence": [
             "m03317",
             "m03336",
             "m03337"
           ]
         }
       ],
-      "lastKnown": "2021-05仍属续研：MAG论文指数增长、Wiki学术圈近年接近不变等为群内观察；尚无验证完整的定量公式。",
+      "lastKnown": "已有跨库比较和点边增长、跨学科边等候选解释，但没有完整定量机制。作者层面Gini与论文层面γ不是同一统计对象；引用不平等文献的比较只作为方法背景，不当作机制已验证。",
       "nextSteps": [
-        "对齐年份、文献类型、分类规则和节点范围",
-        "将固定文章集合与随年新增集合分开做实验",
-        "复现点边增长、幂律斜率、聚合阈值之间关系",
-        "保留作者层面与文章层面不可直接等同的限制"
+        "依赖γ估计核验，对齐两库年份、文献类型、方向、样本和排名口径。",
+        "分开固定节点集合与随年新增集合，检验点边增长和新增跨学科边假说。",
+        "报告支持、反例和适用范围，保留作者与论文统计层级的区别。"
       ],
       "evidence": [
+        "m02112",
+        "m02154",
         "m03222",
-        "m03259",
         "m03260",
         "m03317",
+        "m03336",
         "m03337"
       ],
       "id": "mag-science-mapping-q1",
@@ -2547,45 +2768,143 @@
       "sourceProjectId": "mag-science-mapping",
       "topicTitle": "MAG/MAS 学术图谱、学科距离与复杂网络基线",
       "lastDate": "2021-05-10",
-      "priority": false
+      "priority": false,
+      "kind": "research",
+      "status": "validation",
+      "lastDiscussedAt": "2021-05-10",
+      "lastProgressAt": "2021-05-10",
+      "lastArtifactAt": null,
+      "acceptanceCriteria": [
+        "在可比口径下复现或推翻原始趋势差异。",
+        "候选机制有独立对照，明确数据覆盖与估计方法的影响。",
+        "模型关系由定义或实验支持，不仅由曲线形状与积分类比推出。"
+      ],
+      "relatedIds": [
+        "mag-science-mapping-q1-coupling-trend",
+        "academic-distance-q2",
+        "wiki-evolution-q1"
+      ],
+      "backgroundEvidence": [
+        "m03259",
+        "m03289"
+      ],
+      "evidenceExcerpts": [
+        {
+          "messageId": "m02112",
+          "text": "3. 为什么Wiki的幂律更加陡？\n\t4. 为什么Wiki的幂律规律和MAG不一样？（有时是反着的）"
+        },
+        {
+          "messageId": "m02154",
+          "text": "2.幂律\n\twiki和MAG斜率差太多，规律也不同，没MAG有规律。\n\twiki可能多了很多学术外的文章，wiki反映不了学科内的影响，反映的是学科外部环境的影响。\n\t是否用所有学科的文章作一个子图计算幂律？(就是去掉学术外的影响)"
+        },
+        {
+          "messageId": "m03222",
+          "text": "i）为什么MAG幂律越来越陡，wiki越来越平；"
+        }
+      ]
     },
     {
-      "title": "MAG数据中的错年、缺引用、重复记录怎样影响网络测量？",
+      "title": "MAG与Wikipedia学科聚合阈值的时间趋势为何不同？",
       "attempts": [
         {
-          "text": "发现重复论文、作者单年数千条等异常，并收紧学科识别与比对Google作者。",
+          "text": "比较MAG与Wiki学科距离随年代变化，提出前沿论文与持续修订百科可能不同的解释。",
           "evidence": [
-            "m01853",
-            "m01855",
-            "m01948",
-            "m01974"
+            "m02112"
           ]
         },
         {
-          "text": "核对图灵早期论文，确认引用未完整收录，1945年前数据可能不可靠。",
+          "text": "Wiki学术圈去掉历史、文学后，阈值仍下降，不同引文方向的学科合并顺序也不同；随后明确要求解释MAG阈值增大与Wiki减小的关系。",
+          "evidence": [
+            "m03108",
+            "m03222"
+          ]
+        }
+      ],
+      "lastKnown": "已有Wiki过滤对照和跨库趋势问题，持续编辑与语料性质只是候选解释。需先固定距离与聚合定义，不能把幂律解释进展共用为本问题的新结果。",
+      "nextSteps": [
+        "固定学科范围、节点或边口径、方向及集群合并算法。",
+        "核对跨库聚合阈值趋势是否能在可比窗口复现。",
+        "将节点增量、引文更新和类别重分配分别作对照。"
+      ],
+      "evidence": [
+        "m02112",
+        "m03108",
+        "m03222"
+      ],
+      "id": "mag-science-mapping-q1-coupling-trend",
+      "projectId": "science-atlas",
+      "sourceProjectId": "mag-science-mapping",
+      "topicTitle": "MAG/MAS 学术图谱、学科距离与复杂网络基线",
+      "lastDate": "2021-04-16",
+      "priority": false,
+      "kind": "research",
+      "status": "validation",
+      "lastDiscussedAt": "2021-04-16",
+      "lastProgressAt": "2021-03-25",
+      "lastArtifactAt": null,
+      "acceptanceCriteria": [
+        "交付同口径阈值序列及关键合并边。",
+        "区分原有学科关系变化与新增类别或覆盖变化。",
+        "给出候选解释的证据与边界，不要求两库趋势必然相反。"
+      ],
+      "relatedIds": [
+        "mag-science-mapping-q1",
+        "wiki-research-platform-q2-link-direction",
+        "academic-distance-q1"
+      ],
+      "backgroundEvidence": [],
+      "evidenceExcerpts": [
+        {
+          "messageId": "m02112",
+          "text": "2. 为什么Wiki的linksout更加平滑flat，而MAG却是越来越远？MAS所有学科和数学的距离都是越来越远的，但wiki却是越来越近的。可能的原因MAS都是反映当前文章的水平，而Wikipedia更加类似是综述式的，内容一直在修改。是那些和数学较远的学科，都被淘汰了？"
+        },
+        {
+          "messageId": "m03222",
+          "text": "ii）MAG阈值越来越大，wiki越来越小。两者有啥关系，最好得出定量的公式层面的关系"
+        }
+      ]
+    },
+    {
+      "title": "MAG重复记录、缺失引用和错年引用是否通过统一数据核验？",
+      "attempts": [
+        {
+          "text": "发现同标题、作者近似但ID不同的论文，以及作者某年被聚合出数千论文的异常。",
+          "evidence": [
+            "m01853",
+            "m01855"
+          ]
+        },
+        {
+          "text": "核对图灵早期论文标题重复与参考文献，认为战前非标准引用格式可能造成漏收。",
           "evidence": [
             "m02435",
             "m02453"
           ]
         },
         {
-          "text": "有向网络试算发现约6%—8%问题部分存在穿越引用；去除后单篇最大深度从25300多层降到49。",
+          "text": "有向网络试算发现错年或未来引用边；去掉穿越边后最大深度从25300多层降到49，去零入引不能排除此类边。",
           "evidence": [
             "m02837",
             "m02838",
-            "m02839"
+            "m02839",
+            "m02840"
           ]
         }
       ],
-      "lastKnown": "已定位多种质量问题，但未见统一清洗完成证明；去零引用不能排除穿越引用。",
+      "lastKnown": "三类数据问题已有具体样例和部分过滤结果，可在同一MAG数据版本验收中分项核对。现有记录没有统一清洗验收；6%—8%估算的分母不清，不写成确认的全库错误率。",
       "nextSteps": [
-        "建立错年、未来引用、专利混入和重复论文检查",
-        "选择可人工验证的经典论文做基准",
-        "报告清洗前后指标差异和不可用年代"
+        "固定MAG快照，分别建立重复/身份、引用完整性、年份/未来引用三份核验清单。",
+        "对经典论文和分层随机样本人工对照，记录不能判断的覆盖缺口。",
+        "清洗前后报告边集合及相关指标差异；机制影响研究另定命题。"
       ],
       "evidence": [
+        "m01853",
+        "m01855",
+        "m02435",
         "m02453",
         "m02837",
+        "m02838",
+        "m02839",
         "m02840"
       ],
       "id": "mag-science-mapping-q2",
@@ -2593,166 +2912,350 @@
       "sourceProjectId": "mag-science-mapping",
       "topicTitle": "MAG/MAS 学术图谱、学科距离与复杂网络基线",
       "lastDate": "2021-01-19",
-      "priority": false
+      "priority": false,
+      "kind": "data",
+      "status": "audit",
+      "lastDiscussedAt": "2021-01-19",
+      "lastProgressAt": "2021-01-19",
+      "lastArtifactAt": null,
+      "acceptanceCriteria": [
+        "三类检查各有对象、分母、处理规则、样本和误判说明。",
+        "保留已确认修正与无法恢复的记录，不把所有晚年引用自动判错。",
+        "交付版本化清洗报告与前后对照，不以仅去零入引作为完成依据。"
+      ],
+      "relatedIds": [
+        "disruption-wm-q1",
+        "mag-science-mapping-q3",
+        "knowledge-consilience-q2"
+      ],
+      "backgroundEvidence": [],
+      "evidenceExcerpts": [
+        {
+          "messageId": "m02453",
+          "text": "MAG的点边关系，早些年点比边多，原因可能是二战前发表的论文没有标准的reference，都是在标注里面，不好处理。看了图灵早年的论文确实如此，MAG并没有收录全此引用，Google scholar没有reference这一项，内附的论文链接里面，也是在标注里面。\n\t所以1945年前的引用关系可能不可用。"
+        }
+      ]
     },
     {
-      "title": "学科小世界与活跃期的定义如何解释高路径长度和工程低自引？",
+      "title": "MAG小世界指标对历史排名和引用时间窗怎样变化？",
       "attempts": [
         {
-          "text": "修正历史排名，按时间窗口计算，并扩展至40年。",
+          "text": "改为每个历史截止年份内单独计算学科内入链排名，避免用全集未来排名选取旧年份节点。",
           "evidence": [
             "m01628",
-            "m01727",
+            "m01727"
+          ]
+        },
+        {
+          "text": "增加40年范围的小世界网络并更新页面。",
+          "evidence": [
             "m02102"
-          ]
-        },
-        {
-          "text": "检验零引用或低引用占比，工程并没有特别高；排名版仍待解释。",
-          "evidence": [
-            "m01785",
-            "m01793"
-          ]
-        },
-        {
-          "text": "2020-11明确MAG无标度不必满足小世界；2021-02学习平均路径与直径区别。",
-          "evidence": [
-            "m02535",
-            "m02974"
           ]
         }
       ],
-      "lastKnown": "多个测量版本已交付；“大于6必然有错”等原始直觉不是可用判据。工程及学科间差异没有完整解释。",
+      "lastKnown": "历史排名选择已修正，40年窗口已上线；这些不是尚未开展的工作。尚需在固定节点、联通分量及排名口径下判断指标对窗口的敏感性，不能以路径超过6作为计算错误判据。",
       "nextSteps": [
-        "重新固定小世界判据和随机网络对照",
-        "明确最大连通分量、平均路径与直径",
-        "对学科规模、引用窗口、文献类型分别控制变量"
+        "恢复各窗口和截止年份的节点、边及排名方式。",
+        "控制网络规模、最大连通分量与取样，比较平均路径和聚集系数。",
+        "区分窗口效应、排名前视偏差与不同学科的覆盖差异。"
       ],
       "evidence": [
-        "m01785",
-        "m02535",
-        "m02974"
+        "m01628",
+        "m01727",
+        "m02102"
       ],
       "id": "mag-science-mapping-q3",
       "projectId": "science-atlas",
       "sourceProjectId": "mag-science-mapping",
       "topicTitle": "MAG/MAS 学术图谱、学科距离与复杂网络基线",
-      "lastDate": "2021-02-27",
-      "priority": false
+      "lastDate": "2020-09-04",
+      "priority": false,
+      "kind": "research",
+      "status": "validation",
+      "lastDiscussedAt": "2020-09-04",
+      "lastProgressAt": "2020-09-04",
+      "lastArtifactAt": "2020-09-04",
+      "acceptanceCriteria": [
+        "提供历史排名与窗口数据的版本化定义。",
+        "同一学科在不同窗口下的指标可复算，并有规模控制。",
+        "可得稳定窗口、无稳定窗口或学科特定边界，不预设存在统一活跃期。"
+      ],
+      "relatedIds": [
+        "mag-science-mapping-q3-engineering-self-citation",
+        "mag-science-mapping-q2",
+        "academic-distance-q1"
+      ],
+      "backgroundEvidence": [
+        "m02535",
+        "m02974"
+      ],
+      "evidenceExcerpts": []
     },
     {
-      "title": "论文主结论是否已有足够证据和可重复的图表？",
+      "title": "工程子学科的低自引比例与较长路径由什么造成？",
       "attempts": [
         {
-          "text": "比较MAG/Wiki阈值趋势与封闭圈，发现合并顺序、方向指标和年代趋势存在差异。",
+          "text": "当时回复工程类所统计比例并不特别高，随后称排名距离仍在算、比例算过仍不大。现有归档片段未完整定义该比例，不将其提升为已经充分排除零引用影响。",
           "evidence": [
-            "m03064",
-            "m03066",
-            "m03108",
-            "m03120"
-          ]
-        },
-        {
-          "text": "进一步要求用定量公式解释幂律趋势与阈值趋势的联系，5月仍在提出假说。",
-          "evidence": [
-            "m03222",
-            "m03317"
-          ]
-        },
-        {
-          "text": "analysis-1只到2021年4月文稿，后续2022-04-07已有v3稿，2022-05-09有最新两层学术圈集群图和文稿更新。把成果阶段更新到2022年，同时保留“未见发表确认”。“数据仓库保留已发表图表一致性”本身不能替代该论文的发表凭证。",
-          "evidence": [
-            "m05711",
-            "m05713",
-            "m05715",
-            "m05887",
-            "m05891",
-            "m07494",
-            "m07495"
+            "m01785",
+            "m01793"
           ]
         }
       ],
-      "lastKnown": "2022 年仍有 v3 稿与两层学术圈集群图更新；已经形成文稿和图表，但本次记录中未见这篇论文的明确发表确认。",
+      "lastKnown": "已有统计回复与排名版计算动作，但所挂原文缺少比例定义和完整结果。需要恢复自引的点/边计数、子学科归属和网络范围，区分数据口径与学科关系，不先要求工程指标必须高。",
       "nextSteps": [
-        "关联后续阶段最终文稿与发表信息",
-        "为论文图表绑定数据集、版本和生成代码",
-        "将尚未检验的解释标记为假说"
+        "定位原统计表及定义，明确自引按边还是文章、分母和年份。",
+        "在同版本分类与网络中检验零/低引用、跨学科引用及类别覆盖。",
+        "比较子学科与工程总体，控制样本规模后检验路径差异。"
+      ],
+      "evidence": [
+        "m01785",
+        "m01793"
+      ],
+      "id": "mag-science-mapping-q3-engineering-self-citation",
+      "projectId": "science-atlas",
+      "sourceProjectId": "mag-science-mapping",
+      "topicTitle": "MAG/MAS 学术图谱、学科距离与复杂网络基线",
+      "lastDate": "2020-07-10",
+      "priority": false,
+      "kind": "research",
+      "status": "validation",
+      "lastDiscussedAt": "2020-07-10",
+      "lastProgressAt": "2020-07-10",
+      "lastArtifactAt": null,
+      "acceptanceCriteria": [
+        "为自引比例及路径提供明确统计对象、分母和可复算数据。",
+        "各候选解释有对应对照，不仅凭直觉排除或接受。",
+        "允许低自引或长路径是真实现象，报告无法分辨的覆盖影响。"
+      ],
+      "relatedIds": [
+        "mag-science-mapping-q3",
+        "mag-science-mapping-q2"
+      ],
+      "backgroundEvidence": [
+        "m02535",
+        "m02974"
+      ],
+      "evidenceExcerpts": []
+    },
+    {
+      "title": "OneCulture文稿最终版本、发表状态及图表复现材料是否可核验？",
+      "attempts": [
+        {
+          "text": "2021年分享OneCulture-TwoCultures-ManyCultures文稿；2022年继续分享v3稿，并要求提高图清晰度、处理文字重叠及统一学科配色。",
+          "evidence": [
+            "m03171",
+            "m05711",
+            "m05713",
+            "m05715"
+          ]
+        },
+        {
+          "text": "2022年5月上传Wikipedia更新文档并说明最新两层入链学术圈集群图。",
+          "evidence": [
+            "m05887",
+            "m05891"
+          ]
+        }
+      ],
+      "lastKnown": "文稿和研究图表已形成，2022年仍有更新；现有记录未提供同一稿件的明确发表凭证。需要核验版本和图表数据代码，而非把“未见发表”当作科研命题没有答案。2023年knowledge-consilience目录消息无法确认属于本稿，不延长日期。",
+      "nextSteps": [
+        "核对同一文稿的版本链、最终文件及可验证发表信息。",
+        "逐图绑定数据快照、筛选参数和生成代码；明确缺失材料范围。",
+        "把科学假说讨论关联到对应研究页，不重复计为本任务尝试。"
       ],
       "evidence": [
         "m03171",
-        "m03222",
-        "m03317"
+        "m05711",
+        "m05713",
+        "m05715",
+        "m05887",
+        "m05891"
       ],
       "id": "one-two-many-cultures-paper-q1",
       "projectId": "science-atlas",
       "sourceProjectId": "one-two-many-cultures-paper",
       "topicTitle": "One / Two / Many Cultures 论文与研究图表",
-      "lastDate": "2023-03-09",
-      "priority": false
+      "lastDate": "2022-05-09",
+      "priority": false,
+      "kind": "verification",
+      "status": "audit",
+      "lastDiscussedAt": "2022-05-09",
+      "lastProgressAt": "2022-05-09",
+      "lastArtifactAt": "2022-05-09",
+      "acceptanceCriteria": [
+        "版本链中明确可读稿、缺失稿和最终版本是否已确认。",
+        "发表状态仅凭可核对出处更新，无法核验时准确保留未知。",
+        "核心图表具备数据、参数与代码映射，或逐项标明待恢复依赖。"
+      ],
+      "relatedIds": [
+        "mag-science-mapping-q1",
+        "mag-science-mapping-q1-coupling-trend",
+        "wiki-research-platform-q2-link-direction",
+        "academic-distance-q1"
+      ],
+      "backgroundEvidence": [],
+      "evidenceExcerpts": []
     },
     {
-      "title": "跨数据库学科树的结构差异能否可靠量化？",
+      "title": "固定节点对齐与过滤后，Wikipedia和MAG学科群落差异怎样量化？",
       "attempts": [
         {
-          "text": "Wiki二级学科442个，与MAS 292个二级学科交集113个。",
+          "text": "记录Wiki二级学科442个与MAS二级学科292个的交集为113个，指出节点集合不一致。",
           "evidence": [
             "m09125",
             "m09189"
           ]
         },
         {
-          "text": "尝试整体距离过滤导致小一级学科消失，改为各一级学科内比例过滤。",
+          "text": "比较整体距离过滤与一级学科内比例过滤；前者令小一级学科消失，后者保留一级学科完整性。观察若干群落组成相同、整体结构不同，明确仍不好定量描述。",
           "evidence": [
+            "m09194",
             "m09201"
-          ]
-        },
-        {
-          "text": "树相似性初始算法与其他相似度不相关；随后研究树编辑距离、同构与带权扩展。",
-          "evidence": [
-            "m09168",
-            "m09159",
-            "m09275"
           ]
         }
       ],
-      "lastKnown": "图和说明已完成，但群落差异还主要是定性比较。",
+      "lastKnown": "已有节点交集统计、过滤对照与定性群落比较。可调节点数量得到相同集群数不等于结构一致；当前仍缺固定对齐与过滤条件下的可复算差异量化。两棵带权树的编辑距离另属算法问题。",
       "nextSteps": [
-        "固定匹配词表与节点集合",
-        "分别比较拓扑、边权、社区组成，给出随机基线",
-        "审计人为删类与手动改边的展示影响"
+        "固定Wiki/MAG版本、节点对齐表及各层级过滤规则。",
+        "在明确可比对象上分别比较边权、拓扑与群落成员，提供随机或扰动对照。",
+        "记录手动修改展示的影响，避免把图形编辑当算法输出。"
       ],
       "evidence": [
+        "m09125",
+        "m09189",
         "m09194",
-        "m09201",
-        "m09258"
+        "m09201"
       ],
       "id": "knowledge-consilience-q1",
       "projectId": "science-atlas",
       "sourceProjectId": "knowledge-consilience",
       "topicTitle": "知识融通：MAG/OpenAlex学科网络与数据归档",
-      "lastDate": "2024-08-13",
-      "priority": false
+      "lastDate": "2024-08-02",
+      "priority": false,
+      "kind": "research",
+      "status": "validation",
+      "lastDiscussedAt": "2024-08-02",
+      "lastProgressAt": "2024-08-02",
+      "lastArtifactAt": "2024-08-02",
+      "acceptanceCriteria": [
+        "节点集合与对齐误差可追溯，不通过调集群数制造一致性。",
+        "量化指标与问题对象匹配，提供基线和过滤敏感性。",
+        "展示人工改动与计算网络分开记录，结论可支持相似、不同或不可比较。"
+      ],
+      "relatedIds": [
+        "knowledge-consilience-q1-weighted-tree-similarity",
+        "metapedia-ontology-q1"
+      ],
+      "backgroundEvidence": [],
+      "evidenceExcerpts": [
+        {
+          "messageId": "m09125",
+          "text": "wiki19个一级学科，用core类取二级学科有442个，和mas的292个二级学科取交集共有113个。"
+        }
+      ]
     },
     {
-      "title": "OpenAlex学科首次出现年份及2000年后类数不变如何修正？",
+      "title": "两棵带权知识树的结构相似度怎样定义并验证？",
       "attempts": [
         {
-          "text": "按最早论文时间推断类别年份，再对比量子计算等学科的MAG/OpenAlex/Wikipedia时间。",
+          "text": "区分完全同构判断与部分结构相似度，寻找能表达非完全相同树结构的算法。",
           "evidence": [
-            "m09829",
-            "m09835",
-            "m09837"
+            "m09159"
+          ]
+        },
+        {
+          "text": "已在学科数据集试算tree相似度，报告它与其他相似度不相关，并质疑当前算法。",
+          "evidence": [
+            "m09168"
+          ]
+        },
+        {
+          "text": "提出含节点插入、删除及边权修改的树编辑距离方案，讨论不同根、近似公共子树和加权方式；当时说明代码仍在编写。",
+          "evidence": [
+            "m09275"
           ]
         }
       ],
-      "lastKnown": "2025年3月仍在质疑类别时间口径，未见可靠修正方案。",
+      "lastKnown": "有一次tree相似度试算和后续带权编辑距离构想；没有证据显示新方案已完成验证。不相关本身不是算法错误的充分证明；需定义希望保持的结构性质。专利稿交付段落不作为算法进展。",
       "nextSteps": [
-        "区分学科历史起源、分类标签建立时间与语料最早收录时间",
-        "恢复具体类别列表，排查标签回填和版本冻结",
-        "比较动态主题抽取，必要时限定分析区间"
+        "明确有根/无根、标签、边权含义及允许的编辑操作。",
+        "以同构、节点或边的小扰动和人工判定样本检验相似度性质。",
+        "比较基础树编辑距离与所提加权扩展，报告复杂度及失败情况。"
+      ],
+      "evidence": [
+        "m09159",
+        "m09168",
+        "m09275"
+      ],
+      "id": "knowledge-consilience-q1-weighted-tree-similarity",
+      "projectId": "science-atlas",
+      "sourceProjectId": "knowledge-consilience",
+      "topicTitle": "知识融通：MAG/OpenAlex学科网络与数据归档",
+      "lastDate": "2024-08-13",
+      "priority": false,
+      "kind": "research",
+      "status": "validation",
+      "lastDiscussedAt": "2024-08-13",
+      "lastProgressAt": "2024-07-30",
+      "lastArtifactAt": "2024-07-30",
+      "acceptanceCriteria": [
+        "相似度定义、归一化、编辑代价及根选择规则明确可实现。",
+        "可手算样例与算法结果一致，并报告非同构但近似结构的对照。",
+        "是否与其他相似度相关只是对照之一，不设为唯一正确标准。"
+      ],
+      "relatedIds": [
+        "knowledge-consilience-q1",
+        "gpc-distance-q1",
+        "network-entropy-kqi-q3"
+      ],
+      "backgroundEvidence": [],
+      "evidenceExcerpts": [
+        {
+          "messageId": "m09168",
+          "text": "tree 相似度在学科数据集上已经算好了, 结果是和其他相似度都不相关, 算法不靠谱."
+        },
+        {
+          "messageId": "m09275",
+          "text": "1.树编辑距离的某些细节还要优化下，目前是这个思路(代码还在编写)：\n树编辑距离有3种编辑操作，节点的插入、节点的删除、边距离权重的修改\na.计算树编辑距离,tree1中每个节点当作root依次和tree2(tree2取固定的一个root节点)做编辑距离，得到编辑距离矩阵，取编辑距离最小的以及层数最接近的那些tree1的以root为根节点的结构树(可能有多个)\nb.层数相同直接计算每层边的差值(取差值最小的，差值相当于权重)，编辑距离节点的插入和删除不需要加权重。此时，树编辑距离=编辑距离(不带权重)+边的差值\nc.层数不同，根据a中矩阵找出近似最大公共子树（子树节点数大于1）且编辑距离小的两颗子树[子树的编辑距离在0附近都可以记作近似公共子树],计算边之间的距离差；\n\t子树是以节点i为根节点，L(i)为子树最左边的节点，用后序遍历，记作[(L(i)...,i)]\n\tc.1重新计算编辑距离，插入和删除加上边的权重。权重有多条边，怎么加权？如果相邻的节点在最大公共子树中，则取边的100%，反之取边的50%。\n\t此时，树编辑距离=编辑距离(带权重)+公共子树的边的差值\n\tc.2没有公共子树的情况(说明插入和删除占了大部分)，则做近似，只做c.1\nd.整合a，b，c"
+        }
+      ]
+    },
+    {
+      "title": "OpenAlex以最早收录论文推断学科年代，可靠边界是什么？",
+      "attempts": [
+        {
+          "text": "选择量子计算、强化学习、深度学习和范畴论等，比较Wiki、MAG和OpenAlex的最早时间。",
+          "evidence": [
+            "m09829"
+          ]
+        },
+        {
+          "text": "说明论文数据没有类别建立时间，只能用类别内最早论文年份推断；已有几个类别的对照，报告只有Quantum computer跨MAG/OpenAlex一致，继续找资料核对。",
+          "evidence": [
+            "m09835",
+            "m09837",
+            "m09840"
+          ]
+        },
+        {
+          "text": "提出若难以修正，可考虑限制分析时间范围，避免把长期不变的类别数作为变量；记录未证明该备选已执行。",
+          "evidence": [
+            "m09830"
+          ]
+        }
+      ],
+      "lastKnown": "类别时间字段缺失、多库推断年份不一致已有明确说明。最早收录、标签建立与学科历史起源并非同一时间；现有验证仍不足以支持对2000年后动态类别数的解释。",
+      "nextSteps": [
+        "保留已做类别对照，逐项区分语料最早发表时间、标签建立时间和学科史时间。",
+        "检查标签回填、版本固定及收录边界是否影响类数曲线。",
+        "根据核验结果限定可分析年代；动态主题方法仅作为后续备选。"
       ],
       "evidence": [
         "m09829",
         "m09830",
+        "m09835",
+        "m09837",
         "m09840"
       ],
       "id": "knowledge-consilience-q2",
@@ -2760,159 +3263,317 @@
       "sourceProjectId": "knowledge-consilience",
       "topicTitle": "知识融通：MAG/OpenAlex学科网络与数据归档",
       "lastDate": "2025-03-11",
-      "priority": false
+      "priority": false,
+      "kind": "research",
+      "status": "validation",
+      "lastDiscussedAt": "2025-03-11",
+      "lastProgressAt": "2025-03-11",
+      "lastArtifactAt": null,
+      "acceptanceCriteria": [
+        "各类别有可追溯的时间定义、来源和不确定性。",
+        "解释现有类数序列能否用作历史动态变量，不强行补造标签成立年份。",
+        "给出可用范围、修正方案或不可辨识结论，并区分已执行与备选方法。"
+      ],
+      "relatedIds": [
+        "knowledge-consilience-q1"
+      ],
+      "backgroundEvidence": [],
+      "evidenceExcerpts": []
     },
     {
-      "title": "去掉代数、几何、分析或拓扑后，数学与物理的距离如何变化？",
+      "title": "复现2019剔除数学子学科实验：数学—物理距离变化是否稳健？",
       "attempts": [
         {
-          "text": "2019-09-04直接报告：数学去掉代数、几何、分析或拓扑后，与物理距离都变远；并比较1层与2层的单个子学科到物理距离，几何最靠前，其他顺序受层数影响。",
+          "text": "2019年提出分别剔除代数、几何、分析或拓扑，再看数学与物理关系的实验。",
           "evidence": [
-            "m00326",
-            "m00329",
-            "m00330",
+            "m00329"
+          ]
+        },
+        {
+          "text": "2019年9月直接答复四种剔除后距离都变远，并给出一层、两层单个子学科到物理距离的顺序；后者是相关对照，不等同剔除结果。",
+          "evidence": [
             "m00340"
           ]
         },
         {
-          "text": "2023年曾比较E/C/D样本与数学和其他学科的距离，并提示整体距离近不代表每篇论文都近；可复用当时距离数据口径，但它尚未直接回答剔除子学科的反事实问题。",
+          "text": "2026年4月再次原样提出该问题，未附可读的新实验结论。",
           "evidence": [
-            "m07133",
-            "m07136",
-            "m07163"
+            "m10010"
           ]
         }
       ],
-      "lastKnown": "2019 年已有“距离都变远”的初步答复。2026-04-28再次原样提出；其后2026-05-06只有无法解密图片，没有可读的新结论，也不能确认图片就是该问题答案。 需恢复原始集合、版本与距离实现，检验旧答复是否稳健。",
+      "lastKnown": "2019年已有“四种剔除后距离都变远”的初步答复。2026年4月再次提出，尚未找到可读的新验证结果；需恢复原始集合、数据版本、删除规则和距离实现，检验旧结果的稳健性。",
       "nextSteps": [
-        "先找2019剔除实验代码、集合、Wiki年份、层数和距离公式，恢复当时结果。",
-        "核验多父类与重叠子类的删除定义，分别测试节点删除、集合差与边删除。",
-        "在同规模随机删减基线下复算，区分集合规模和子学科作用。",
-        "补回2026-05-06图片原文，确认其是否回应本问题。"
+        "先恢复2019代码、Wiki快照、学科集合、层数及公式；材料不足时明确不可复现范围。",
+        "明确多父类和交叉标签下的集合剔除规则，区分节点删减与边删除。",
+        "用规模匹配及随机删减对照检验四个子学科的影响。"
       ],
       "evidence": [
-        "m10010",
-        "m10011",
-        "m00340"
+        "m00329",
+        "m00340",
+        "m10010"
       ],
       "id": "knowledge-consilience-q3",
       "projectId": "science-atlas",
       "sourceProjectId": "knowledge-consilience",
       "topicTitle": "知识融通：MAG/OpenAlex学科网络与数据归档",
-      "lastDate": "2026-05-06",
-      "priority": true
+      "lastDate": "2026-04-28",
+      "priority": true,
+      "kind": "research",
+      "status": "replication",
+      "lastDiscussedAt": "2026-04-28",
+      "lastProgressAt": "2019-09-04",
+      "lastArtifactAt": null,
+      "acceptanceCriteria": [
+        "能复算旧答复，或明确记录为何无法复现。",
+        "同一删除定义下报告四个子学科结果和规模控制对照。",
+        "可支持旧结果、推翻旧结果或限定条件，不以必须变远作为验收标准。"
+      ],
+      "relatedIds": [
+        "wiki-core-consistency-q2",
+        "wiki-research-platform-q2"
+      ],
+      "backgroundEvidence": [
+        "m00326",
+        "m00330"
+      ],
+      "evidenceExcerpts": []
     },
     {
-      "title": "D、CD5与实际创新影响力的偏差来自指标，还是引文数据缺失？",
+      "title": "数据缺失与指标限制分别怎样影响 D/CD5 对成果重要性的判断？",
       "attempts": [
         {
-          "text": "检查材料学D接近1的文章，k=0、i/j个位数，MAG linksout缺失。",
+          "text": "在材料学与计算机样本中，观察到缺参考文献或误收专利会产生接近1的D值。",
           "evidence": [
-            "m02574"
-          ]
-        },
-        {
-          "text": "核对计算机异常文章，在Google/DBLP找不到或指向专利。",
-          "evidence": [
+            "m02574",
             "m02581"
           ]
         },
         {
-          "text": "比较高被引、WM和D头部交集，并研究Shor、Kolmogorov等例子。",
+          "text": "以Shor和Kolmogorov论文讨论跨学科引用及少引文情形；随后对比Shor论文在MAG和Google中的引用数量。",
           "evidence": [
-            "m06114",
-            "m06017"
+            "m06017",
+            "m06275",
+            "m06276",
+            "m06277"
           ]
         },
         {
-          "text": "对比Shor两文的MAG与Google被引数，发现当时Google约为MAG的3倍，MAG参考文献也存在缺失。",
+          "text": "群内认为少引文论文更易受缺失影响，同时明确追问更换i、j、k数据后结论是否改变。",
           "evidence": [
-            "m06275",
-            "m06276",
-            "m06277",
-            "m06288"
+            "m06282",
+            "m06288",
+            "m06301"
           ]
         }
       ],
-      "lastKnown": "有大量反例和工作稿；不能仅凭MAG计算把指标偏差全部归因为D公式，也不能把高被引/百科收录当作创新的无偏金标准。",
+      "lastKnown": "已有反例、引用数量对照和效度工作稿，尚未量化数据缺失与指标本身各自造成的偏差。高被引或百科收录也不能直接当作创新真值。",
       "nextSteps": [
-        "恢复每篇案例的i、j、k及原始引文，标明数据时间。",
-        "将低引用极端D值与成熟高引用论文分层检验。",
-        "人工核验抽样，区分未收录、漏匹配与理论指标限制。"
+        "先完成论文身份与引文核验，再用同一窗口复算D/CD5。",
+        "分层比较修复前后变化与独立重要性标签，保留数据缺失和指标限制两种解释。"
       ],
       "evidence": [
-        "m02579",
-        "m02581",
-        "m02621",
-        "m06282",
-        "m06288",
-        "m06301",
         "m02574",
+        "m02581",
+        "m06017",
         "m06275",
         "m06276",
-        "m07876"
+        "m06277",
+        "m06282",
+        "m06288",
+        "m06301"
       ],
       "id": "disruption-wm-q1",
       "projectId": "disruption",
       "sourceProjectId": "disruption-wm",
       "topicTitle": "颠覆度检验与Wikipedia–MAG交集（WM）",
-      "lastDate": "2023-06-26",
-      "priority": false
+      "lastDate": "2022-07-12",
+      "priority": false,
+      "kind": "research",
+      "status": "validation",
+      "acceptanceCriteria": [
+        "固定论文标识、数据日期、引用窗口及D/CD5定义，可逐篇复算i、j、k。",
+        "给出补全或受控删边对D值、极端值及排名的影响，并与独立效度对照区分。",
+        "报告支持条件、反例及不能识别的归因部分，不能把全部偏差单归于公式或数据库。"
+      ],
+      "relatedIds": [
+        "disruption-wm-q1-citation-audit",
+        "disruption-index-q1",
+        "disruption-index-q2"
+      ],
+      "backgroundEvidence": [
+        "m06114"
+      ],
+      "lastDiscussedAt": "2022-07-12",
+      "lastProgressAt": "2022-07-12",
+      "lastArtifactAt": "2022-06-20",
+      "evidenceExcerpts": []
     },
     {
-      "title": "为什么WM与同样规模高被引集合重叠仍只有约16.8%？",
+      "title": "D/CD5 个案的论文身份与引文是否核对一致？",
       "attempts": [
         {
-          "text": "用同规模W、C、D集合比较并改画交集面积。",
+          "text": "MAG中部分高D记录缺少linksout，计算机样本还出现指向专利的记录。",
           "evidence": [
-            "m06241",
-            "m06608",
-            "m06610"
+            "m02574",
+            "m02581"
+          ]
+        },
+        {
+          "text": "Shor两文被引数量在Google与MAG差异明显；原聊天题名和年份对应仍需核对。",
+          "evidence": [
+            "m06275",
+            "m06276",
+            "m06277"
           ]
         }
       ],
-      "lastKnown": "2022-08-23明确回复“这个还没有结论”。",
+      "lastKnown": "已有人工对照但没有完整逐篇审计表；不能把Google较新的计数差异直接当成同一时间快照的漏引率。",
       "nextSteps": [
-        "核对16.8%的分母、时间窗、书籍是否包含及数据快照。",
-        "按学科、发表年代、百科条目类型、引用年龄分层分析未重叠样本。",
-        "避免由重叠比例直接推出知识质量结论。"
+        "用稳定论文标识核对题名、年份和版本，排除聊天中两篇论文年份混用。",
+        "在同一截止时间逐边记录缺失、误匹配和不适用记录，建立可复算审计表。"
+      ],
+      "evidence": [
+        "m02574",
+        "m02581",
+        "m06275",
+        "m06276",
+        "m06277",
+        "m06288",
+        "m06301"
+      ],
+      "id": "disruption-wm-q1-citation-audit",
+      "projectId": "disruption",
+      "sourceProjectId": "disruption-wm",
+      "topicTitle": "颠覆度检验与Wikipedia–MAG交集（WM）",
+      "lastDate": "2022-07-12",
+      "priority": false,
+      "kind": "data",
+      "status": "audit",
+      "acceptanceCriteria": [
+        "每个案例有唯一标识、版本与截止日期，区分论文和专利。",
+        "参考文献及后续引用有来源与核对状态，给出修复前后i、j、k。",
+        "差异明确归为采集时间、身份/版本、覆盖或算法问题，无法确认者单列。"
+      ],
+      "relatedIds": [
+        "disruption-wm-q1",
+        "mag-science-mapping-q2"
+      ],
+      "backgroundEvidence": [],
+      "lastDiscussedAt": "2022-07-12",
+      "lastProgressAt": "2022-07-12",
+      "lastArtifactAt": null,
+      "evidenceExcerpts": []
+    },
+    {
+      "title": "同规模百科收录集合与高被引集合为何只部分重叠？",
+      "attempts": [
+        {
+          "text": "2022年追问W-1200与C-1200约16.8%的重叠为何仍小，回复尚无结论。",
+          "evidence": [
+            "m06604",
+            "m06605"
+          ]
+        },
+        {
+          "text": "2023年比较截止2010网络与全网络排名后再筛发表年份的两种计算，报告E102与C102交集随口径改变。",
+          "evidence": [
+            "m07694"
+          ]
+        }
+      ],
+      "lastKnown": "16.8%是2022年的特定版本问题。2023年已出现E102/C102的新集合及排名口径修正，但尚无对未重叠样本的充分解释，两个版本不可混算。",
+      "nextSteps": [
+        "先恢复各版集合与分母，再按年代、学科和文献类型解释重叠差异。",
+        "复用漏匹配审计结果，避免把数据覆盖差异直接解释成知识质量差异。"
       ],
       "evidence": [
         "m06604",
-        "m06605"
+        "m06605",
+        "m07694"
       ],
       "id": "disruption-wm-q2",
       "projectId": "disruption",
       "sourceProjectId": "disruption-wm",
       "topicTitle": "颠覆度检验与Wikipedia–MAG交集（WM）",
-      "lastDate": "2022-08-24",
-      "priority": true
+      "lastDate": "2023-04-21",
+      "priority": true,
+      "kind": "research",
+      "status": "validation",
+      "acceptanceCriteria": [
+        "明确目标集合版本，重算交集、双向覆盖率与适当随机对照。",
+        "对未重叠样本给出分层原因、抽样误差和无法解释部分。",
+        "把集合规模、覆盖、时间窗和学科结构解释与重要性解释分开。"
+      ],
+      "relatedIds": [
+        "disruption-wm-q2-collection-audit",
+        "disruption-wm-q3",
+        "disruption-index-q2"
+      ],
+      "backgroundEvidence": [],
+      "lastDiscussedAt": "2023-04-21",
+      "lastProgressAt": "2023-04-21",
+      "lastArtifactAt": null,
+      "evidenceExcerpts": []
     },
     {
-      "title": "Wiki引用但未匹配MAG的论文有多少，近期下降是否由漏匹配造成？",
+      "title": "16.8% 与后续 E102/C102 结果分别对应哪些集合版本？",
       "attempts": [
         {
-          "text": "提出按cite_type、DOI和论文字段估算，现有逻辑多是匹配后才知道为论文。",
+          "text": "2022年使用W-1200/C-1200提出16.8%的问题；随后三色图按数值修正面积。",
           "evidence": [
-            "m06512",
-            "m06513",
-            "m06514",
-            "m06516"
+            "m06604",
+            "m06608",
+            "m06610"
           ]
         },
         {
-          "text": "人工查看数十个未匹配journal/book例子并归纳四类原因。",
+          "text": "2023年记录显示全网络计算排名后再取1965—2010论文，与截断网络内计算排名得到不同交集。",
           "evidence": [
-            "m06578",
-            "m06579"
+            "m07694"
           ]
         }
       ],
-      "lastKnown": "截至8月能列原因，无法确定总体未匹配比例或比例是否稳定。",
+      "lastKnown": "有历史数值和口径修正，缺少把W-1200、E102及对应排名集合逐版绑定的审计表。图形面积修正不是原因解释。",
       "nextSteps": [
-        "先建立不依赖MAG匹配结果的论文候选集合。",
-        "按年份、来源和匹配等级分层人工标注，估计precision/recall。",
-        "单独审计2010年后的出版滞后和MAG更新延迟。"
+        "恢复集合ID、论文清单、快照、排名网络范围与分母。",
+        "分别重算旧版和新版，记录转换及过滤差异。"
+      ],
+      "evidence": [
+        "m06604",
+        "m06610",
+        "m07694"
+      ],
+      "id": "disruption-wm-q2-collection-audit",
+      "projectId": "disruption",
+      "sourceProjectId": "disruption-wm",
+      "topicTitle": "颠覆度检验与Wikipedia–MAG交集（WM）",
+      "lastDate": "2023-04-21",
+      "priority": true,
+      "kind": "data",
+      "status": "audit",
+      "acceptanceCriteria": [
+        "每一百分比对应确定的集合清单、分母、日期窗和去重/书籍政策。",
+        "历史数值可复算；不能复算者标待核验，不能继续写成现行结果。"
+      ],
+      "relatedIds": [
+        "disruption-wm-q2"
+      ],
+      "backgroundEvidence": [
+        "m06608"
+      ],
+      "lastDiscussedAt": "2023-04-21",
+      "lastProgressAt": "2023-04-21",
+      "lastArtifactAt": "2022-08-24",
+      "evidenceExcerpts": []
+    },
+    {
+      "title": "近期 WM 数量下降有多少来自漏匹配、数据库覆盖或引用滞后？",
+      "attempts": [],
+      "lastKnown": "2022-08-08明确提出近期下降的不同可能来源；8月16日归纳未匹配例子，但不能据此给出各因素对下降的贡献。",
+      "nextSteps": [
+        "先取得独立候选集合的覆盖和匹配率估计。",
+        "对同一近期论文队列分别检查MAG收录、匹配成功与引用观察窗口。"
       ],
       "evidence": [
         "m06515",
@@ -2923,20 +3584,92 @@
       "projectId": "disruption",
       "sourceProjectId": "disruption-wm",
       "topicTitle": "颠覆度检验与Wikipedia–MAG交集（WM）",
-      "lastDate": "2022-08-16",
-      "priority": false
+      "lastDate": "2022-08-08",
+      "priority": false,
+      "kind": "research",
+      "status": "proposed",
+      "acceptanceCriteria": [
+        "固定论文队列、观察截止时间和各因素定义。",
+        "报告漏匹配、覆盖不足、时间滞后能解释的下降量及误差，保留无法区分部分。"
+      ],
+      "relatedIds": [
+        "disruption-wm-q3-unmatched-audit",
+        "disruption-wm-q4",
+        "disruption-wm-q2"
+      ],
+      "backgroundEvidence": [],
+      "lastDiscussedAt": "2022-08-08",
+      "lastProgressAt": null,
+      "lastArtifactAt": null,
+      "evidenceExcerpts": []
     },
     {
-      "title": "WM增长的xlnx、线性和多项式解释是否稳定？",
+      "title": "Wikipedia 学术引文候选中未匹配 MAG 的比例有多大？",
       "attempts": [
         {
-          "text": "交集总结并列xlnx与二次方拟合，并观察引入时间相对发表时间滞后约8年。",
+          "text": "指出现有流程多是匹配成功后才确认是论文，不能直接识别全部未匹配论文。",
+          "evidence": [
+            "m06512",
+            "m06513",
+            "m06514",
+            "m06516"
+          ]
+        },
+        {
+          "text": "人工检查数十个journal/book未匹配例子，区分非学术、MAG未收录和字段匹配异常。",
+          "evidence": [
+            "m06578",
+            "m06579"
+          ]
+        }
+      ],
+      "lastKnown": "已列举原因，未形成独立于匹配成功定义的论文候选集合及总体比例估计。",
+      "nextSteps": [
+        "按引用字段建立候选抽样框并人工标注文献类型。",
+        "分年份与匹配等级审计覆盖、精确率和召回率。"
+      ],
+      "evidence": [
+        "m06512",
+        "m06513",
+        "m06514",
+        "m06516",
+        "m06578",
+        "m06579"
+      ],
+      "id": "disruption-wm-q3-unmatched-audit",
+      "projectId": "disruption",
+      "sourceProjectId": "disruption-wm",
+      "topicTitle": "颠覆度检验与Wikipedia–MAG交集（WM）",
+      "lastDate": "2022-08-16",
+      "priority": false,
+      "kind": "data",
+      "status": "audit",
+      "acceptanceCriteria": [
+        "候选集合定义不依赖MAG匹配是否成功。",
+        "报告未匹配率、错误原因和分层估计的不确定性。",
+        "能区分MAG未收录与收录后漏匹配，不把所有journal/book都视为论文。"
+      ],
+      "relatedIds": [
+        "disruption-wm-q3",
+        "disruption-wm-q1-citation-audit"
+      ],
+      "backgroundEvidence": [],
+      "lastDiscussedAt": "2022-08-16",
+      "lastProgressAt": "2022-08-16",
+      "lastArtifactAt": null,
+      "evidenceExcerpts": []
+    },
+    {
+      "title": "WM 按引入时间的增长模型及发表年代队列解释能否复现？",
+      "attempts": [
+        {
+          "text": "交集拟合总结比较xlnx与二次方，并对照论文发表时间与百科引入时间。",
           "evidence": [
             "m06113"
           ]
         },
         {
-          "text": "2022年7—8月改按MAG年代切片，发现旧论文引入曲线更线性、新年代基线更高。",
+          "text": "按论文发表年代观察首次收录分布，记录旧论文队列较平、新年代基线较高的现象，并尝试用队列叠加解释总量。",
           "evidence": [
             "m06407",
             "m06437",
@@ -2944,60 +3677,77 @@
           ]
         }
       ],
-      "lastKnown": "本期可确认分年代的解释尝试；MAG整体增长又在8月从三次方改到亚指数，不能把早期结论写成定论。",
+      "lastKnown": "有WM两条时间轴的经验拟合和队列叠加解释；没有唯一模型结论，仍需固定快照、过滤和滞后窗口复算。MAG全集点边增长不属于本题结果。",
       "nextSteps": [
-        "分清Wikipedia首次引用时间与论文发表时间这两条时间轴。",
-        "固定版本和过滤规则后重做模型比较，区分边界截断与增长机制。",
-        "对高阶差分噪声做稳健性分析。"
+        "恢复首次引入和发表年份两套序列及队列清单。",
+        "在同一数据版本比较候选模型，检查队列和边界截断能解释多少总量变化。"
       ],
       "evidence": [
-        "m05914",
-        "m06328",
-        "m06329",
-        "m06567",
-        "m06572"
+        "m06113",
+        "m06407",
+        "m06437",
+        "m06576"
       ],
       "id": "disruption-wm-q4",
       "projectId": "disruption",
       "sourceProjectId": "disruption-wm",
       "topicTitle": "颠覆度检验与Wikipedia–MAG交集（WM）",
       "lastDate": "2022-08-16",
-      "priority": false
+      "priority": false,
+      "kind": "research",
+      "status": "replication",
+      "acceptanceCriteria": [
+        "明确定义累计量、增量、首次引入及删除处理，两条时间轴不得混用。",
+        "队列之和可重构总量，候选模型有统一区间、残差与样本外比较。",
+        "给出支持范围与未解释部分，不以视觉贴合替代理论证明。"
+      ],
+      "relatedIds": [
+        "disruption-wm-q3",
+        "wiki-evolution-q1"
+      ],
+      "backgroundEvidence": [],
+      "lastDiscussedAt": "2022-08-16",
+      "lastProgressAt": "2022-08-16",
+      "lastArtifactAt": "2022-06-20",
+      "evidenceExcerpts": []
     },
     {
-      "title": "D/CD5集中在0的机制能否严格解释？",
+      "title": "逐论文的 k/(i+j) 关系能否解释 D/CD5 的近零集中？",
       "attempts": [
         {
-          "text": "发现近零主要由k过大造成，不等同i=j；k总和比i、j大约三个数量级。",
+          "text": "区分恰好D=0与大量值接近0，报告k总和显著大于i、j总和。",
           "evidence": [
             "m07827",
             "m07831"
           ]
         },
         {
-          "text": "分析保度随机化交换边如何让j变i，并阅读原论文补充材料。",
+          "text": "在OpenAlex与诺奖相关领域样本观察近零集中，并提出优先引用高被引文献的候选机制。",
           "evidence": [
-            "m07840",
-            "m07846"
+            "m07876",
+            "m08287",
+            "m08298"
           ]
         },
         {
-          "text": "尝试用优先连接、参考文献高被引、focal论文低被引解释，仍标明部分条件需证明。",
+          "text": "2023年10月底仍报告公式未推通；已有逐论文的大参考文献引用统计观察。",
           "evidence": [
-            "m08287",
-            "m08298",
+            "m08324",
             "m08332"
           ]
         }
       ],
-      "lastKnown": "截至2023-10-31数学公式仍未推通；已有经验统计与解释草稿，不能当成已证定理。",
+      "lastKnown": "有经验分布和候选解释，尚无完成的机制推导。总体k总和的比例不能代替逐论文充分条件；需明确全时D与CD5窗口。",
       "nextSteps": [
-        "恢复逐论文i/j/k与年份数据，分层检验条件分布",
-        "构造保度且保年份的随机引文网络",
-        "明确全时D与5年窗口CD5，区分经验反例和普适性证明"
+        "恢复逐论文i、j、k，检验近零的充分条件及满足比例。",
+        "明确候选机制的假设，给出推导、反例或成立边界，并与随机化子实验互证。"
       ],
       "evidence": [
-        "m08304",
+        "m07827",
+        "m07831",
+        "m07876",
+        "m08287",
+        "m08298",
         "m08324",
         "m08332"
       ],
@@ -3006,71 +3756,190 @@
       "sourceProjectId": "disruption-index",
       "topicTitle": "颠覆度指标复核：Wiki筛选、高引、PageRank与诺奖对照",
       "lastDate": "2023-10-31",
-      "priority": false
+      "priority": false,
+      "kind": "research",
+      "status": "validation",
+      "acceptanceCriteria": [
+        "D/CD5的计算窗口与零分母政策明确，可复算逐论文值。",
+        "从公式推导可检验条件，并报告每个样本满足条件的比例及不确定性。",
+        "不能只用总和比例或高被引文献存在性替代逐论文论证。"
+      ],
+      "relatedIds": [
+        "disruption-index-q1-randomization",
+        "disruption-wm-q1"
+      ],
+      "backgroundEvidence": [],
+      "lastDiscussedAt": "2023-10-31",
+      "lastProgressAt": "2023-10-31",
+      "lastArtifactAt": null,
+      "evidenceExcerpts": [
+        {
+          "messageId": "m08324",
+          "text": "颠覆度那个公式还没进展"
+        },
+        {
+          "messageId": "m08332",
+          "text": "颠覆度公式还是没进展，不好推，只能从数据中看出百分之八九十的论文都引用了至少一个10倍引文的，即80%以上的论文的颠覆度都在0.1以下；"
+        }
+      ]
     },
     {
-      "title": "WoS对照和跨学科创新假设如何继续？",
+      "title": "保度且保年份随机化后，D/CD5 分布与平均趋势怎样变化？",
       "attempts": [
         {
-          "text": "试图获取WoS top10000，但缺少数据和标题，无法验证其是否为C-top子集。",
+          "text": "阅读原论文随机化结果，记录随机化平均D与实际D趋势的差别。",
           "evidence": [
-            "m07906",
-            "m07908",
-            "m07910"
+            "m07840"
           ]
         },
         {
-          "text": "阅读跨学科研究影响论文，明确引用影响力不能直接等同创新力。",
+          "text": "整理交换边端点、保持入出度与被引年份的规则，并以j转i说明可能影响。",
+          "evidence": [
+            "m07846"
+          ]
+        }
+      ],
+      "lastKnown": "现有记录主要是原论文图与算法的解读，未见独立随机化重复实验结果；局部j转i例子不能代表全网总体方向。",
+      "nextSteps": [
+        "恢复相同引文网络与窗口，实现保度保年份对照。",
+        "重复随机化并比较分布和平均趋势，检查混合及停止条件。"
+      ],
+      "evidence": [
+        "m07840",
+        "m07846"
+      ],
+      "id": "disruption-index-q1-randomization",
+      "projectId": "disruption",
+      "sourceProjectId": "disruption-index",
+      "topicTitle": "颠覆度指标复核：Wiki筛选、高引、PageRank与诺奖对照",
+      "lastDate": "2023-06-13",
+      "priority": false,
+      "kind": "research",
+      "status": "validation",
+      "acceptanceCriteria": [
+        "算法约束、随机种子、迭代与停止规则可复现。",
+        "报告真实网络与多次随机化的D/CD5分布和趋势区间，支持、无差异或反向结果均可验收。"
+      ],
+      "relatedIds": [
+        "disruption-index-q1"
+      ],
+      "backgroundEvidence": [],
+      "lastDiscussedAt": "2023-06-13",
+      "lastProgressAt": null,
+      "lastArtifactAt": null,
+      "evidenceExcerpts": []
+    },
+    {
+      "title": "跨学科性与创新性的关系能否独立于引用影响力检验？",
+      "attempts": [
+        {
+          "text": "阅读跨学科研究影响的论文，区分引用影响力与创新力，并整理多样性、平衡、差异性等跨学科维度。",
           "evidence": [
             "m07911"
           ]
         }
       ],
-      "lastKnown": "缺WoS原始数据，主要依靠MAG/OpenAlex复核。",
+      "lastKnown": "记录支持概念澄清和文献阅读，尚无以独立创新标签检验跨学科关系的本地实验。WoS清单缺失是数据依赖，不等于研究结论缺失或得到支持。",
       "nextSteps": [
-        "先恢复样本构成与研究问题",
-        "在可获得数据库复现，再记录与WoS覆盖差异",
-        "用独立创新标注或专家样本评估而非只对比引用量"
+        "明确跨学科性、引用影响和创新标签的独立定义。",
+        "设计同年代、学科与被引量对照，评估D及其他指标的效度。"
       ],
       "evidence": [
-        "m07845",
-        "m07910"
+        "m07911"
       ],
       "id": "disruption-index-q2",
       "projectId": "disruption",
       "sourceProjectId": "disruption-index",
       "topicTitle": "颠覆度指标复核：Wiki筛选、高引、PageRank与诺奖对照",
       "lastDate": "2023-06-27",
-      "priority": false
+      "priority": false,
+      "kind": "research",
+      "status": "proposed",
+      "acceptanceCriteria": [
+        "创新标签不能仅由引用量或Wikipedia收录替代。",
+        "预先固定样本、标注和对照，报告跨学科关系及不确定性。"
+      ],
+      "relatedIds": [
+        "disruption-index-q2-wos-recovery",
+        "disruption-wm-q1"
+      ],
+      "backgroundEvidence": [],
+      "lastDiscussedAt": "2023-06-27",
+      "lastProgressAt": null,
+      "lastArtifactAt": null,
+      "evidenceExcerpts": []
     },
     {
-      "title": "GPC距离约束是否能稳定完成类比推理？",
+      "title": "WoS Top10000 的论文清单与筛选口径能否恢复？",
       "attempts": [
         {
-          "text": "man/woman、king/prince可相似，但man/king和queen/king很远；要求至少100例。",
+          "text": "寻找WoS数据，检查附带GitHub后仍未找到Top10000论文标题；其他图仅见约200篇标题。",
           "evidence": [
-            "m08599",
-            "m08606",
-            "m08609"
-          ]
-        },
-        {
-          "text": "开发ku2ku并扩展四边形、多边形、父类子类和误差范围。",
-          "evidence": [
-            "m08623",
-            "m08666",
-            "m08802",
-            "m09202"
+            "m07845",
+            "m07906",
+            "m07908",
+            "m07910"
           ]
         }
       ],
-      "lastKnown": "有界面和申请材料；未见完整100例benchmark、成功率与错误分析。",
+      "lastKnown": "截至2023-06-27记录明确称Top10000缺数据、无法验证。缺失清单不说明相应创新假设已失败。",
       "nextSteps": [
-        "恢复word2vec类比样本，固定训练/测试集",
-        "给出top-k准确率、覆盖率、歧义词和无Wiki页的失败类型",
-        "测试类别上下文、多语言对齐与距离容差敏感性"
+        "核对论文、补充材料和已有仓库的样本定义。",
+        "恢复可用标识及取样规则；若仍受限，记录范围和可复现替代数据。"
       ],
       "evidence": [
+        "m07845",
+        "m07906",
+        "m07908",
+        "m07910"
+      ],
+      "id": "disruption-index-q2-wos-recovery",
+      "projectId": "disruption",
+      "sourceProjectId": "disruption-index",
+      "topicTitle": "颠覆度指标复核：Wiki筛选、高引、PageRank与诺奖对照",
+      "lastDate": "2023-06-27",
+      "priority": false,
+      "kind": "data",
+      "status": "audit",
+      "acceptanceCriteria": [
+        "交付样本标识、筛选定义、时间窗和版本，或明确无法取得的具体范围。",
+        "验证它与本地C-top是否同一口径；获得数据本身不作为效度实验结果。"
+      ],
+      "relatedIds": [
+        "disruption-index-q2"
+      ],
+      "backgroundEvidence": [],
+      "lastDiscussedAt": "2023-06-27",
+      "lastProgressAt": "2023-06-27",
+      "lastArtifactAt": null,
+      "evidenceExcerpts": []
+    },
+    {
+      "title": "GPC 四边形距离约束能否可靠回答类比题？",
+      "attempts": [
+        {
+          "text": "观察man/woman与king/prince相近，但man/king、queen/king较远，且部分词没有对应Wiki页面。",
+          "evidence": [
+            "m08599",
+            "m08606"
+          ]
+        },
+        {
+          "text": "要求至少100例并讨论能否从距离函数推出平行四边形关系及误差范围。",
+          "evidence": [
+            "m08609",
+            "m08625"
+          ]
+        }
+      ],
+      "lastKnown": "已有少量实例与数学假设讨论，未见完整独立题集、成功率或可复核的误差界。查询界面交付不证明类比有效。",
+      "nextSteps": [
+        "固定独立题集、候选库与答案评分，记录覆盖、歧义和无词条失败。",
+        "将距离约束的数学假设与容差作为同一验证的方法部分。"
+      ],
+      "evidence": [
+        "m08599",
+        "m08606",
         "m08609",
         "m08625"
       ],
@@ -3078,84 +3947,252 @@
       "projectId": "gpc",
       "sourceProjectId": "gpc-distance",
       "topicTitle": "GPC语义距离库与类比推理",
-      "lastDate": "2024-08-02",
-      "priority": false
+      "lastDate": "2024-02-27",
+      "priority": false,
+      "kind": "research",
+      "status": "validation",
+      "acceptanceCriteria": [
+        "至少100例的题集及评分规则可追溯，测试集不因观察结果改动。",
+        "报告top-k准确率、覆盖率与失败类型，并比较合适基线。",
+        "平行四边形命题给出假设、误差解释、证明或反例，经验有效与理论成立分开。"
+      ],
+      "relatedIds": [
+        "gpc-distance-q1-polygon-extension",
+        "gpc-distance-q1-query-audit",
+        "gpc-text-similarity-q1"
+      ],
+      "backgroundEvidence": [
+        "m08670",
+        "m08672"
+      ],
+      "lastDiscussedAt": "2024-02-27",
+      "lastProgressAt": "2024-02-21",
+      "lastArtifactAt": null,
+      "evidenceExcerpts": []
     },
     {
-      "title": "GPC能否替代向量数据库的具体能力？",
+      "title": "多边形及父子类替换后的距离约束如何定义和验证？",
       "attempts": [
         {
-          "text": "讨论不训练、预计算、类别消歧优势，并演示Milvus和向量数据库流程。",
+          "text": "讨论用多个四边形候选集合求交处理多边形，原记录明确多边形约束尚未定义清楚。",
           "evidence": [
-            "m08643",
-            "m08650",
-            "m08670",
-            "m08672"
+            "m08802"
           ]
         },
         {
-          "text": "围绕是否只需算距离展开争论，尚未建立功能对照。",
+          "text": "提出将token替换为父类或子类后比较多边形相似结构的构思。",
           "evidence": [
-            "m08652",
-            "m08653",
-            "m08658",
-            "m08660"
+            "m09202"
           ]
         }
       ],
-      "lastKnown": "没有系统对比ANN索引、增量更新、文本覆盖和检索质量的报告。",
+      "lastKnown": "有扩展构思，没有明确的一般约束或效果验证；写入申请构想不能替代算法结果。",
       "nextSteps": [
-        "把目标限定为具体检索任务",
-        "比较准确率、延迟、内存、更新成本和OOV覆盖",
-        "恢复真实查询日志与最终距离矩阵格式"
+        "先定义多边形一致性、父子替换规则和目标任务。",
+        "在固定样本上比较扩展方法与四边形基线，并说明不成立情形。"
+      ],
+      "evidence": [
+        "m08802",
+        "m09202"
+      ],
+      "id": "gpc-distance-q1-polygon-extension",
+      "projectId": "gpc",
+      "sourceProjectId": "gpc-distance",
+      "topicTitle": "GPC语义距离库与类比推理",
+      "lastDate": "2024-08-02",
+      "priority": false,
+      "kind": "research",
+      "status": "proposed",
+      "acceptanceCriteria": [
+        "输入、约束、输出和容差均有可执行定义。",
+        "报告覆盖、准确率、失败案例和复杂度，允许反例或有限成立范围。"
+      ],
+      "relatedIds": [
+        "gpc-distance-q1"
+      ],
+      "backgroundEvidence": [],
+      "lastDiscussedAt": "2024-08-02",
+      "lastProgressAt": null,
+      "lastArtifactAt": null,
+      "evidenceExcerpts": [
+        {
+          "messageId": "m08802",
+          "text": "四边形的话d1,d2是定义了约束。\nn边形的话d1，d2...的约束还不明确。\n如果还是用四边形来约束的话，比如分别求所有四边形ABCX和ACDX的x1,x2,最后再求x1∩x2。"
+        },
+        {
+          "messageId": "m09202",
+          "text": "一个由几个token构成的多边形，将每个token的父类构成的多边形是否构成原始多边形的某种相似的结构。将原始多边形中每个token的子类构成的多边形和原始多边形是否构成相似的结构。将原始多边形的一部分token取父类或子类是否构成相似结构。"
+        }
+      ]
+    },
+    {
+      "title": "ku2ku 类比查询原型已实现哪些输入输出和性能范围？",
+      "attempts": [
+        {
+          "text": "原型增加图形示例和显式计算按钮。",
+          "evidence": [
+            "m08623"
+          ]
+        },
+        {
+          "text": "更新搜索建议、查询排序与结果上限，报告大部分查询可在1秒获得结果。",
+          "evidence": [
+            "m08666"
+          ]
+        }
+      ],
+      "lastKnown": "有两次明确界面更新与历史性能陈述，尚缺按需求逐项验收和统一性能样本；原型能力与科学有效性分开核验。",
+      "nextSteps": [
+        "恢复对应版本，列出输入、约束、结果排序及查询上限。",
+        "对固定查询样本核对功能与延迟，明确历史版本与现存版本差别。"
+      ],
+      "evidence": [
+        "m08623",
+        "m08666"
+      ],
+      "id": "gpc-distance-q1-query-audit",
+      "projectId": "gpc",
+      "sourceProjectId": "gpc-distance",
+      "topicTitle": "GPC语义距离库与类比推理",
+      "lastDate": "2024-02-29",
+      "priority": false,
+      "kind": "engineering",
+      "status": "audit",
+      "acceptanceCriteria": [
+        "功能逐项标为可复现、有历史证据或未见实现。",
+        "查询结果能关联输入约束，性能报告注明样本、机器与版本。"
+      ],
+      "relatedIds": [
+        "gpc-distance-q1"
+      ],
+      "backgroundEvidence": [],
+      "lastDiscussedAt": "2024-02-29",
+      "lastProgressAt": "2024-02-29",
+      "lastArtifactAt": null,
+      "evidenceExcerpts": []
+    },
+    {
+      "title": "预计算 GPC 能否满足指定近邻检索任务？",
+      "attempts": [
+        {
+          "text": "讨论是否可以用GPC距离替换向量数据库中的距离计算，并出现“替换不了”及需弄清其他能力的回复。",
+          "evidence": [
+            "m08643",
+            "m08652",
+            "m08653",
+            "m08658"
+          ]
+        }
+      ],
+      "lastKnown": "有可行性讨论，未见固定检索任务和同覆盖率基线的对比报告；表示方式不训练不能推导数据库可被全面替代。",
+      "nextSteps": [
+        "固定语料、查询、过滤条件和候选覆盖。",
+        "对照基线报告检索质量、延迟、内存与更新成本。"
       ],
       "evidence": [
         "m08643",
-        "m08660"
+        "m08652",
+        "m08653",
+        "m08658"
       ],
       "id": "gpc-distance-q2",
       "projectId": "gpc",
       "sourceProjectId": "gpc-distance",
       "topicTitle": "GPC语义距离库与类比推理",
-      "lastDate": "2024-03-04",
-      "priority": false
+      "lastDate": "2024-02-27",
+      "priority": false,
+      "kind": "research",
+      "status": "proposed",
+      "acceptanceCriteria": [
+        "目标检索任务、基线及相同覆盖集合明确。",
+        "输出质量和工程成本有可复算报告，结论限定于该任务。"
+      ],
+      "relatedIds": [
+        "gpc-distance-q2-capability-audit",
+        "gpc-distance-q1"
+      ],
+      "backgroundEvidence": [],
+      "lastDiscussedAt": "2024-02-27",
+      "lastProgressAt": null,
+      "lastArtifactAt": null,
+      "evidenceExcerpts": [
+        {
+          "messageId": "m08643",
+          "text": "我们的这个东西可否当成一个向量数据库来使用？考虑：向量数据库主要就是算距离，我们可以算距离，算好之后，它该怎么干还是怎么干。"
+        }
+      ]
     },
     {
-      "title": "GPC文本相似度在独立数据上的有效性与词序如何处理？",
+      "title": "GPC 检索服务与目标向量数据库的功能差距有哪些？",
       "attempts": [
         {
-          "text": "古登堡分类不可靠、Stanford文本Wiki词条匹配少；换数据并筛选学科文本。",
+          "text": "记录曾演示Milvus，同时要求总结向量数据库除距离计算之外的能力。",
           "evidence": [
+            "m08650",
+            "m08660"
+          ]
+        }
+      ],
+      "lastKnown": "有演示经历和核对要求，没有完整功能矩阵；不能仅因可以算距离就认定可替代数据库。",
+      "nextSteps": [
+        "列明索引、近邻查询、过滤、增量更新、删除和持久化等目标需求。",
+        "逐项确认GPC已有、缺失和不需要的能力。"
+      ],
+      "evidence": [
+        "m08650",
+        "m08660"
+      ],
+      "id": "gpc-distance-q2-capability-audit",
+      "projectId": "gpc",
+      "sourceProjectId": "gpc-distance",
+      "topicTitle": "GPC语义距离库与类比推理",
+      "lastDate": "2024-02-28",
+      "priority": false,
+      "kind": "engineering",
+      "status": "audit",
+      "acceptanceCriteria": [
+        "每项需求有输入输出、实现证据和已演示/未见实现状态。",
+        "明确可替换的组件边界，不把系统整体与距离函数混为一谈。"
+      ],
+      "relatedIds": [
+        "gpc-distance-q2"
+      ],
+      "backgroundEvidence": [
+        "m08670",
+        "m08672"
+      ],
+      "lastDiscussedAt": "2024-02-28",
+      "lastProgressAt": null,
+      "lastArtifactAt": null,
+      "evidenceExcerpts": []
+    },
+    {
+      "title": "GPC 文本相似度在独立人工语义基准上是否有效？",
+      "attempts": [
+        {
+          "text": "初次相关计算偏低；检查古登堡学科标签和Stanford文本的Wiki匹配覆盖，随后更换部分文本观察。",
+          "evidence": [
+            "m09359",
             "m09395",
             "m09400"
           ]
         },
         {
-          "text": "讨论用注意力机制解决词序，seq2seq算法仍未系统理解。",
+          "text": "2024-10-24报告STS、token及两种Google距离之间的Pearson/Spearman相关。",
           "evidence": [
-            "m09047",
-            "m09414",
-            "m09415"
-          ]
-        },
-        {
-          "text": "加入长token优先匹配和token包含关系说明。",
-          "evidence": [
-            "m09371",
-            "m09372",
-            "m09374"
+            "m09427"
           ]
         }
       ],
-      "lastKnown": "2024-10-24有新结果，但缺统一样本、标准公开指标与词序方案的验证。",
+      "lastKnown": "已有模型间相关数值及数据覆盖诊断，但这些相关性不能单独替代对人工语义真值的效度检验。尚缺统一样本、覆盖及评分说明。",
       "nextSteps": [
-        "保存样本ID、分词词表、core匹配和过滤规则",
-        "在STS基准上与相同覆盖率的向量基线比较",
-        "分别测词序、否定、同义词、歧义和无Wiki词条文本"
+        "固定样本ID、人工语义分数、词表和全部过滤规则。",
+        "在同一覆盖集合与向量基线评估，单列未覆盖文本。"
       ],
       "evidence": [
         "m09359",
         "m09395",
+        "m09400",
         "m09427"
       ],
       "id": "gpc-text-similarity-q1",
@@ -3163,70 +4200,325 @@
       "sourceProjectId": "gpc-text-similarity",
       "topicTitle": "GPC文本相似度与STS/向量模型对照",
       "lastDate": "2024-10-24",
-      "priority": false
+      "priority": false,
+      "kind": "research",
+      "status": "validation",
+      "acceptanceCriteria": [
+        "评价目标是独立人工语义标注，区别于模型间相关性。",
+        "报告Pearson/Spearman或预定指标、样本数、区间与失败样本。",
+        "覆盖率、调参和独立测试的边界清楚，不只展示挑选学科的例子。"
+      ],
+      "relatedIds": [
+        "gpc-text-similarity-q1-word-order",
+        "gpc-text-similarity-q1-token-matching",
+        "gpc-distance-q2"
+      ],
+      "backgroundEvidence": [],
+      "lastDiscussedAt": "2024-10-24",
+      "lastProgressAt": "2024-10-24",
+      "lastArtifactAt": null,
+      "evidenceExcerpts": []
     },
     {
-      "title": "知识复杂性如何避免迭代退化并稳定解释稀缺性？",
+      "title": "GPC 能否区分词序、语义角色与否定造成的意义变化？",
       "attempts": [
         {
-          "text": "尝试二级/三级学科、RCA式进出口定义、国家总出口阈值。",
+          "text": "提出考虑注意力机制解决词序问题；后续记录称未看过seq2seq算法，仅看过部分注意力原理图。",
+          "evidence": [
+            "m09047",
+            "m09414",
+            "m09415"
+          ]
+        }
+      ],
+      "lastKnown": "有研究方向与学习现状，未见词序方案实施或对照实验。专利和演示意向不构成结果。",
+      "nextSteps": [
+        "构造保持词汇但改变顺序、角色或否定的最小句对。",
+        "比较当前方法与候选序列方案，记录哪些变化被识别。"
+      ],
+      "evidence": [
+        "m09047",
+        "m09414",
+        "m09415"
+      ],
+      "id": "gpc-text-similarity-q1-word-order",
+      "projectId": "gpc",
+      "sourceProjectId": "gpc-text-similarity",
+      "topicTitle": "GPC文本相似度与STS/向量模型对照",
+      "lastDate": "2024-10-21",
+      "priority": false,
+      "kind": "research",
+      "status": "proposed",
+      "acceptanceCriteria": [
+        "测试集覆盖词序、角色和否定的预定类别。",
+        "报告原方法和候选方法的区分能力与错误案例，理论学习不作为验收结果。"
+      ],
+      "relatedIds": [
+        "gpc-text-similarity-q1"
+      ],
+      "backgroundEvidence": [],
+      "lastDiscussedAt": "2024-10-21",
+      "lastProgressAt": null,
+      "lastArtifactAt": null,
+      "evidenceExcerpts": [
+        {
+          "messageId": "m09047",
+          "text": "我觉得注意力机制可以解决词序的问题。"
+        }
+      ]
+    },
+    {
+      "title": "长短 token 重叠时的匹配规则是否一致且可复算？",
+      "attempts": [
+        {
+          "text": "讨论token包含另一个token的情形，现有实施方法采用优先匹配长字符串。",
+          "evidence": [
+            "m09371",
+            "m09372"
+          ]
+        }
+      ],
+      "lastKnown": "已有最长匹配政策说明，没有针对重叠、歧义和下游评分影响的系统核验；专利补写说明不等于预处理已验证。",
+      "nextSteps": [
+        "固定嵌套词条、歧义与重叠样本，记录分词和实体映射规则。",
+        "比较最长匹配与允许重叠等政策对覆盖与相似度的影响。"
+      ],
+      "evidence": [
+        "m09371",
+        "m09372"
+      ],
+      "id": "gpc-text-similarity-q1-token-matching",
+      "projectId": "gpc",
+      "sourceProjectId": "gpc-text-similarity",
+      "topicTitle": "GPC文本相似度与STS/向量模型对照",
+      "lastDate": "2024-10-05",
+      "priority": false,
+      "kind": "data",
+      "status": "audit",
+      "acceptanceCriteria": [
+        "同一文本可重现token列表和规则选择。",
+        "报告覆盖、重复计数和下游分数变化，规则改动有版本记录。"
+      ],
+      "relatedIds": [
+        "gpc-text-similarity-q1"
+      ],
+      "backgroundEvidence": [],
+      "lastDiscussedAt": "2024-10-05",
+      "lastProgressAt": "2024-10-05",
+      "lastArtifactAt": null,
+      "evidenceExcerpts": [
+        {
+          "messageId": "m09371",
+          "text": "一个token是另一个token的子集的情况，例如：上海，上海人民广场。我们以前讨论过这个。"
+        },
+        {
+          "messageId": "m09372",
+          "text": "现在用的实施方法是优先匹配字符串长的token。"
+        }
+      ]
+    },
+    {
+      "title": "国家—学科知识复杂性迭代为何收敛为相同值？",
+      "attempts": [
+        {
+          "text": "国家—学科矩阵迭代后出现国家复杂性相同值，并讨论迭代轮数。",
+          "evidence": [
+            "m06796"
+          ]
+        },
+        {
+          "text": "参照RCA比例定义，重算二级学科后仍收敛，提出更细粒度学科及国家出口阈值方案。",
           "evidence": [
             "m06803",
             "m06829",
             "m06831",
             "m07288"
           ]
-        },
-        {
-          "text": "发现一篇论文多FOS会制造大量单次出口，提出只取最高score分类。",
-          "evidence": [
-            "m07311",
-            "m07314",
-            "m07316"
-          ]
-        },
-        {
-          "text": "诺奖复杂性使用二值边后丢失出口量差异，排序不如PageRank符合预期。",
-          "evidence": [
-            "m08038",
-            "m08040",
-            "m08047"
-          ]
         }
       ],
-      "lastKnown": "已有产品与报告；缺少一套经过稳健性检验、适用于国家/机构/学科的统一指标。",
+      "lastKnown": "已有迭代退化观察及矩阵/阈值调整；缺少区分定义性质、矩阵稠密程度与实现问题的复算。不得以排名更合常识代替验证。",
       "nextSteps": [
-        "恢复原始矩阵与各次阈值实验，记录数据版本",
-        "比较二值RCA、加权RCA与分数式多标签归属的稳定性",
-        "用预先定义的外部样本验证，避免只按常识调排名"
+        "恢复矩阵、归一化、零值和迭代实现，逐轮记录数值与排名。",
+        "在手算例子及固定真实数据上比较粒度、阈值与归一化，区分竞争解释。"
       ],
       "evidence": [
         "m06796",
-        "m07309",
-        "m08038"
+        "m06803",
+        "m06829",
+        "m06831",
+        "m07288"
       ],
       "id": "knowledge-complexity-q1",
       "projectId": "knowledge-complexity",
       "sourceProjectId": "knowledge-complexity",
       "topicTitle": "知识复杂度：从经济复杂性到国家、学科和机构排名",
-      "lastDate": "2023-08-04",
-      "priority": true
+      "lastDate": "2023-02-15",
+      "priority": true,
+      "kind": "research",
+      "status": "validation",
+      "acceptanceCriteria": [
+        "输入矩阵和每轮变换可复算，零度及停止规则明确。",
+        "给出收敛原因的支持、反例或边界，不只靠选择某轮排名。",
+        "外部检验方案预先确定，避免按预期国家顺序调指标。"
+      ],
+      "relatedIds": [
+        "knowledge-complexity-q1-fos-allocation",
+        "knowledge-complexity-q1-award-weighting",
+        "knowledge-complexity-q1-patent-audit",
+        "knowledge-complexity-q2"
+      ],
+      "backgroundEvidence": [],
+      "lastDiscussedAt": "2023-02-15",
+      "lastProgressAt": "2023-02-15",
+      "lastArtifactAt": null,
+      "evidenceExcerpts": []
     },
     {
-      "title": "知识复杂性是否领先经济复杂性及GDP？",
+      "title": "多 FOS 论文如何计入国家—学科贡献量？",
       "attempts": [
         {
-          "text": "整理经济复杂性预测GDP的回归变量与三个十年区间，但具体回归尚未理解清楚。",
+          "text": "发现一篇多FOS论文可能在多个学科各记一次，造成很多单次出口；提出只取最高score分类再算。",
           "evidence": [
-            "m07221",
-            "m07223"
+            "m07311",
+            "m07314",
+            "m07316"
           ]
         }
       ],
-      "lastKnown": "群聊提出时间关系和预测任务，没有找到完成回归与样本外验证的证据。",
+      "lastKnown": "已识别重复归属的计数效应，未见单标签重算结果或统一政策验收。",
       "nextSteps": [
-        "重建按年同口径的知识/经济复杂性序列",
-        "设计滞后回归、控制变量和样本外检验"
+        "定义全计数、分数计数和单标签归属的目标含义。",
+        "在固定论文集检查总量、多样性和稀缺性对政策的敏感性。"
+      ],
+      "evidence": [
+        "m07311",
+        "m07314",
+        "m07316"
+      ],
+      "id": "knowledge-complexity-q1-fos-allocation",
+      "projectId": "knowledge-complexity",
+      "sourceProjectId": "knowledge-complexity",
+      "topicTitle": "知识复杂度：从经济复杂性到国家、学科和机构排名",
+      "lastDate": "2023-02-16",
+      "priority": true,
+      "kind": "data",
+      "status": "audit",
+      "acceptanceCriteria": [
+        "每篇论文的国家和FOS分摊规则明确，能检查是否守恒或为何不守恒。",
+        "报告各政策对矩阵、稀缺性和排名的影响，并保存版本。"
+      ],
+      "relatedIds": [
+        "knowledge-complexity-q1"
+      ],
+      "backgroundEvidence": [],
+      "lastDiscussedAt": "2023-02-16",
+      "lastProgressAt": "2023-02-16",
+      "lastArtifactAt": null,
+      "evidenceExcerpts": []
+    },
+    {
+      "title": "奖项—学科网络中二值 RCA 与加权关系分别测量什么？",
+      "attempts": [
+        {
+          "text": "诺奖复杂性迭代后排序变化，记录二值边丢失原权重差异，并与PageRank比较。",
+          "evidence": [
+            "m08038",
+            "m08040"
+          ]
+        },
+        {
+          "text": "解释原经济复杂性使用相对比例阈值的二值关系，并非直接使用出口量。",
+          "evidence": [
+            "m08047"
+          ]
+        }
+      ],
+      "lastKnown": "已有排序现象和指标含义讨论；尚未证明哪种关系适合该奖项网络，不能因更像PageRank或常识就判正确。",
+      "nextSteps": [
+        "明确奖项、学科、边与权重的语义及目标命题。",
+        "固定网络比较二值RCA、加权方案与参照指标，并做阈值敏感性检验。"
+      ],
+      "evidence": [
+        "m08038",
+        "m08040",
+        "m08047"
+      ],
+      "id": "knowledge-complexity-q1-award-weighting",
+      "projectId": "knowledge-complexity",
+      "sourceProjectId": "knowledge-complexity",
+      "topicTitle": "知识复杂度：从经济复杂性到国家、学科和机构排名",
+      "lastDate": "2023-08-04",
+      "priority": true,
+      "kind": "research",
+      "status": "validation",
+      "acceptanceCriteria": [
+        "每种边定义对应可解释的测量对象。",
+        "报告归一化、迭代及排名稳定性，外部效度标准不由想要的排名反推。"
+      ],
+      "relatedIds": [
+        "knowledge-complexity-q1"
+      ],
+      "backgroundEvidence": [],
+      "lastDiscussedAt": "2023-08-04",
+      "lastProgressAt": "2023-08-04",
+      "lastArtifactAt": null,
+      "evidenceExcerpts": []
+    },
+    {
+      "title": "国家专利复杂度演示的矩阵与迭代结果是否可复算？",
+      "attempts": [
+        {
+          "text": "国家专利复杂度页面报告第0轮排序较符合判断，后续波动并在第10轮接近收敛。",
+          "evidence": [
+            "m07309"
+          ]
+        }
+      ],
+      "lastKnown": "这是专利网络的历史演示观察，不能充当国家论文复杂性已验证的结果；尚缺矩阵和逐轮复算说明。",
+      "nextSteps": [
+        "恢复演示用专利集、国家归属和贡献矩阵。",
+        "核对各轮计算与页面展示，按预定标准评估稳定性。"
+      ],
+      "evidence": [
+        "m07309"
+      ],
+      "id": "knowledge-complexity-q1-patent-audit",
+      "projectId": "knowledge-complexity",
+      "sourceProjectId": "knowledge-complexity",
+      "topicTitle": "知识复杂度：从经济复杂性到国家、学科和机构排名",
+      "lastDate": "2023-02-16",
+      "priority": true,
+      "kind": "data",
+      "status": "audit",
+      "acceptanceCriteria": [
+        "数据版本、矩阵语义、迭代与归一化有完整复算记录。",
+        "区分页面可用与指标合理性，不以主观国家排序作为验收。"
+      ],
+      "relatedIds": [
+        "knowledge-complexity-q1"
+      ],
+      "backgroundEvidence": [],
+      "lastDiscussedAt": "2023-02-16",
+      "lastProgressAt": "2023-02-16",
+      "lastArtifactAt": null,
+      "evidenceExcerpts": []
+    },
+    {
+      "title": "知识复杂性是否提供经济复杂性变化的领先信息？",
+      "attempts": [
+        {
+          "text": "提出比较知识复杂性与经济复杂性的时间关系，并要求观察上升下降的变化。",
+          "evidence": [
+            "m07016",
+            "m07221",
+            "m07236"
+          ]
+        }
+      ],
+      "lastKnown": "有研究目标与时间关系要求，未见完成的领先关系估计或样本外验证。共同数据准备不等于已获得预测结果。",
+      "nextSteps": [
+        "重建国家年度同口径序列，预先限定滞后范围。",
+        "与仅用历史经济复杂性等基线作按时间划分的样本外比较。"
       ],
       "evidence": [
         "m07016",
@@ -3238,40 +4530,106 @@
       "sourceProjectId": "knowledge-complexity",
       "topicTitle": "知识复杂度：从经济复杂性到国家、学科和机构排名",
       "lastDate": "2023-02-08",
-      "priority": false
-    },
-    {
-      "title": "如何解释MAG与Wiki不同熵的方向，是否真由边比点增长更快造成？",
-      "attempts": [
+      "priority": false,
+      "kind": "research",
+      "status": "proposed",
+      "acceptanceCriteria": [
+        "序列、国家覆盖和滞后设定明确。",
+        "报告相对基线的新增预测信息及稳定性，允许无增益结论。"
+      ],
+      "relatedIds": [
+        "knowledge-complexity-q2-gdp-prediction",
+        "knowledge-complexity-q1"
+      ],
+      "backgroundEvidence": [],
+      "lastDiscussedAt": "2023-02-08",
+      "lastProgressAt": null,
+      "lastArtifactAt": null,
+      "evidenceExcerpts": [
         {
-          "text": "比较标准结构熵、绝对熵、度分布熵和网络密度，加入BA模拟。",
-          "evidence": [
-            "m05387",
-            "m05564",
-            "m05744",
-            "m05800"
-          ]
+          "messageId": "m07221",
+          "text": "知识复杂性是不是领先经济复杂性。经济复杂性领先GDP，故而可以预测GDP的增长。知识复杂性是不是也可以预测经济复杂性的增长？"
         },
         {
-          "text": "提出边数增长快导致某些熵上升或平庸化的假说。",
+          "messageId": "m07236",
+          "text": "3）知识复杂度和经济复杂度的关系（时间的关系），看变化的程度，从上升到下降，从下降到上升等；"
+        }
+      ]
+    },
+    {
+      "title": "加入知识复杂性后能否改善 GDP 增长预测？",
+      "attempts": [
+        {
+          "text": "阅读经济复杂性预测GDP使用的变量、三个十年区间与回归过程，记录具体计算仍未看懂。",
           "evidence": [
-            "m05814",
-            "m06671",
-            "m06672",
-            "m06673"
+            "m07223"
           ]
         }
       ],
-      "lastKnown": "截至本期结尾仍在要求用已有网络核验该关系；有向图归一化、零度节点和定义适用性需继续检查。",
+      "lastKnown": "现有材料只有预测链条设想和基线文献阅读，没有加入知识指标后的回归结果；领先关系不可传递为预测增益。",
       "nextSteps": [
-        "明确每种熵的概率空间、对数底数、归一化上下界与零度处理。",
-        "复核度分布熵推导中的归一化和额外对时间积分是否成立。",
-        "在保持节点数、平均度、度异质性分别变化的对照网络上验证。"
+        "先复现已有经济复杂性GDP基线，再引入知识指标。",
+        "采用时间外测试和固定控制变量比较增益。"
       ],
       "evidence": [
-        "m05571",
-        "m05810",
-        "m05906",
+        "m07221",
+        "m07223"
+      ],
+      "id": "knowledge-complexity-q2-gdp-prediction",
+      "projectId": "knowledge-complexity",
+      "sourceProjectId": "knowledge-complexity",
+      "topicTitle": "知识复杂度：从经济复杂性到国家、学科和机构排名",
+      "lastDate": "2023-02-03",
+      "priority": false,
+      "kind": "research",
+      "status": "proposed",
+      "acceptanceCriteria": [
+        "GDP目标、预测期限、控制与基线模型预先明确。",
+        "报告加入知识指标前后的样本外误差及稳定性，不能以相关或领先链条替代。"
+      ],
+      "relatedIds": [
+        "knowledge-complexity-q2"
+      ],
+      "backgroundEvidence": [],
+      "lastDiscussedAt": "2023-02-03",
+      "lastProgressAt": null,
+      "lastArtifactAt": null,
+      "evidenceExcerpts": [
+        {
+          "messageId": "m07221",
+          "text": "经济复杂性领先GDP，故而可以预测GDP的增长。知识复杂性是不是也可以预测经济复杂性的增长？"
+        }
+      ]
+    },
+    {
+      "title": "边数相对节点数的增长能否解释度分布熵的变化？",
+      "attempts": [
+        {
+          "text": "提出BA常量新增边与Wiki新增边/点关系不同，可能解释熵变化。",
+          "evidence": [
+            "m05814"
+          ]
+        },
+        {
+          "text": "继续追问边比点增长快是否使某种熵增大、是否与密度相关，并要求用已有网络核验。",
+          "evidence": [
+            "m06671",
+            "m06672",
+            "m06673",
+            "m06674"
+          ]
+        }
+      ],
+      "lastKnown": "2022 年的机制猜测仍待控制检验。m05800 曾报告 Wiki 度分布熵略向上；m06671—m06674 后续只追问边数、点数、密度与“某种熵”的关系，未确认具体熵定义或普适增长趋势。此条以度分布熵为待检验对象，需先明确公式和复算趋势，并与节点度熵、标准化方案及后来的 KQI 分开验收。",
+      "nextSteps": [
+        "以前置跨库复算确认现象与指定熵定义。",
+        "构造控制节点数、边数及度异质性的网络，检验增长比是否足以解释变化。"
+      ],
+      "evidence": [
+        "m05814",
+        "m06671",
+        "m06672",
+        "m06673",
         "m06674"
       ],
       "id": "network-entropy-q1",
@@ -3279,70 +4637,250 @@
       "sourceProjectId": "network-entropy",
       "topicTitle": "结构熵、度分布熵与网络增长机制",
       "lastDate": "2022-08-30",
-      "priority": false
+      "priority": false,
+      "kind": "research",
+      "status": "proposed",
+      "acceptanceCriteria": [
+        "检验使用明确度分布概率及熵公式，解释边/点增长与密度的区别。",
+        "给出控制实验、反例或成立条件，不仅比较两条历史曲线。"
+      ],
+      "relatedIds": [
+        "network-entropy-q1-trend-audit",
+        "network-entropy-q2",
+        "network-entropy-q2-node-degree"
+      ],
+      "backgroundEvidence": [
+        "m05800"
+      ],
+      "lastDiscussedAt": "2022-08-30",
+      "lastProgressAt": null,
+      "lastArtifactAt": null,
+      "evidenceExcerpts": []
     },
     {
-      "title": "能否从Wiki增长模型推出结构熵或有效直径的公式？",
+      "title": "统一定义后，MAG 与 Wiki 的度熵及度分布熵趋势能否复算？",
       "attempts": [
         {
-          "text": "扩展BA速率方程并推导度分布熵候选公式。",
+          "text": "按log2重算MAG密度和结构熵，记录对数底数改变绝对值而标准化结果近乎不变。",
           "evidence": [
-            "m05467",
-            "m05471",
-            "m05680",
-            "m05906"
+            "m05387"
           ]
         },
         {
-          "text": "尝试将公式拟合实测度分布熵，但明确称复杂Wiki结构熵还无法推公式。",
+          "text": "上线Wiki/MAG网络熵与MAG分学科页面，并讨论两种熵趋势差异。",
           "evidence": [
-            "m05803",
-            "m05805",
-            "m05810"
+            "m05564",
+            "m05744",
+            "m05800"
           ]
         }
       ],
-      "lastKnown": "有推导稿与经验拟合，未见Wiki标准结构熵及有效直径的证明完成。",
+      "lastKnown": "有2022年计算与页面，但仍明确担心零度节点等口径；底数问题已有复算，不应继续列作无答案核心。后续定义变化需分版本。",
       "nextSteps": [
-        "先审计候选度分布是否为归一化概率，再推导熵。",
-        "区分有限规模效应、经验拟合与渐近定理。",
-        "恢复BA与变边数生成模型代码并比较模拟结果。"
+        "固定概率对象、方向、零度节点、图规模和归一化边界。",
+        "用相同版本快照重算并分别展示绝对值与标准化值。"
       ],
       "evidence": [
-        "m05655",
-        "m05656",
-        "m05805",
-        "m06541"
+        "m05387",
+        "m05564",
+        "m05571",
+        "m05744",
+        "m05800"
+      ],
+      "id": "network-entropy-q1-trend-audit",
+      "projectId": "network-entropy",
+      "sourceProjectId": "network-entropy",
+      "topicTitle": "结构熵、度分布熵与网络增长机制",
+      "lastDate": "2022-04-18",
+      "priority": false,
+      "kind": "data",
+      "status": "audit",
+      "acceptanceCriteria": [
+        "每种熵有清晰定义、实现及最小例子对照。",
+        "历史图表能复算，差异标明来自定义、样本或实现，不能把同名指标当同一公式。"
+      ],
+      "relatedIds": [
+        "network-entropy-q1",
+        "network-entropy-q2",
+        "network-entropy-q2-node-degree"
+      ],
+      "backgroundEvidence": [],
+      "lastDiscussedAt": "2022-04-18",
+      "lastProgressAt": "2022-04-13",
+      "lastArtifactAt": null,
+      "evidenceExcerpts": []
+    },
+    {
+      "title": "Wiki 增长模型的度分布熵候选推导是否成立？",
+      "attempts": [
+        {
+          "text": "给出含时间项的候选度分布，并先对度积分再对时间积分；原记录明确第二次积分依据未确认。",
+          "evidence": [
+            "m05680"
+          ]
+        },
+        {
+          "text": "记录度分布熵已按文稿拟合，随后上传推导材料。",
+          "evidence": [
+            "m05803",
+            "m05906"
+          ]
+        }
+      ],
+      "lastKnown": "有候选公式、拟合陈述和可读推导稿，仍需检查概率归一化、适用范围及额外时间积分。拟合相近不等于推导成立。",
+      "nextSteps": [
+        "明确生成机制、度范围和概率归一化。",
+        "从同一概率分布重新推导度分布熵，再用模拟检验。",
+        "依赖补齐：尽可能恢复 2022-02-17 上传的 BA 概率方程推广稿，核对其与当前候选推导、实现和实验版本的对应关系；未恢复部分标为证据缺口，不推断其内容或完成状态。"
+      ],
+      "evidence": [
+        "m05680",
+        "m05803",
+        "m05906"
       ],
       "id": "network-entropy-q2",
       "projectId": "network-entropy",
       "sourceProjectId": "network-entropy",
       "topicTitle": "结构熵、度分布熵与网络增长机制",
-      "lastDate": "2022-08-12",
-      "priority": false
+      "lastDate": "2022-04-18",
+      "priority": false,
+      "kind": "research",
+      "status": "validation",
+      "acceptanceCriteria": [
+        "候选P(k,t)在所用支持域归一，边界和参数条件明确。",
+        "额外时间积分是否必要有依据；给出成立推导、反例或修正。",
+        "理论值与模拟比较注明有限规模误差，不以图形近似代替证明。"
+      ],
+      "relatedIds": [
+        "network-entropy-q2-node-degree",
+        "network-entropy-q2-effective-diameter",
+        "network-entropy-q1"
+      ],
+      "backgroundEvidence": [
+        "m05467",
+        "m05471"
+      ],
+      "lastDiscussedAt": "2022-04-18",
+      "lastProgressAt": "2022-04-18",
+      "lastArtifactAt": "2022-05-12",
+      "evidenceExcerpts": []
     },
     {
-      "title": "距离复杂度替换结构熵的定义是否成立？",
+      "title": "指定 Wiki 模型的节点度熵及归一化度熵能否推导？",
       "attempts": [
         {
-          "text": "指出原结构熵定理基于度数，全局熵与局部距离复杂度推导不一致。",
+          "text": "提出比较BA与Wiki的结构熵趋势并尝试推导；后续回复称复杂Wiki结构熵还无法推出，只能处理特殊网络。",
+          "evidence": [
+            "m05800",
+            "m05805",
+            "m05810"
+          ]
+        }
+      ],
+      "lastKnown": "2022年所称结构熵主要按节点度概率计算，尚无Wiki模型公式；它与度分布熵不是同一数学对象，也不能与后期编码树结构熵直接混用。",
+      "nextSteps": [
+        "固定节点度概率、方向及标准化上下界，注明历史命名。",
+        "对明确生成模型给出解析式、界或反例，并比较模拟。"
+      ],
+      "evidence": [
+        "m05800",
+        "m05805",
+        "m05810"
+      ],
+      "id": "network-entropy-q2-node-degree",
+      "projectId": "network-entropy",
+      "sourceProjectId": "network-entropy",
+      "topicTitle": "结构熵、度分布熵与网络增长机制",
+      "lastDate": "2022-04-18",
+      "priority": false,
+      "kind": "research",
+      "status": "proposed",
+      "acceptanceCriteria": [
+        "节点概率和归一化定义独立于度频率概率，最小网络可手算。",
+        "说明假设下是否可推导，给出公式或边界，不把另一种熵的拟合算作完成。"
+      ],
+      "relatedIds": [
+        "network-entropy-q2",
+        "network-entropy-q1-trend-audit"
+      ],
+      "backgroundEvidence": [],
+      "lastDiscussedAt": "2022-04-18",
+      "lastProgressAt": null,
+      "lastArtifactAt": null,
+      "evidenceExcerpts": []
+    },
+    {
+      "title": "指定增长模型能否解释 Wiki 有效直径维持在较小范围？",
+      "attempts": [
+        {
+          "text": "明确Wiki有效直径大致在4—5之间，但此前未下“常量”结论；随后要求证明并讨论BA平均路径公式。",
+          "evidence": [
+            "m05654",
+            "m05655",
+            "m05656"
+          ]
+        },
+        {
+          "text": "记录BA标准结构熵模拟过，有效直径尚未算过。",
+          "evidence": [
+            "m06541"
+          ]
+        }
+      ],
+      "lastKnown": "有实测范围与理论任务，未见BA有效直径模拟或该现象证明；平均最短路径公式不能替代有效直径结论。",
+      "nextSteps": [
+        "分别定义有效直径、平均最短路径与普通直径。",
+        "恢复历史网络与候选模型，检验有限规模范围及生成机制。"
+      ],
+      "evidence": [
+        "m05654",
+        "m05655",
+        "m05656",
+        "m06541"
+      ],
+      "id": "network-entropy-q2-effective-diameter",
+      "projectId": "network-entropy",
+      "sourceProjectId": "network-entropy",
+      "topicTitle": "结构熵、度分布熵与网络增长机制",
+      "lastDate": "2022-08-12",
+      "priority": false,
+      "kind": "research",
+      "status": "proposed",
+      "acceptanceCriteria": [
+        "有效直径的分位定义、可达节点对和有向性明确。",
+        "报告多个规模与重复模拟的趋势区间，区分经验稳定、渐近常量和未识别情况。"
+      ],
+      "relatedIds": [
+        "network-entropy-q2",
+        "academic-distance-q1"
+      ],
+      "backgroundEvidence": [],
+      "lastDiscussedAt": "2022-08-12",
+      "lastProgressAt": null,
+      "lastArtifactAt": null,
+      "evidenceExcerpts": []
+    },
+    {
+      "title": "语义距离构造的复杂度能否继承结构熵性质？",
+      "attempts": [
+        {
+          "text": "指出原结构熵定理基于度数，距离复杂度使用局部计算再加权，原有推导不能直接套用。",
           "evidence": [
             "m09801"
           ]
         },
         {
-          "text": "比较Google距离与关联度归一化概率，发现不是简单p和1-p；数值接近不能替代证明。",
+          "text": "讨论距离与关联度权重，计算其归一化并指出不是简单 p 与 1-p 的关系。",
           "evidence": [
             "m09847",
             "m09971"
           ]
         }
       ],
-      "lastKnown": "有数据实验，无证明能把原定理直接推广到语义距离。",
+      "lastKnown": "已有归一化比较与小规模数值观察；现有记录未给出将度数定理推广到语义权重的证明。权重选择和归一化作为同一命题的诊断保留。",
       "nextSteps": [
-        "逐项列出度熵/度分布熵/HT/HP/KQI/距离复杂度定义与单位",
-        "检验非负性、归一性、尺度不变性与理论边界",
-        "用可手算小图对照代码，明确权重应是距离还是关联度"
+        "固定图、权重与概率定义，列出待继承性质。",
+        "用手算小图检验性质，给出证明、反例或成立条件。"
       ],
       "evidence": [
         "m09801",
@@ -3354,28 +4892,45 @@
       "sourceProjectId": "network-entropy-kqi",
       "topicTitle": "网络熵、距离复杂度与KQI",
       "lastDate": "2025-05-09",
-      "priority": false
+      "priority": false,
+      "kind": "research",
+      "status": "validation",
+      "lastDiscussedAt": "2025-05-09",
+      "lastProgressAt": "2025-05-09",
+      "lastArtifactAt": null,
+      "acceptanceCriteria": [
+        "明确两种权重的归一化分母及零值处理。",
+        "对目标性质逐项给出证明、反例或限定条件，并与实现样例一致。",
+        "数值接近不作为定义等价的证明。"
+      ],
+      "relatedIds": [],
+      "backgroundEvidence": [],
+      "evidenceExcerpts": [
+        {
+          "messageId": "m09801",
+          "text": "结构熵是一个全局熵，根据网络中每个点的度数计算的，推导过程提到了随机游走；距离复杂度，是一个局部熵，需要先计算每个点的距离复杂度，再进行加权求和。全局熵和局部熵的结论推导过程应该是不一致的。\n结构熵里面的定理都是根据度数来定义和证明的，用距离来重新定义，不知道成不成立。h2的loglog(n)证明是基于这些定理的。"
+        },
+        {
+          "messageId": "m09847",
+          "text": "在算距离熵或复杂度时，应该用关联度而不是距离吧"
+        },
+        {
+          "messageId": "m09971",
+          "text": "1.距离和相关度不是简单的p和1-p的关系\n比如节点a的距离和=d1+d2,总的距离和记作T，节点a的概率=（d1+d2）/T\n节点a的相关度和=2-d1-d2，总的相关度和记作P=C-T，C为常数，节点a的概率=（2-d1-d2）/P\n这两个概率不是简单的p和1-p的关系\n2.用的昨天的19个类的距离计算的\n\t相关度计算的熵略大于距离计算的熵，都在4左右，差距在0.2以内"
+        }
+      ]
     },
     {
-      "title": "KQI编码树、交叉节点片段与出入度应怎样计算？",
+      "title": "高效 KQI 的 fragment、度数与体积如何一致计算？",
       "attempts": [
         {
-          "text": "拆分多学科节点后网络规模变化，早期算法发现错误重算。",
+          "text": "按论文推导提出 gj、Vi 应取内部体积的理解。",
           "evidence": [
-            "m09728",
-            "m09729"
+            "m09988"
           ]
         },
         {
-          "text": "HT与HP在K=2关系曾长期混淆，后来写出等价证明草稿。",
-          "evidence": [
-            "m09895",
-            "m09924",
-            "m09941"
-          ]
-        },
-        {
-          "text": "2025年6月继续追问fragment、入出度和l的准确含义。",
+          "text": "记录节点与 fragment 的区别、入出度解释及未理解部分，并要求用例子展开公式。",
           "evidence": [
             "m09997",
             "m09998",
@@ -3383,41 +4938,196 @@
           ]
         }
       ],
-      "lastKnown": "最后理论文档上传于2025-07-17但缺附件；定义理解和高效KQI算法仍未闭合。",
+      "lastKnown": "可读定义讨论截至 2025-06-20，仍需核对 fragment、in/out、l 与体积。7 月理论稿属于缺失的后续资料，不能据其缺失断言此后没有解决。节点复制和 K=2 证明分别关联核验任务。",
       "nextSteps": [
-        "优先补回结构熵理论_20250717.docx与原论文",
-        "构造有多来源节点的最小DAG，手工列fragment及编码树",
-        "分别核对有向/无向、内部外部体积与重复计数",
-        "对每个公式建立可复核的数值例子"
+        "用最小多来源 DAG 展开节点、片段、边及公式。",
+        "核对入出度、内部/外部体积与重复计数；取得后续理论稿后更新结论。"
       ],
       "evidence": [
         "m09988",
         "m09997",
-        "m10001"
+        "m09998",
+        "m09999"
       ],
       "id": "network-entropy-kqi-q2",
       "projectId": "network-entropy",
       "sourceProjectId": "network-entropy-kqi",
       "topicTitle": "网络熵、距离复杂度与KQI",
-      "lastDate": "2025-07-17",
-      "priority": true
+      "lastDate": "2025-06-20",
+      "priority": true,
+      "kind": "research",
+      "status": "validation",
+      "lastDiscussedAt": "2025-06-20",
+      "lastProgressAt": "2025-06-20",
+      "lastArtifactAt": "2025-07-17",
+      "acceptanceCriteria": [
+        "同一最小 DAG 列出每个节点、fragment、边、l、in/out 和体积定义。",
+        "公式手算与实现一致，明确有向/无向及内部/外部边口径。",
+        "区分原文明确解释与仍属猜测的片段概率。"
+      ],
+      "relatedIds": [
+        "network-entropy-kqi-q2-node-copy-audit",
+        "network-entropy-kqi-q2-k2-proof-audit"
+      ],
+      "backgroundEvidence": [
+        "m10001"
+      ],
+      "evidenceExcerpts": [
+        {
+          "messageId": "m09988",
+          "text": "按KQI论文这个推导gj，Vi是应该取内部的"
+        },
+        {
+          "messageId": "m09997",
+          "text": "1.Fragments are defined as new nodes created by splitting the node with multiple sources. One Fragment is a part of the node and belongs to only one source at the same time.\n\t节点还是算一个节点，片段有多个。\n2.在知识树中，dv(in)就是节点的入度，dv(out)就是节点的出度。\n\t高效KQI算法中[每个片段连接到节点的概率是1/dv(in)，可能节点的出度入度算上片段的度了]\n3.其他的还没看明白"
+        },
+        {
+          "messageId": "m09998",
+          "text": "看这个第一个公式的定义，用例子把它展开"
+        },
+        {
+          "messageId": "m09999",
+          "text": "l的定义是什么，in，out的定义是什么？"
+        }
+      ]
     },
     {
-      "title": "层次聚类能否恢复Wiki或MAG分类树？",
+      "title": "多学科节点复制与结构熵重算是否正确？",
       "attempts": [
         {
-          "text": "提出用凝聚层次聚类把Wiki/E1200文章组成树，先用Weka做小例子。",
+          "text": "报告上传了旧文档、拆分网络算法有误，正在重算。",
+          "evidence": [
+            "m09728"
+          ]
+        },
+        {
+          "text": "说明交叉学科节点按学科复制，约 8000 万规模网络扩展约两倍并增加计算量。",
+          "evidence": [
+            "m09729"
+          ]
+        }
+      ],
+      "lastKnown": "已记录算法错误与重算启动，本组证据未确认重算完成或验收。数据预处理中的节点复制不等同于 KQI fragment 定义。",
+      "nextSteps": [
+        "恢复复制规则、输入输出及重算版本。",
+        "在手算重叠学科子图验证节点、边与体积计数。"
+      ],
+      "evidence": [
+        "m09728",
+        "m09729"
+      ],
+      "id": "network-entropy-kqi-q2-node-copy-audit",
+      "projectId": "network-entropy",
+      "sourceProjectId": "network-entropy-kqi",
+      "topicTitle": "网络熵、距离复杂度与KQI",
+      "lastDate": "2025-01-22",
+      "priority": false,
+      "kind": "data",
+      "status": "audit",
+      "lastDiscussedAt": "2025-01-22",
+      "lastProgressAt": "2025-01-22",
+      "lastArtifactAt": null,
+      "acceptanceCriteria": [
+        "明确重叠成员如何产生副本、边和权重，报告前后数量。",
+        "小图无重复计数歧义，重算产物绑定代码和输入版本。"
+      ],
+      "relatedIds": [
+        "network-entropy-kqi-q2"
+      ],
+      "backgroundEvidence": [],
+      "evidenceExcerpts": [
+        {
+          "messageId": "m09728",
+          "text": "文档拷贝错了, 发送的是旧版本.\n周一的结果网络拆分算法没算对, 现在进行重新计算\n> Nick Zhang（尼克）: 补充在word文件的什么地方？"
+        },
+        {
+          "messageId": "m09729",
+          "text": "新处理结构熵算法是将多交叉学科节点拷贝到每个学科一个节点, 最初 8000万 的网络规模扩大了2倍左右, 计算量增大, 预计还需要一天时间才能计算完成 OpenAlex 的结构熵"
+        }
+      ]
+    },
+    {
+      "title": "K=2 时 HT 与 H2 的等价证明草稿如何复核？",
+      "attempts": [
+        {
+          "text": "先追问 partition 与 tree 的差别，随后记录将 K=2 理解为不同公式的解释。",
+          "evidence": [
+            "m09895",
+            "m09924"
+          ]
+        },
+        {
+          "text": "4 月 24 日报告 K=2 时 HT 与 H2 相等且证明在文档末，次日重述结论及边界情形。",
+          "evidence": [
+            "m09941",
+            "m09948"
+          ]
+        }
+      ],
+      "lastKnown": "已有等价证明的阶段报告，应保留该进展。当前核验具体证明、符号与适用条件，不再将该子题写成全无答案。",
+      "nextSteps": [
+        "定位确切证明版本并逐式检查。",
+        "以 K=2 编码树手算对照 H2 和实现。"
+      ],
+      "evidence": [
+        "m09895",
+        "m09924",
+        "m09941",
+        "m09948"
+      ],
+      "id": "network-entropy-kqi-q2-k2-proof-audit",
+      "projectId": "network-entropy",
+      "sourceProjectId": "network-entropy-kqi",
+      "topicTitle": "网络熵、距离复杂度与KQI",
+      "lastDate": "2025-04-25",
+      "priority": false,
+      "kind": "verification",
+      "status": "audit",
+      "lastDiscussedAt": "2025-04-25",
+      "lastProgressAt": "2025-04-25",
+      "lastArtifactAt": null,
+      "acceptanceCriteria": [
+        "明确稿件版本、K=2、树/划分、体积和边界条件。",
+        "逐式核验与小图数值可复算；发现错误则记录具体步骤。"
+      ],
+      "relatedIds": [
+        "network-entropy-kqi-q2"
+      ],
+      "backgroundEvidence": [],
+      "evidenceExcerpts": [
+        {
+          "messageId": "m09895",
+          "text": "按partition P算的HP和按照tree T算的HT有啥不同？"
+        },
+        {
+          "messageId": "m09924",
+          "text": "论文中假设每个图G都是有层次结构T，从二维推广到K维，在二维HP里面只用到T里面根节点下面一层的模块P，在高维HK用到了整个层次结构T。一维H1就是普通的香农熵，统计度数或体积；二维HP就是需要分模块，计算模块内和模块外两部分的熵；K维HT需要编码树T，T有K层，K>=2，HT的计算公式只有一项，sigma[-gα/V*log(vα/vα-)]，gα表示从Tα中的节点到Tα外的节点的度数或体积，α表示编码树中不属于根节点的任意一个节点，遍历了整棵树T。当K=2时编码树T根节点下下面一层就是模块P，但是HT是根据T来计算的，只有一项，和HP计算的不一样。"
+        },
+        {
+          "messageId": "m09941",
+          "text": "1.K=2时，高维结构熵HT和二维结构熵H2相等，证明见文档最后"
+        },
+        {
+          "messageId": "m09948",
+          "text": "这个文档证明了，K=2的高维结构熵和二维结构熵是一样的；二维熵和一维熵在gj=0或gj=vj也是相等的。K>3的高维结构熵，模块之间是分层的，二维熵模块就一层，两者算出来的数值肯定是不一样的。"
+        }
+      ]
+    },
+    {
+      "title": "层次聚类所得树与 Wiki/MAG 分类结构有多一致？",
+      "attempts": [
+        {
+          "text": "提出用凝聚层次聚类组成 Wiki/E1200 文章树，并要求先用 Weka 试几个例子。",
           "evidence": [
             "m09969",
             "m09970"
           ]
         }
       ],
-      "lastKnown": "仅有任务指示，未见结果。",
+      "lastKnown": "现有证据只有任务指示，未见小例子或全量实验结果；需先明确多父分类与聚类树的比较规则。",
       "nextSteps": [
-        "先选同节点的小型学科子集",
-        "比较平均/完全/单连接与结构熵最小化编码树",
-        "用已知分类树及外部标签检验"
+        "固定同节点子集及参照分类，说明树化或直接比较规则。",
+        "预先确定评价指标后执行基线，连接法仅作可选对照。"
       ],
       "evidence": [
         "m09969",
@@ -3428,36 +5138,68 @@
       "sourceProjectId": "network-entropy-kqi",
       "topicTitle": "网络熵、距离复杂度与KQI",
       "lastDate": "2025-05-08",
-      "priority": false
+      "priority": false,
+      "kind": "research",
+      "status": "proposed",
+      "lastDiscussedAt": "2025-05-08",
+      "lastProgressAt": null,
+      "lastArtifactAt": null,
+      "acceptanceCriteria": [
+        "明确相同节点、参照版本及多父节点处理。",
+        "交付可重跑结果、预先声明的一致性指标和错误案例。"
+      ],
+      "relatedIds": [],
+      "backgroundEvidence": [],
+      "evidenceExcerpts": [
+        {
+          "messageId": "m09969",
+          "text": "@NYB 下一步做这个工作，但也要结合结构熵的方法论:\n用层次聚类把Wiki，E1200的所有文章通过凝聚组成树状图，理想目标是结果树状图类似与wiki或MAG的分类树。\n> Nick Zhang（尼克）: @NYB 你看下这个：https://zh.wikipedia.org/wiki/%E5%B1%82%E6%AC%A1%E8%81%9A%E7%B1%BB"
+        },
+        {
+          "messageId": "m09970",
+          "text": "@NYB 先尝试用weka试试几个例子。明中午我进来时，汇报下。然后决定如何进步"
+        }
+      ]
     },
     {
-      "title": "增长拟合的经验效果能否得到一致的机制解释？",
+      "title": "知识增长拟合、派生比值与时间口径能否保持一致？",
       "attempts": [
         {
-          "text": "尝试1/ln、对数积分、xlnx、线性和多项式，并要求比值必须由基础量公式推出。",
+          "text": "记录增长公式和候选趋势，要求比值由基础量公式推出。",
           "evidence": [
             "m03511",
             "m05110",
+            "m05123",
             "m05125"
           ]
         },
         {
-          "text": "对新月份数据进行预测核验，并与官网作者、编辑数比对。",
+          "text": "新增后续 Wiki 数据验证；核对官网作者和编辑数，并说明总字数统计差异。",
           "evidence": [
             "m05606",
             "m06157"
           ]
+        },
+        {
+          "text": "上传演化稿件，后要求把季度改为月并重写总结。",
+          "evidence": [
+            "m06122",
+            "m06593"
+          ]
         }
       ],
-      "lastKnown": "本期有成套经验拟合和验证记录；分类增长、长度、常量物理含义与时间单位曾多次修改，尚不能作为统一理论结论。",
+      "lastKnown": "已有经验拟合、后续数据核验和统计口径说明；最新是时间单位修订要求。需要复算基础量与派生量一致性，不能把它们升级为统一机制研究的历史任务。",
       "nextSteps": [
-        "固定数据快照、时间单位和长度定义，保存可复算数据。",
-        "区分训练拟合与未来月份验证，报告候选模型的残差和样本外误差。",
-        "重新检查总量、均值、比值公式之间的一致性。"
+        "固定快照、时间单位与长度等统计定义。",
+        "区分训练拟合、后续月份验证和派生比值的一致性。"
       ],
       "evidence": [
+        "m03511",
+        "m05110",
         "m05123",
         "m05125",
+        "m05606",
+        "m06157",
         "m06122",
         "m06593"
       ],
@@ -3466,39 +5208,82 @@
       "sourceProjectId": "wiki-evolution",
       "topicTitle": "Wikipedia 历史重建与知识增长",
       "lastDate": "2022-08-19",
-      "priority": false
+      "priority": false,
+      "kind": "research",
+      "status": "validation",
+      "lastDiscussedAt": "2022-08-19",
+      "lastProgressAt": "2022-06-29",
+      "lastArtifactAt": "2022-06-22",
+      "acceptanceCriteria": [
+        "基础与派生量共享明确口径，均能由数据和公式复算。",
+        "报告残差、样本外误差、常数调整与拟合区间。",
+        "新增机制解释与历史实证拟合分开标注。"
+      ],
+      "relatedIds": [],
+      "backgroundEvidence": [],
+      "evidenceExcerpts": [
+        {
+          "messageId": "m05123",
+          "text": "用边和文章的公式进行拟合，和原来用数据拟合的差了6.8的上下位移，加了个6.8常数把曲线往下降，这几条曲线就很接近了。公式的话不太好化简。"
+        },
+        {
+          "messageId": "m05125",
+          "text": "必须得用公式推出，否则所有拟合都没有意义"
+        },
+        {
+          "messageId": "m05606",
+          "text": "新增了wiki最新数据对拟合曲线的数据验证；wiki引用MAG论文数据的拟合。"
+        },
+        {
+          "messageId": "m06157",
+          "text": "作者数、编辑数都和wiki官网数据对应上了，总字数是统计的方式不一样，文档里都描述了"
+        },
+        {
+          "messageId": "m06593",
+          "text": "那你把季度的改成月的，把总结重新写一下"
+        }
+      ]
     },
     {
-      "title": "文章长度是否服从对数正态分布，早期与成熟期是否不同？",
+      "title": "文章长度是否服从对数正态分布，年代差异如何检验？",
       "attempts": [
         {
-          "text": "2022年1—5月尝试固定宽度、双对数和单对数图，仍明确称没有结论。",
+          "text": "比较单对数与双对数分布图，并指出 words 与 bytes 的口径区别。",
           "evidence": [
             "m05338",
-            "m05428",
-            "m06002",
-            "m06005"
+            "m05428"
           ]
         },
         {
-          "text": "8月改用指数区间分箱，图形更接近正态，补算早期和逐年比例。",
+          "text": "重新提出对数正态问题；8 月采用指数分箱并记录概念疑问，计算逐年比例、更新图和细分箱。",
           "evidence": [
+            "m06002",
             "m06459",
             "m06466",
             "m06485",
             "m06498"
           ]
+        },
+        {
+          "text": "要求将对数正态内容加入文稿。",
+          "evidence": [
+            "m06527"
+          ]
         }
       ],
-      "lastKnown": "截至8月图已上线并要求写入文稿，消息仍提示理论概念不清楚，缺少正式分布检验。",
+      "lastKnown": "已有分布图与逐年比例结果；8 月 3 日仍质疑分箱转换的理论含义，未见正式分布检验。不使用仅“嗯”的答复支持具体判断。",
       "nextSteps": [
-        "在原始长度样本上比较对数正态、幂律、截断幂律等模型。",
-        "避免用对数分箱后柱高直接判断正态；核对频数与概率密度。",
-        "对2007年前后分别检验并说明字符、单词、bytes差异。"
+        "固定原始长度单位与年代分界。",
+        "正确归一化分箱密度，做参数估计、模型比较和年代差异检验。"
       ],
       "evidence": [
+        "m05338",
+        "m05428",
+        "m06002",
         "m06459",
+        "m06466",
         "m06485",
+        "m06498",
         "m06527"
       ],
       "id": "wiki-evolution-q2",
@@ -3506,13 +5291,51 @@
       "sourceProjectId": "wiki-evolution",
       "topicTitle": "Wikipedia 历史重建与知识增长",
       "lastDate": "2022-08-10",
-      "priority": false
+      "priority": false,
+      "kind": "research",
+      "status": "validation",
+      "lastDiscussedAt": "2022-08-10",
+      "lastProgressAt": "2022-08-05",
+      "lastArtifactAt": "2022-08-05",
+      "acceptanceCriteria": [
+        "明确样本、单位、零长度及年代分组。",
+        "报告候选模型参数、不确定性与拟合检验。",
+        "不能以分箱后看起来正态代替统计结论。"
+      ],
+      "relatedIds": [],
+      "backgroundEvidence": [],
+      "evidenceExcerpts": [
+        {
+          "messageId": "m05338",
+          "text": "wiki文章长度分布不是正态分布，像1/x的"
+        },
+        {
+          "messageId": "m05428",
+          "text": "文章长度的分布，最开始取了双对数，也不是幂律的，向下弯的。\nx轴取了单对数，最左边的图（2000字数以内的分布）才有点像正态分布。"
+        },
+        {
+          "messageId": "m06459",
+          "text": "y轴表示文章数\nx=32表示字数在[0,32)\nx=64表示字数在[32,64)\n这样画图和论文中的图对上了，很正态分布。但是对数正态是不是这样转换的，理论概念还不清楚"
+        },
+        {
+          "messageId": "m06466",
+          "text": "文章长度对数正态-按年的比例(其他几年的还在算)。可以看出随时间字数少的文章比例变少，曲线整体也会右偏。"
+        },
+        {
+          "messageId": "m06485",
+          "text": "文章长度的对数正态图也更新好了 https://wiki.nikepai.com/wikipedia-build/articleLength"
+        },
+        {
+          "messageId": "m06527",
+          "text": "@NYB 把对数正态加到文件里"
+        }
+      ]
     },
     {
-      "title": "Koomey外推何时达到Landauer极限，量纲和外推是否可靠？",
+      "title": "明确量纲与擦除假设后，Koomey 外推和 Landauer 下限如何比较？",
       "attempts": [
         {
-          "text": "尝试用修正曲线推到原Koomey2050年的同一数值，得到2113/2115年前后估计。",
+          "text": "比较修正曲线与原 Koomey 曲线 2050 年数值，得到约 2113/2115 年的条件估计。",
           "evidence": [
             "m04707",
             "m04708",
@@ -3520,24 +5343,35 @@
           ]
         },
         {
-          "text": "随即质疑倍增/减半时间、能量与功率TDP、算力与每秒算力的口径。",
+          "text": "随即追问能量、TDP 功率、算力与速率、减半时间，并观察曲线后期更平。",
           "evidence": [
             "m04722",
             "m04723",
             "m04725",
             "m04726"
           ]
+        },
+        {
+          "text": "提到 Landauer 每 bit 擦除的最小能量，要求定量公式。",
+          "evidence": [
+            "m04734",
+            "m04740"
+          ]
         }
       ],
-      "lastKnown": "本期未记录这些质疑已充分解决；2115只能列为当时待核实估计，不是确定预测。",
+      "lastKnown": "估计依赖拟合与比较口径，量纲及操作到 bit 擦除的假设仍需核验。2115 只是当时的条件估计，不是确定预测。",
       "nextSteps": [
-        "逐一列出能量、功率、运算次数、运算速率单位。",
-        "恢复原始样本和拟合参数、基准年份，再复算减半时间。",
-        "将Landauer每bit擦除下限与实际benchmark能耗之间的假设写清。"
+        "恢复样本、基准年与拟合参数，核对全部单位。",
+        "写明操作到擦除的映射，复算外推并做敏感性分析。"
       ],
       "evidence": [
+        "m04707",
+        "m04708",
+        "m04717",
         "m04722",
+        "m04723",
         "m04725",
+        "m04726",
         "m04734",
         "m04740"
       ],
@@ -3546,57 +5380,143 @@
       "sourceProjectId": "computing-growth",
       "topicTitle": "摩尔定律、Koomey定律与算力增长",
       "lastDate": "2021-09-24",
-      "priority": false
+      "priority": false,
+      "kind": "research",
+      "status": "validation",
+      "lastDiscussedAt": "2021-09-24",
+      "lastProgressAt": "2021-09-23",
+      "lastArtifactAt": null,
+      "acceptanceCriteria": [
+        "单位转换和 benchmark 到擦除下限的假设显式、可复算。",
+        "报告参数与适用区间，允许条件下无可靠交点。",
+        "以口径一致和边界明确验收，不以得到特定年份为准。"
+      ],
+      "relatedIds": [],
+      "backgroundEvidence": [],
+      "evidenceExcerpts": [
+        {
+          "messageId": "m04707",
+          "text": "文章中我加了一句话：\n“按照原始Koomey定律的曲线，到2050年左右，就会达到Landauer极限，从而Koomey定律彻底失效。按照尼克定律修正的能耗曲线，这个时间会推迟的更远。”\n我需要帮我算一下，尼克定律何时达到Landauer极限。其实可以简单算一下按照Koomey定律（每1.57年降一倍）在2050年的的值，尼克定律（你那个拟合曲线，C^(t/lnt)  ）何时达到，就可以了。"
+        },
+        {
+          "messageId": "m04708",
+          "text": "拟合曲线大概2113年到达Koomey定律（每1.57年降一倍）在2050年的的值"
+        },
+        {
+          "messageId": "m04717",
+          "text": "那这个也用0.5表示，y=A*0.5^((year-2021)/1.57),A是2021年的值，拟合曲线大概是2115年左右到达2050年的Koomey的值\n> Nick Zhang（尼克）: Koomey定律公式怎么表示？"
+        },
+        {
+          "messageId": "m04722",
+          "text": "还有Koomey定律的纵坐标是能量和算力的关系，而不是功率和算力的关系。TDP是功率而不是能量。功率=能量/时间。这个有没有关系？"
+        },
+        {
+          "messageId": "m04723",
+          "text": "我们算的是算力/秒，还是算力？"
+        },
+        {
+          "messageId": "m04725",
+          "text": "如果到2115年，这个图就不太对了。现在已经是5年了，那至少把这个时间要延长得更多啊？你能核实一下吗？"
+        },
+        {
+          "messageId": "m04726",
+          "text": "看了拟合曲线越往后越平（直），到2115年大概也才6年减半，拟合曲线现在2010-2021大概都是4年左右减半。"
+        },
+        {
+          "messageId": "m04734",
+          "text": "@NYB @Lu飞 把Koomey定律吃吃透，我觉得这是个方向。能耗和算力的关系，这是个本质问题。Landauer原理定义了擦掉一个bit所需的最小能量。"
+        },
+        {
+          "messageId": "m04740",
+          "text": "所以我们要有个定量的东西，公式，可以更精准地预测Koomey定律失效（即达到Landauer下限）的时间点。"
+        }
+      ]
     },
     {
-      "title": "SPECint与多核性能比较应如何界定？",
+      "title": "所用 SPECint 数据与多核比较的口径是否匹配？",
       "attempts": [
         {
-          "text": "用ax/lnx+b拟合，后期拟合不足。",
+          "text": "记录 ax/lnx+b 拟合及近期拟合不足，提出对数幂次修正。",
           "evidence": [
             "m05631",
-            "m05644"
+            "m05644",
+            "m05726"
           ]
         },
         {
-          "text": "考虑加ln幂次修正，后又发现该benchmark按单核单线程解释，与多核性能比较不同。",
+          "text": "引用 SPECint2006 单 CPU/核说明，并提出原比较未区分单核单线程和多核性能。",
           "evidence": [
-            "m05726",
             "m05729",
             "m05730",
             "m05731"
           ]
         }
       ],
-      "lastKnown": "本期有图和方法讨论，未见完成一个新的SPECint论证。",
+      "lastKnown": "原讨论已提出单核与多核不可直接比较的阶段澄清。剩余事项是核验所用具体版本与运行口径，不因缺少新论文就维持全无答案的研究状态。",
       "nextSteps": [
-        "固定所用SPEC版本、speed/rate、核心和线程配置。",
-        "将单核性能研究与系统并行性能分开报告。"
+        "定位数据来源与 SPEC 版本、speed/rate、核线程、编译配置。",
+        "据真实口径标注图表并界定旧比较范围。"
       ],
       "evidence": [
+        "m05631",
+        "m05644",
         "m05726",
-        "m05730"
+        "m05729",
+        "m05730",
+        "m05731"
       ],
       "id": "computing-growth-q2",
       "projectId": "computing-growth",
       "sourceProjectId": "computing-growth",
       "topicTitle": "摩尔定律、Koomey定律与算力增长",
       "lastDate": "2022-04-11",
-      "priority": false
+      "priority": false,
+      "kind": "data",
+      "status": "audit",
+      "lastDiscussedAt": "2022-04-11",
+      "lastProgressAt": "2022-04-11",
+      "lastArtifactAt": null,
+      "acceptanceCriteria": [
+        "每组数据具有版本、speed/rate、核线程、配置与出处。",
+        "单核和系统吞吐分别报告，明确可保留、撤回或重算的旧比较。"
+      ],
+      "relatedIds": [],
+      "backgroundEvidence": [],
+      "evidenceExcerpts": [
+        {
+          "messageId": "m05631",
+          "text": "最近几年的太弯了，有点拟合不上"
+        },
+        {
+          "messageId": "m05644",
+          "text": "现在就是按 y=ax/lnx+b 拟合的"
+        },
+        {
+          "messageId": "m05726",
+          "text": "@NYB 能不能用（x/（lnx）^c)来拟合SPECint，c=2或c=3.\n\n原因是集成电路密度如果是x/lnx的话，在我文章中还提到了算法的并行加速的损失，一般是lnx或者（lnx）^2.\n\n有人在知乎上也提到：\n问题还特别提到了SPECint。和fp相比，一般认为int benchmarks的并行度更低，分支更多，数据访问更加不规则，所以更难被通用的编译优化算法或者并行化大幅提升性能。"
+        },
+        {
+          "messageId": "m05730",
+          "text": "SPECint测的就是单核单线程的性能。所以那篇文章的结论不可比。"
+        },
+        {
+          "messageId": "m05731",
+          "text": "所以这样比较是没有意思的，因为现在性能都是多核多线程，即使排序这样基本的算法也是并行算法的。看八个核里一个核的性能改进，不太对。这恰恰说明单核性能提升已经到头了。"
+        }
+      ]
     },
     {
-      "title": "为什么不同语料的压缩结果近线性，怎样证明代码更难压缩？",
+      "title": "跨语料可压缩性的规模关系与差异能否复现？",
       "attempts": [
         {
-          "text": "比较gzip/bz/xz的零/随机文件，发现不同算法与输入结构导致不同时间和压缩趋势。",
+          "text": "比较零文件压后体积，观察 gzip 分段近线性与 bz/xz 更像 log，分块机制仍未明确。",
           "evidence": [
-            "m08795",
             "m08908",
             "m08911"
           ]
         },
         {
-          "text": "观察JDK/java/class/Wiki交点随大小变化，早期文字结论与图相互矛盾后要求重算。",
+          "text": "记录 Wiki/java/class 交点和重复压缩，文字排序与图的解释不一致后要求扩大样本。",
           "evidence": [
             "m08933",
             "m08934",
@@ -3605,25 +5525,41 @@
           ]
         },
         {
-          "text": "重新考虑文件切割顺序、大小、注释与冗余空格，发现代码分布近幂律。",
+          "text": "比较按文件大小与文件名的顺序，讨论注释与切割；报告 JDK java 近线性和 JDK/Maven class 差异未解释。",
           "evidence": [
             "m08989",
             "m08991",
             "m09000",
             "m09032"
           ]
+        },
+        {
+          "text": "2025 年重提压缩率规模关系，并继续追问代码更难压缩的依据。",
+          "evidence": [
+            "m10004",
+            "m10005",
+            "m10007"
+          ]
         }
       ],
-      "lastKnown": "最后明确追问在2025-10-10，仍无已完成的统一解释。",
+      "lastKnown": "已有需核对的规模曲线和语料差异，2025 年重提但未见新的受控实验报告。压后体积与语料比较同组验收；耗时和文件分布分别归关联事项。",
       "nextSteps": [
-        "恢复相同机器、算法版本、压缩级别和原始语料清单",
-        "同时报告原长/压后与压后/原长，避免压缩率方向混乱",
-        "按固定bytes长度采样，区分压缩后大小、比例、时间三条曲线",
-        "检验分块窗口、文件拼接顺序、注释和编码的影响"
+        "固定语料、算法版本、级别、bytes 长度与拼接规则复现。",
+        "检验体积规模关系与跨语料差异，控制编码、注释和窗口。"
       ],
       "evidence": [
         "m08908",
+        "m08911",
+        "m08933",
+        "m08934",
+        "m08935",
+        "m08940",
+        "m08989",
+        "m08991",
+        "m09000",
         "m09032",
+        "m10004",
+        "m10005",
         "m10007"
       ],
       "id": "software-compression-q1",
@@ -3631,66 +5567,343 @@
       "sourceProjectId": "software-compression",
       "topicTitle": "软件复用、JDK调用与跨语料压缩实验",
       "lastDate": "2025-10-10",
-      "priority": true
+      "priority": true,
+      "kind": "research",
+      "status": "replication",
+      "lastDiscussedAt": "2025-10-10",
+      "lastProgressAt": "2024-06-20",
+      "lastArtifactAt": null,
+      "acceptanceCriteria": [
+        "原长、压后 bytes 和比例定义明确，耗时不混入压缩率。",
+        "相同规模和算法条件下，数据、图表和文字排序一致。",
+        "报告差异成立范围，允许代码并非总更难压缩。"
+      ],
+      "relatedIds": [
+        "software-compression-q1-runtime-audit",
+        "software-compression-q2-file-size-distribution"
+      ],
+      "backgroundEvidence": [],
+      "evidenceExcerpts": [
+        {
+          "messageId": "m08908",
+          "text": "1.gzip头部无明显log趋势，可以看成是几段斜率不一样的直线的趋势（xz压缩头部更像是log）。\n2.线性趋势的原因还未找到\n\t滑动窗口大小32k，目前压缩的纯0文件大小在此范围内，所以排除滑动窗口的影响，显示2000bit(0.25k)之前是一条直线；2000bit之后（测试数据到12万bit=14.6k）又是另一条斜率更小(压缩率大)的直线。\n\tblock分块原理未明确(原文：The compressor terminates a block when it determines that starting a new block with fresh trees would be useful, or when the block size fills up the compressor's block buffer.)。但是32k数据分不了多少块，所以分块对32k数据内的线性趋势可能影响不大，即块内就呈线性趋势（0.25k之后是一整条直线，斜率不变）。\n\t可能lz77+哈夫曼这种组合方式的压缩趋势就是线性的"
+        },
+        {
+          "messageId": "m08911",
+          "text": "bz/xz还是像log的"
+        },
+        {
+          "messageId": "m08934",
+          "text": "所以结论是class比java难压，java比Wiki难压"
+        },
+        {
+          "messageId": "m08935",
+          "text": "图中结论是class比java难压，wiki比java难压"
+        },
+        {
+          "messageId": "m08991",
+          "text": "注释规律性可能没有冗余强，一个文件的注释可大可小，随机性很大。可能和文件切割的顺序也有关系。github项目结果出来可以一起比较下。上面那个ROWS其实是文件数。"
+        },
+        {
+          "messageId": "m09032",
+          "text": "2.jdk java文件按之前的切割方式基本符合github项目的压缩规律，基本都是线性的。\n3.jdk class切割 比maven项目的class更难压缩，暂时还没解释。"
+        },
+        {
+          "messageId": "m10004",
+          "text": "我们原来比较压缩时，有没有比较过不同文本的压缩率随文本大小的变化？应该不是线性的吧？"
+        },
+        {
+          "messageId": "m10007",
+          "text": "怎么提现代码更难压缩？"
+        }
+      ],
+      "sections": [
+        {
+          "title": "压后体积的规模关系",
+          "lastKnown": "已有不同算法和区间的趋势观察，分块解释需验证。",
+          "evidence": [
+            "m08908",
+            "m08911",
+            "m09032"
+          ],
+          "acceptanceCriteria": [
+            "发布相同输入构造、级别下压后 bytes 对输入 bytes 的曲线及残差。"
+          ],
+          "lastDiscussedAt": "2025-10-10"
+        },
+        {
+          "title": "代码与自然语言对照",
+          "lastKnown": "文字与图的历史排序冲突仍需复现。",
+          "evidence": [
+            "m08933",
+            "m08934",
+            "m08935",
+            "m08940",
+            "m08991",
+            "m09000",
+            "m09032",
+            "m10007"
+          ],
+          "acceptanceCriteria": [
+            "统一规模、编码和拼接后复现排序，并说明改变条件时是否成立。"
+          ],
+          "lastDiscussedAt": "2025-10-10"
+        }
+      ]
     },
     {
-      "title": "软件复用理论与程序调用层次如何量化？",
+      "title": "压缩耗时随规模和输入结构的关系是否复现？",
       "attempts": [
         {
-          "text": "阅读Software Libraries and Their Reuse并研究lambda幂律；JDK/Linux调用抽取受宏、多架构和同名文件影响。",
+          "text": "用零和随机文件测试 gz/bz/xz 耗时并报告近线性；古登堡语料超过 12 小时未结束，超出先前最差情形估计。",
           "evidence": [
-            "m08494",
-            "m08570",
-            "m08688",
-            "m08703",
-            "m09026"
+            "m08795"
           ]
         }
       ],
-      "lastKnown": "有数据和讲解资料，但理论公式理解、调用图可信度与压缩关系未形成可验证结论。",
+      "lastKnown": "已有特定输入耗时基准及长耗时反例；不能把零/随机样本称为通用最差耗时，耗时斜率也不是压后体积趋势。",
       "nextSteps": [
-        "先在可完全编译的小项目验证真实调用图",
-        "分离文件大小分布、复用度与调用深度",
-        "再考虑结构熵/Kolmogorov近似与软件复用假设"
+        "固定机器、版本、级别及语料，独立记录耗时和内存。",
+        "复核零、随机和古登堡的重复基准及超时。"
+      ],
+      "evidence": [
+        "m08795"
+      ],
+      "id": "software-compression-q1-runtime-audit",
+      "projectId": "software-compression",
+      "sourceProjectId": "software-compression",
+      "topicTitle": "软件复用、JDK调用与跨语料压缩实验",
+      "lastDate": "2024-04-17",
+      "priority": false,
+      "kind": "engineering",
+      "status": "audit",
+      "lastDiscussedAt": "2024-04-17",
+      "lastProgressAt": "2024-04-17",
+      "lastArtifactAt": null,
+      "acceptanceCriteria": [
+        "报告 CPU/墙钟时间、规模单位、配置、级别及重复次数。",
+        "保留超时与离群记录，耗时独立于压缩率展示。"
+      ],
+      "relatedIds": [
+        "software-compression-q1"
+      ],
+      "backgroundEvidence": [],
+      "evidenceExcerpts": [
+        {
+          "messageId": "m08795",
+          "text": "gz,bz,xz 三种压缩格式的压缩时间（y）与文件大小（x）之间存在线性关系，\n斜率（系数）的大小随文件压缩性变化。\n\n我设计了一个测试方法\n填充随机内容的文件和填充零的文件，测试压缩消耗的时间,\n最终得到如下结果\n\ngz（Gzip）：\n最差情况下的压缩效率：y = 0.03x\n最好情况下的压缩效率：y = 0.01x\n以1GB的文件为例：\n最差情况下的压缩时间： 30.72秒\n最好情况下的压缩时间： 10.24秒\n\nbz（Bzip2）：\n最差情况下的压缩效率：y = 0.17x\n最好情况下的压缩效率：y = 0.01x\n以1GB的文件为例：\n最差情况下的压缩时间： 174.08秒\n最好情况下的压缩时间： 10.24秒\n\nxz（Xz）：\n最差情况下的压缩效率：y = 0.51x\n最好情况下的压缩效率：y = 0.02x\n以1GB的文件为例：\n最差情况下的压缩时间： 522.24秒\n最好情况下的压缩时间： 20.48秒\n\n"
+        },
+        {
+          "messageId": "m08795",
+          "text": "3. 纯随机文件不是压缩最耗时的，特定类型结构的文件，压缩会更耗时，这部分还需要更进一步测试。\n\n古登堡书籍约30GB大小，压缩超过12小时还没有结束， 超过了上述测试的最差情况"
+        }
+      ]
+    },
+    {
+      "title": "软件复用与调用层次能否形成可测量的复杂度模型？",
+      "attempts": [
+        {
+          "text": "记录软件可重用公式尚未理解。",
+          "evidence": [
+            "m08494"
+          ]
+        },
+        {
+          "text": "在无循环调用假设下，提出层次对熵/Kolmogorov 的影响和底层是否为基本压缩单元的指标设想。",
+          "evidence": [
+            "m08570"
+          ]
+        }
+      ],
+      "lastKnown": "已有公式理解问题与量化设想，未见对应测量模型或实验结果。文件分布与调用图准确性分别验收，不再共用未解决状态。",
+      "nextSteps": [
+        "将理论符号、单位与假设映射为可观测量。",
+        "用无循环小程序定义复用、层次及复杂度的对照。"
       ],
       "evidence": [
         "m08494",
-        "m08570",
-        "m09026"
+        "m08570"
       ],
       "id": "software-compression-q2",
       "projectId": "software-compression",
       "sourceProjectId": "software-compression",
       "topicTitle": "软件复用、JDK调用与跨语料压缩实验",
-      "lastDate": "2024-06-19",
-      "priority": false
+      "lastDate": "2024-02-01",
+      "priority": false,
+      "kind": "research",
+      "status": "proposed",
+      "lastDiscussedAt": "2024-02-01",
+      "lastProgressAt": null,
+      "lastArtifactAt": null,
+      "acceptanceCriteria": [
+        "每个理论量都有代码对象、单位和适用限制。",
+        "交付手算小程序及可复算指标，允许否定底层即基本压缩单元的设想。"
+      ],
+      "relatedIds": [
+        "software-compression-q2-file-size-distribution",
+        "software-compression-q2-call-graph-audit",
+        "software-compression-q1"
+      ],
+      "backgroundEvidence": [],
+      "evidenceExcerpts": [
+        {
+          "messageId": "m08494",
+          "text": "软件可重用的公式还没想明白"
+        },
+        {
+          "messageId": "m08570",
+          "text": "引用或者调用的层次对熵或者kolmogorov的影响有多大？假设没有循环引用，就只有层次调用了，是不是最底层（就是只被别人调而自己从不调别人的）是不是压缩的最基本单元？这个能算个具体指标吗？Wikipedia里也有类似问题"
+        }
+      ]
     },
     {
-      "title": "如何减少地图样本偏倚并区分缺失与真实迁徙？",
+      "title": "项目文件大小分布是否更符合 λ-幂律？",
       "attempts": [
         {
-          "text": "科学家用职业与距离双过滤；书籍尝试country字段和正文提取位置。",
+          "text": "从近幂律观察出发，提出与多一个 log 修正的 λ-幂律比较。",
           "evidence": [
-            "m09798",
+            "m09026"
+          ]
+        },
+        {
+          "text": "报告 C、Python、Go 项目已做分布，斜率约 -1。",
+          "evidence": [
+            "m09032"
+          ]
+        }
+      ],
+      "lastKnown": "已有跨语言文件分布观察，近似斜率不等于 λ-幂律获证，未见正式候选分布比较。",
+      "nextSteps": [
+        "恢复文件级原始 bytes 和仓库版本，统一文件选择规则。",
+        "比较幂律、λ-幂律与适当替代模型，报告区间与不确定性。"
+      ],
+      "evidence": [
+        "m09026",
+        "m09032"
+      ],
+      "id": "software-compression-q2-file-size-distribution",
+      "projectId": "software-compression",
+      "sourceProjectId": "software-compression",
+      "topicTitle": "软件复用、JDK调用与跨语料压缩实验",
+      "lastDate": "2024-06-20",
+      "priority": false,
+      "kind": "research",
+      "status": "validation",
+      "lastDiscussedAt": "2024-06-20",
+      "lastProgressAt": "2024-06-20",
+      "lastArtifactAt": null,
+      "acceptanceCriteria": [
+        "样本对象、版本、文件政策、分箱和密度定义明确。",
+        "提供估计区间与模型比较，不只靠对数图斜率认定。"
+      ],
+      "relatedIds": [
+        "software-compression-q2",
+        "software-compression-q1"
+      ],
+      "backgroundEvidence": [],
+      "evidenceExcerpts": [
+        {
+          "messageId": "m09026",
+          "text": "基本是幂律，再看看是不是更加符合software-lib文章中定义的λ-幂律，就是比正常幂律还差一个log"
+        },
+        {
+          "messageId": "m09032",
+          "text": "1.c、python、go项目也做了分布，基本符合幂律，斜率基本都在-1上下。"
+        }
+      ]
+    },
+    {
+      "title": "宏、多架构与同名头文件下的调用图是否准确？",
+      "attempts": [
+        {
+          "text": "说明静态抽取包含各设备实现，而实际编译由宏选择，导致分析中一对多调用。",
+          "evidence": [
+            "m08688"
+          ]
+        },
+        {
+          "text": "统计同名头文件多映射和受影响 C 文件比例，随后有人对总误差解释提出异议。",
+          "evidence": [
+            "m08699",
+            "m08703"
+          ]
+        }
+      ],
+      "lastKnown": "已定位构建配置与头文件解析风险。85% 是原文统计的受影响 C 文件比例，不能直接当作调用边错误率；仍需金标准核验。",
+      "nextSteps": [
+        "固定可编译项目和构建配置，保留编译数据库。",
+        "与人工或编译器参考图比较 include 解析和调用边。"
+      ],
+      "evidence": [
+        "m08688",
+        "m08699",
+        "m08703"
+      ],
+      "id": "software-compression-q2-call-graph-audit",
+      "projectId": "software-compression",
+      "sourceProjectId": "software-compression",
+      "topicTitle": "软件复用、JDK调用与跨语料压缩实验",
+      "lastDate": "2024-03-14",
+      "priority": false,
+      "kind": "engineering",
+      "status": "audit",
+      "lastDiscussedAt": "2024-03-14",
+      "lastProgressAt": "2024-03-14",
+      "lastArtifactAt": null,
+      "acceptanceCriteria": [
+        "架构、宏、解析规则明确，受影响文件数与错误边数分开。",
+        "标注样本报告调用边 precision/recall、错误类型及构建来源。"
+      ],
+      "relatedIds": [
+        "software-compression-q2"
+      ],
+      "backgroundEvidence": [],
+      "evidenceExcerpts": [
+        {
+          "messageId": "m08688",
+          "text": "linksin 数量/linksout 数量=7.2， 这种一对多的关系\nlinux kernel  函数调用有一对多的对应情况，比如一个函数有在不同的设备上有不同的实现， 真正的运行逻辑是编译的时候通过【宏】确定为哪一种设备编译，包含哪些代码，实现一对一调用。我们分析代码调用是将所有调用关系都计算在内，得到一对多的调用关系。"
+        },
+        {
+          "messageId": "m08699",
+          "text": "受影响的 c 文件比例是 28710/33561 = 0.85"
+        },
+        {
+          "messageId": "m08703",
+          "text": "你们讨论下，我觉得不一样"
+        }
+      ]
+    },
+    {
+      "title": "科学家、书籍和图书馆地图的样本覆盖与位置含义如何核验？",
+      "attempts": [
+        {
+          "text": "发现中国科学家点位有可疑情况，后交付职业细分和 Google 距离阈值筛选。",
+          "evidence": [
+            "m09792",
+            "m09798"
+          ]
+        },
+        {
+          "text": "报告书籍合并学科后的地图趋势和作者缺失，提出用 country/正文补点。",
+          "evidence": [
             "m09956"
           ]
         },
         {
-          "text": "图书馆建议增加其他语言Wiki数据，或按美国比例过滤；后者仅是方案，未见实施。",
+          "text": "报告图书馆美国集中和年份/入度过滤后比例变化不大，提出多语补充与预期比例过滤方案。",
           "evidence": [
             "m09956"
           ]
         }
       ],
-      "lastKnown": "演示已交付；英文Wiki覆盖、职业标签和缺失地理信息会扭曲历史结论。",
+      "lastKnown": "已有筛选演示与覆盖诊断。三个对象分母、位置语义不同；筛选功能不是准确率验证，按预期美国比例删样本不等于纠偏。",
       "nextSteps": [
-        "保留样本覆盖率与缺失地理字段",
-        "优先增加多语数据，避免按预期比例人工制造历史分布",
-        "区分作者出生地、著作创作地、出版地和机构地",
-        "为每个世纪的迁徙箭头附样本量与置信说明"
+        "分别保存各对象来源、分母、缺失字段和位置角色。",
+        "建立人工核验样本，保留原始总体和过滤政策。"
       ],
       "evidence": [
         "m09792",
+        "m09798",
         "m09956"
       ],
       "id": "science-migration-q1",
@@ -3698,50 +5911,194 @@
       "sourceProjectId": "science-migration",
       "topicTitle": "科学迁徙、书籍与图书馆地图",
       "lastDate": "2025-05-08",
-      "priority": false
+      "priority": false,
+      "kind": "data",
+      "status": "audit",
+      "lastDiscussedAt": "2025-05-08",
+      "lastProgressAt": "2025-05-08",
+      "lastArtifactAt": "2025-02-13",
+      "acceptanceCriteria": [
+        "三对象各有覆盖与缺失统计，不能共用准确率或迁徙解释。",
+        "地点区分出生、创作、出版、机构及作品涉及地域，附来源置信。",
+        "地图附样本量与时间覆盖，预设比例只能标展示情景。"
+      ],
+      "relatedIds": [],
+      "backgroundEvidence": [],
+      "evidenceExcerpts": [
+        {
+          "messageId": "m09792",
+          "text": "目测一下在中国的，有些问题"
+        },
+        {
+          "messageId": "m09798",
+          "text": "1. 对职业进行了细分, 可以选择不同科学职业.\n2. 可以按 google 距离阈值选择展示部分 scientists."
+        },
+        {
+          "messageId": "m09956",
+          "text": "1. book 单独看一个学科的地图动画, 原因是数据量不够, 将所有学科合并展示, 能够看到 book 的重心位于欧洲的趋势.\n2. book 缺失作者的比例为 20%~40%, book 也有 country 数据, 从中获取 location, 对于没有作者和 country 的数据, 可以从正文中推理出book坐标. ex.\n  a. Flora of Australia (series), 通过词条就能得到其位于 Australia.\n  b. Alfonsine tables, 词条中明确说明 They were compiled in Toledo, Spain, and contain astronomical data starting on June 1, 1252, the date of the coronation of the King. 从中能够提取地理位置和创作时间.\n"
+        },
+        {
+          "messageId": "m09956",
+          "text": "3. library 集中位于美国的问题.\n在 3300 个图书馆中，超过一半的图书馆都位于美国。这些图书馆均拥有英语版本的 Wikipedia 页面，而负责编辑的志愿者们都熟练掌握英语。从这些志愿者熟练掌握英语这一情况可以合理推断，他们所熟悉的图书馆大多分布在以英语为主要语言的国家。而美国不仅人口众多，且地域面积广阔，具备容纳较多图书馆的条件。综合以上因素，这也就解释了为何在这 3300 个图书馆中，大部分都位于美国。\n通过年份和入度对 3300个图书馆过滤并不会显著改变美国图书馆的比例, 经过多次尝试, 美国图书馆的比例在 40%~60%之间浮动.\n在其他语言的 Wikipedia 中也有其语言唯一的图书馆页面, 比如中文Wikipedia中的 [乌鲁木齐市图书馆], 没有英文Wikipedia页面,不出现在 3300个图书馆数据集中. \n解决方案:\n1. 加入其他语言Wikipedia中的图书馆数据, 最终能够减小美国图书馆在整体数据中的比例. 需要额外的工作量.\n2. 单独针对美国图书馆进行过滤, 设定一个美国图书馆的比例预期,比如20%, 按照入度过滤保留占总量 20% 的美国图书馆数量."
+        }
+      ],
+      "sections": [
+        {
+          "title": "科学家：职业样本与地理点",
+          "lastKnown": "职业与距离筛选已演示，人物及坐标正确性尚需核验。",
+          "evidence": [
+            "m09792",
+            "m09798"
+          ],
+          "acceptanceCriteria": [
+            "人工核对身份、职业、位置角色及年代，报告分层准确率和缺失率。",
+            "保留筛选前后覆盖，阈值仅记录为选择政策。"
+          ],
+          "lastDiscussedAt": "2025-02-13"
+        },
+        {
+          "title": "书籍：字段缺失与位置角色",
+          "lastKnown": "作者缺失和合并学科趋势已有记录，补点是候选方法。",
+          "evidence": [
+            "m09956"
+          ],
+          "acceptanceCriteria": [
+            "分别标注出生、创作、出版与内容涉及地点，保存原文依据。",
+            "核验缺失和推断坐标，报告覆盖、置信和时间分布。"
+          ],
+          "lastDiscussedAt": "2025-05-08"
+        },
+        {
+          "title": "图书馆：语言覆盖与美国比例",
+          "lastKnown": "已有过滤比例观察；多语扩展尚属方案，预设占比不作纠偏结论。",
+          "evidence": [
+            "m09956"
+          ],
+          "acceptanceCriteria": [
+            "建立多语去重与来源覆盖表，保存语言和国家实际分母。",
+            "比较原始、过滤与扩展样本；人为美国占比仅标情景。"
+          ],
+          "lastDiscussedAt": "2025-05-08"
+        }
+      ]
     },
     {
-      "title": "科研资助如何关联到论文、专利和真实创新成果？",
+      "title": "NSF 项目负责人如何跨库关联论文、专利与公司？",
       "attempts": [
         {
-          "text": "设计PI—MAG—WM—专利—融资链路。",
+          "text": "提出从 NSF PI 姓名和单位关联 MAG 论文、Wiki 引用交集、相关专利和创办公司融资的链路。",
           "evidence": [
             "m06161"
           ]
+        }
+      ],
+      "lastKnown": "记录支持链路设想，未见已执行并通过验证。8 月 OpenKG 人物匹配属于另行关联的候选方法；不将资助效果因果评估写成历史任务。",
+      "nextSteps": [
+        "限定年度/部门 PI 样本，定义各跳实体和规则。",
+        "人工核验并保存来源、置信和未匹配原因。"
+      ],
+      "evidence": [
+        "m06161"
+      ],
+      "id": "science-funding-q1",
+      "projectId": null,
+      "sourceProjectId": "science-funding",
+      "topicTitle": "NSF / NSFC资助与科研发展数据",
+      "lastDate": "2022-06-29",
+      "priority": false,
+      "kind": "data",
+      "status": "audit",
+      "lastDiscussedAt": "2022-06-29",
+      "lastProgressAt": null,
+      "lastArtifactAt": null,
+      "acceptanceCriteria": [
+        "每跳列明分母、连接键、实体粒度、去重及时间字段。",
+        "标注链接准确率与覆盖率，追溯原记录。",
+        "成果关联和时间滞后不自动解释为资助导致创新。"
+      ],
+      "relatedIds": [
+        "science-funding-q1-entity-resolution"
+      ],
+      "backgroundEvidence": [],
+      "evidenceExcerpts": [
+        {
+          "messageId": "m06161",
+          "text": "@陆飞 有无可能做到下述：\n1）NSF里每个PI（项目负责人）的名字和单位；\n2）从1）到MAG找到发表的所有论文；\n3）论文被Wiki交集\n4）PI相关的所有专利；\n5）PI创办的公司融资情况"
+        }
+      ]
+    },
+    {
+      "title": "OpenKG 人物能否可靠匹配学术作者？",
+      "attempts": [
+        {
+          "text": "介绍人物来源、infobox/摘要和关系，并称当时没有使用场景。",
+          "evidence": [
+            "m06626"
+          ]
         },
         {
-          "text": "考虑OpenKG人物库关联作者，讨论名字、单位和职业消歧。",
+          "text": "讨论中文/外文名及重名，用职业和单位辅助消歧，并报告词条规模。",
           "evidence": [
-            "m06626",
             "m06628",
             "m06631",
             "m06633"
           ]
         }
       ],
-      "lastKnown": "已有统计与方案，未见跨库人物关联或因果评估交付。",
+      "lastKnown": "已有数据介绍与消歧思路，未见匹配结果或已接入 PI 链路的证据；词条量不是成功匹配人数。",
       "nextSteps": [
-        "先选一个年度/部门的PI样本，人工核验姓名和单位消歧。",
-        "记录每条跨库连接置信度与来源。",
-        "将资助时间与成果发表滞后匹配，避免把关联解释为因果。"
+        "明确百科人物与作者粒度，建立重名和跨语言标注样本。",
+        "比较字段消歧能力，再决定是否用于 PI 链路。"
       ],
       "evidence": [
-        "m06161",
+        "m06626",
         "m06628",
-        "m06631"
+        "m06631",
+        "m06633"
       ],
-      "id": "science-funding-q1",
+      "id": "science-funding-q1-entity-resolution",
       "projectId": null,
       "sourceProjectId": "science-funding",
       "topicTitle": "NSF / NSFC资助与科研发展数据",
       "lastDate": "2022-08-25",
-      "priority": false
+      "priority": false,
+      "kind": "data",
+      "status": "audit",
+      "lastDiscussedAt": "2022-08-25",
+      "lastProgressAt": null,
+      "lastArtifactAt": null,
+      "acceptanceCriteria": [
+        "标注集包含重名、外文名和单位变化，报告 precision/recall 与一对多情况。",
+        "每次匹配有来源置信，说明不属于作者候选集的人物。"
+      ],
+      "relatedIds": [
+        "science-funding-q1"
+      ],
+      "backgroundEvidence": [],
+      "evidenceExcerpts": [
+        {
+          "messageId": "m06626",
+          "text": "openKG person 里面基本就是从中文百科抽取的信息，包含 infobox 和 摘要。也有抽取出来的人与人之间的关系信息，这个数据我们目前没有使用场景。"
+        },
+        {
+          "messageId": "m06628",
+          "text": "主键是中午名字，外国人一般 infobox 中也有外文名，可以做关联，关联的重名问题还是不好解决"
+        },
+        {
+          "messageId": "m06631",
+          "text": "如果有重名，就需要看职业或者单位"
+        },
+        {
+          "messageId": "m06633",
+          "text": "2,480,097 个人物词条"
+        }
+      ]
     },
     {
-      "title": "本体迁移的覆盖率、准确率和产品完成范围？",
+      "title": "英文分类向无本体百科迁移的质量如何验证？",
       "attempts": [
         {
-          "text": "发现百度仅两级分类、互动多层但质量弱，中文分类不准确。",
+          "text": "检查既有分类，记录百度仅两级、互动多层但质量弱以及中文分类不准确。",
           "evidence": [
             "m07347",
             "m07359",
@@ -3749,29 +6106,173 @@
           ]
         },
         {
-          "text": "代理人只按摘要检索过一次，技术步骤后续仍需细化。",
+          "text": "提出暂不用中文分类，以英文分类为没有本体的百科补充本体的目标。",
           "evidence": [
-            "m07650",
-            "m07651"
+            "m07523"
           ]
         }
       ],
-      "lastKnown": "有浏览和查询原型，未见大规模跨语言迁移质量评测或授权证据。",
+      "lastKnown": "已有对中文百科分类深度与质量的观察，并提出以英文分类覆盖无本体百科的目标；尚未见可读的大规模迁移实验或质量评估结果。百科树功能范围与技术交底分别见关联核验。",
       "nextSteps": [
-        "恢复百科树PRD与本体匹配代码",
-        "抽样标注跨语言实体对齐和分类准确率",
-        "区分导航站上线、百科树功能和专利状态"
+        "固定英文本体与目标百科版本，明确对齐、分类与层级映射流程。",
+        "建立分层标注，分别验证覆盖、准确性与层级错误。"
       ],
       "evidence": [
-        "m07523",
-        "m07651"
+        "m07347",
+        "m07359",
+        "m07521",
+        "m07523"
       ],
       "id": "metapedia-ontology-q1",
       "projectId": null,
       "sourceProjectId": "metapedia-ontology",
       "topicTitle": "百科树与跨语言本体迁移",
+      "lastDate": "2023-03-13",
+      "priority": false,
+      "kind": "research",
+      "status": "proposed",
+      "lastDiscussedAt": "2023-03-13",
+      "lastProgressAt": null,
+      "lastArtifactAt": null,
+      "acceptanceCriteria": [
+        "分别定义实体对齐覆盖、分类覆盖及分类准确率的对象与分母。",
+        "标注可复查，报告匹配、赋类与层级冲突错误。",
+        "源分类质量差不等于迁移已验证，支持或否定均可完成本轮。"
+      ],
+      "relatedIds": [
+        "metapedia-ontology-q1-product-audit",
+        "metapedia-ontology-q1-technical-disclosure"
+      ],
+      "backgroundEvidence": [],
+      "evidenceExcerpts": [
+        {
+          "messageId": "m07347",
+          "text": "是的，只有简单的两级"
+        },
+        {
+          "messageId": "m07359",
+          "text": "分类设计上，互动更高级点，有多层级，但是分类质量就不行了，一级就有68个，一半多一级类无子类，分类都很少。"
+        },
+        {
+          "messageId": "m07521",
+          "text": "中文分类不准确"
+        },
+        {
+          "messageId": "m07523",
+          "text": "那就暂时不用中文分类。我们的目的是用英文分类去套所有的百科内容，为所有没有本体的百科内容加上英文的本体"
+        }
+      ]
+    },
+    {
+      "title": "百科树浏览和共同父类查询完成到什么范围？",
+      "attempts": [
+        {
+          "text": "提供百科树 PRD 的腾讯文档链接。",
+          "evidence": [
+            "m07339"
+          ]
+        },
+        {
+          "text": "报告 category 已可查共同父节点及直属关系，给出示例页面。",
+          "evidence": [
+            "m07627"
+          ]
+        }
+      ],
+      "lastKnown": "已见 PRD 链接和功能上线报告；不据链接声称已审阅 PRD 全文，不据查询上线推断迁移流程已打通。2024 综合导航站属于其他产品。",
+      "nextSteps": [
+        "找回可读需求及对应实现版本，逐项核验功能。",
+        "保存输入输出或演示，确认迁移接入情况。"
+      ],
+      "evidence": [
+        "m07339",
+        "m07627"
+      ],
+      "id": "metapedia-ontology-q1-product-audit",
+      "projectId": null,
+      "sourceProjectId": "metapedia-ontology",
+      "topicTitle": "百科树与跨语言本体迁移",
+      "lastDate": "2023-03-30",
+      "priority": false,
+      "kind": "engineering",
+      "status": "audit",
+      "lastDiscussedAt": "2023-03-30",
+      "lastProgressAt": "2023-03-30",
+      "lastArtifactAt": "2023-03-30",
+      "acceptanceCriteria": [
+        "逐项标明已演示、有文档、未见证据，PRD 链接仅作需求线索。",
+        "共同父类和直属关系有可复核示例，迁移接入独立验收。",
+        "不以 2024 综合导航站上线证明百科树完成。"
+      ],
+      "relatedIds": [
+        "metapedia-ontology-q1"
+      ],
+      "backgroundEvidence": [],
+      "evidenceExcerpts": [
+        {
+          "messageId": "m07339",
+          "text": "【腾讯文档】百科树 PRD\nhttps://docs.qq.com/doc/DWGZrTGVueUtvQ2RH"
+        },
+        {
+          "messageId": "m07627",
+          "text": "category 现在能够找共同父节点和直属关系\nhttps://wiki.metapedia.top/category/en/SpaceX"
+        }
+      ]
+    },
+    {
+      "title": "本体方案的技术步骤与初检差异说明是否补齐？",
+      "attempts": [
+        {
+          "text": "报告代理人按摘要初检四项相近专利，概述实体匹配与 RDF/RDFS 本体构建的技术区别。",
+          "evidence": [
+            "m07650"
+          ]
+        },
+        {
+          "text": "说明当时只提供摘要，没有具体技术步骤，代理人仅做简单摘要检索。",
+          "evidence": [
+            "m07651"
+          ]
+        }
+      ],
+      "lastKnown": "记录确认代理人按摘要做过初检，当时尚未提供具体技术步骤。后续需要核验技术交底与差异说明；这些记录没有确定申请或授权阶段。",
+      "nextSteps": [
+        "定位真实技术交底，核对输入输出和步骤。",
+        "按四项初检方案逐项补充差异及依据。"
+      ],
+      "evidence": [
+        "m07650",
+        "m07651"
+      ],
+      "id": "metapedia-ontology-q1-technical-disclosure",
+      "projectId": null,
+      "sourceProjectId": "metapedia-ontology",
+      "topicTitle": "百科树与跨语言本体迁移",
       "lastDate": "2023-04-06",
-      "priority": false
+      "priority": false,
+      "kind": "verification",
+      "status": "audit",
+      "lastDiscussedAt": "2023-04-06",
+      "lastProgressAt": "2023-04-06",
+      "lastArtifactAt": null,
+      "acceptanceCriteria": [
+        "列明输入输出、步骤与必要实现细节，区分已找到和待补部分。",
+        "差异说明逐项有技术依据，不把摘要差异升级为新颖性或授权判断。"
+      ],
+      "relatedIds": [
+        "metapedia-ontology-q1"
+      ],
+      "backgroundEvidence": [],
+      "evidenceExcerpts": [
+        {
+          "messageId": "m07650",
+          "text": "之前代理人根据专利的摘要进行了一次检索，整理了4个类似专利。前3个专利都是实体比对的技术专利，没涉及到知识结构；第4个专利是一个本体构建的专利，是将自然语言分词转化成语法结构，最后根据谓词-论元结构构建的本体，他们的本体是用RDF/RDFS来表示的，构建的本体知识库实际上就是一个能存储和检索RDF/RDFS的数据库。这个构建方法和我们的有所区别。"
+        },
+        {
+          "messageId": "m07651",
+          "text": "之前只是提供了摘要，没有提供具体的技术步骤。代理人只根据摘要进行过简单的检索。"
+        }
+      ]
     }
   ],
   "events": [
@@ -4778,7 +7279,10 @@
       ],
       "projectId": null,
       "status": "阶段记录",
-      "featured": false
+      "featured": false,
+      "questionIds": [
+        "science-funding-q1"
+      ]
     },
     {
       "date": "2022-07-12",
@@ -5082,7 +7586,10 @@
       ],
       "projectId": null,
       "status": "阶段记录",
-      "featured": false
+      "featured": false,
+      "questionIds": [
+        "metapedia-ontology-q1"
+      ]
     },
     {
       "date": "2023-03-20",
@@ -5116,7 +7623,11 @@
       ],
       "projectId": "disruption",
       "status": "阶段记录",
-      "featured": false
+      "featured": false,
+      "questionIds": [
+        "disruption-wm-q2",
+        "disruption-wm-q2-collection-audit"
+      ]
     },
     {
       "date": "2023-05-12",
@@ -5521,7 +8032,10 @@
       ],
       "projectId": "gpc",
       "status": "阶段记录",
-      "featured": false
+      "featured": false,
+      "questionIds": [
+        "gpc-text-similarity-q1"
+      ]
     },
     {
       "date": "2024-11-11",
@@ -5699,7 +8213,10 @@
       ],
       "projectId": "network-entropy",
       "status": "阶段记录",
-      "featured": false
+      "featured": false,
+      "questionIds": [
+        "network-entropy-kqi-q2"
+      ]
     },
     {
       "date": "2025-10-10",
@@ -5717,13 +8234,16 @@
     {
       "date": "2026-04-28",
       "title": "重新提出数学子学科剔除实验",
-      "detail": "删除代数/几何/分析/拓扑后，数学与物理距离变近还是变远？最新群聊无答案。",
+      "detail": "2019年曾报告剔除代数、几何、分析或拓扑后，数学与物理距离都变远。2026年再次提出，尚未见可读的新验证结果；对应研究现为旧结果待复现。",
       "evidence": [
         "m10010"
       ],
-      "status": "待研究",
-      "projectId": null,
-      "featured": false
+      "status": "重新提出 / 旧结果待复现",
+      "projectId": "science-atlas",
+      "featured": false,
+      "questionIds": [
+        "knowledge-consilience-q3"
+      ]
     }
   ],
   "library": [
@@ -19713,5 +22233,394 @@
       "scope": "用于回看历史引用窗口和滞后分布，不将探索性拟合写为已确定规律。",
       "legacyPaths": []
     }
-  ]
+  ],
+  "backlogReview": {
+    "reviewedOn": "2026-11-06",
+    "implementedOn": "2026-11-06",
+    "status": "implemented",
+    "sourceCommit": "3cea11ee7d6680e49a84d99a4e4d4385873a2c3e",
+    "sourceIds": [
+      "wiki-research-platform-q1",
+      "wiki-research-platform-q2",
+      "wiki-core-consistency-q1",
+      "wiki-core-consistency-q2",
+      "academic-distance-q1",
+      "academic-distance-q2",
+      "mag-science-mapping-q1",
+      "mag-science-mapping-q2",
+      "mag-science-mapping-q3",
+      "one-two-many-cultures-paper-q1",
+      "knowledge-consilience-q1",
+      "knowledge-consilience-q2",
+      "knowledge-consilience-q3",
+      "disruption-wm-q1",
+      "disruption-wm-q2",
+      "disruption-wm-q3",
+      "disruption-wm-q4",
+      "disruption-index-q1",
+      "disruption-index-q2",
+      "gpc-distance-q1",
+      "gpc-distance-q2",
+      "gpc-text-similarity-q1",
+      "knowledge-complexity-q1",
+      "knowledge-complexity-q2",
+      "network-entropy-q1",
+      "network-entropy-q2",
+      "network-entropy-kqi-q1",
+      "network-entropy-kqi-q2",
+      "network-entropy-kqi-q3",
+      "wiki-evolution-q1",
+      "wiki-evolution-q2",
+      "computing-growth-q1",
+      "computing-growth-q2",
+      "software-compression-q1",
+      "software-compression-q2",
+      "science-migration-q1",
+      "science-funding-q1",
+      "metapedia-ontology-q1"
+    ],
+    "counts": {
+      "data": 16,
+      "research": 44,
+      "verification": 3,
+      "engineering": 5
+    },
+    "changes": [
+      {
+        "oldId": "wiki-research-platform-q1",
+        "action": "split",
+        "newIds": [
+          "wiki-research-platform-q1",
+          "wiki-research-platform-q1-sample-stability"
+        ],
+        "note": "人物身份数据核验与样本量稳健性研究分开；界面切换移出研究证据。"
+      },
+      {
+        "oldId": "wiki-research-platform-q2",
+        "action": "split",
+        "newIds": [
+          "wiki-research-platform-q2",
+          "wiki-research-platform-q2-link-direction"
+        ],
+        "note": "节点/边数学对象与入链/出链方向差异分开；不再引用孤立答复证明默认配置。"
+      },
+      {
+        "oldId": "wiki-core-consistency-q1",
+        "action": "reclassify",
+        "newIds": [
+          "wiki-core-consistency-q1"
+        ],
+        "note": "转2011/2013专项数据核验，排除其他年份模板差异和后续上线造成的假新进展。"
+      },
+      {
+        "oldId": "wiki-core-consistency-q2",
+        "action": "refine",
+        "newIds": [
+          "wiki-core-consistency-q2"
+        ],
+        "note": "聚焦工程—哲学的贡献词条与分类路径，不预设异常必是污染。"
+      },
+      {
+        "oldId": "academic-distance-q1",
+        "action": "refine",
+        "newIds": [
+          "academic-distance-q1"
+        ],
+        "note": "保留知识距离/拓扑趋势问题，BA公式证明资料关联理论研究，不另造本组研究页。"
+      },
+      {
+        "oldId": "academic-distance-q2",
+        "action": "refine",
+        "newIds": [
+          "academic-distance-q2"
+        ],
+        "note": "保留γ估计核心问题，加入区间稳健性验收与符号边界。"
+      },
+      {
+        "oldId": "mag-science-mapping-q1",
+        "action": "split",
+        "newIds": [
+          "mag-science-mapping-q1",
+          "mag-science-mapping-q1-coupling-trend"
+        ],
+        "note": "分开幂律趋势与耦合阈值趋势，作者Gini对照留方法背景，剔除部署串题。"
+      },
+      {
+        "oldId": "mag-science-mapping-q2",
+        "action": "reclassify",
+        "newIds": [
+          "mag-science-mapping-q2"
+        ],
+        "note": "统一MAG数据质量验收组内保留三项诊断，不拆成三条研究；删除无关分类上线与姓名匹配消息。"
+      },
+      {
+        "oldId": "mag-science-mapping-q3",
+        "action": "split",
+        "newIds": [
+          "mag-science-mapping-q3",
+          "mag-science-mapping-q3-engineering-self-citation"
+        ],
+        "note": "分开时间窗与工程自引；概念澄清放背景，不以路径大于6判错。"
+      },
+      {
+        "oldId": "one-two-many-cultures-paper-q1",
+        "action": "reclassify",
+        "newIds": [
+          "one-two-many-cultures-paper-q1"
+        ],
+        "note": "转同一文稿成果核验组，保留版本/图表交付事实，删除编辑工作流与无法确认同稿的2023数据目录。"
+      },
+      {
+        "oldId": "knowledge-consilience-q1",
+        "action": "split",
+        "newIds": [
+          "knowledge-consilience-q1",
+          "knowledge-consilience-q1-weighted-tree-similarity"
+        ],
+        "note": "分开跨库学科群落与两棵带权树算法；裁切GPC相关性和专利段落，去除无法定位的手动改边消息。"
+      },
+      {
+        "oldId": "knowledge-consilience-q2",
+        "action": "refine",
+        "newIds": [
+          "knowledge-consilience-q2"
+        ],
+        "note": "保留时间推断有效性问题，记录已有字段限制及对照结果，未执行备选不写成进展。"
+      },
+      {
+        "oldId": "knowledge-consilience-q3",
+        "action": "refine",
+        "newIds": [
+          "knowledge-consilience-q3"
+        ],
+        "note": "保留高优先旧结果复现，删2023样本距离串题和未确认图片，讨论日期回到2026-04-28。"
+      },
+      {
+        "oldId": "disruption-wm-q1",
+        "action": "refocus_and_link",
+        "newIds": [
+          "disruption-wm-q1",
+          "disruption-wm-q1-citation-audit"
+        ],
+        "note": "保留归因主问；引文核验转数据任务。m07876移近零机制；m02621为通用导入流程，不再作为本题进展。创新效度与disruption-index-q2互链。"
+      },
+      {
+        "oldId": "disruption-wm-q2",
+        "action": "version_audit_and_refocus",
+        "newIds": [
+          "disruption-wm-q2",
+          "disruption-wm-q2-collection-audit"
+        ],
+        "note": "移除标题中的现行16.8%断言；m06608/m06610只作图表/版本核验，不作科学解释进展。补入现有m07694后续修正。"
+      },
+      {
+        "oldId": "disruption-wm-q3",
+        "action": "separate_measurement_from_attribution",
+        "newIds": [
+          "disruption-wm-q3",
+          "disruption-wm-q3-unmatched-audit"
+        ],
+        "note": "原ID保留近期下降归因；总体未匹配率转独立前置数据核验，各自日期和状态。"
+      },
+      {
+        "oldId": "disruption-wm-q4",
+        "action": "retain_scope_remove_wrong_object",
+        "newIds": [
+          "disruption-wm-q4"
+        ],
+        "note": "WM拟合与队列解释保留同题；m06328/m06329/m06567/m06572是MAG全集增长，移出本题，由science-atlas专题保留；m05914差分噪声仅是通用方法背景，不作WM进展。"
+      },
+      {
+        "oldId": "disruption-index-q1",
+        "action": "retain_mechanism_separate_subexperiment",
+        "newIds": [
+          "disruption-index-q1",
+          "disruption-index-q1-randomization"
+        ],
+        "note": "保留近零机制，随机化独立子实验单记结果；m08324/m08332只引用D公式片段，删除同消息GPC专利进度；m08304交集论证转对应效度/集合问题。"
+      },
+      {
+        "oldId": "disruption-index-q2",
+        "action": "separate_research_and_data_recovery",
+        "newIds": [
+          "disruption-index-q2",
+          "disruption-index-q2-wos-recovery"
+        ],
+        "note": "原ID保留创新效度命题；WoS清单与样本口径恢复为数据任务，避免拿到数据即算研究有结果。"
+      },
+      {
+        "oldId": "gpc-distance-q1",
+        "action": "focus_analogy_and_separate_extension_delivery",
+        "newIds": [
+          "gpc-distance-q1",
+          "gpc-distance-q1-polygon-extension",
+          "gpc-distance-q1-query-audit"
+        ],
+        "note": "四边形有效性与其数学假设保留同题，扩展约束另立研究；ku2ku交付转工程验收。申请状态语句不进入研究尝试，m08802/m09202用技术片段引用。"
+      },
+      {
+        "oldId": "gpc-distance-q2",
+        "action": "bound_retrieval_task_and_engineering_audit",
+        "newIds": [
+          "gpc-distance-q2",
+          "gpc-distance-q2-capability-audit"
+        ],
+        "note": "原ID改为具体近邻任务；数据库功能矩阵转工程事项。m08670/m08672表示特征作背景，不作检索实验进展；写专利指示排除。"
+      },
+      {
+        "oldId": "gpc-text-similarity-q1",
+        "action": "split_validity_order_and_preprocessing",
+        "newIds": [
+          "gpc-text-similarity-q1",
+          "gpc-text-similarity-q1-word-order",
+          "gpc-text-similarity-q1-token-matching"
+        ],
+        "note": "有效性与词序独立验收，token重叠转预处理数据任务。m09374只说明拟补文档，从科学尝试和研究日期中移出；专利指示只截取技术语句。"
+      },
+      {
+        "oldId": "knowledge-complexity-q1",
+        "action": "split_objects_and_contribution_audit",
+        "newIds": [
+          "knowledge-complexity-q1",
+          "knowledge-complexity-q1-fos-allocation",
+          "knowledge-complexity-q1-award-weighting",
+          "knowledge-complexity-q1-patent-audit"
+        ],
+        "note": "国家论文迭代、FOS分摊、奖项网络和国家专利不再共享一个状态；保留不同粒度/阈值作为同一收敛命题的诊断。"
+      },
+      {
+        "oldId": "knowledge-complexity-q2",
+        "action": "split_prediction_endpoints",
+        "newIds": [
+          "knowledge-complexity-q2",
+          "knowledge-complexity-q2-gdp-prediction"
+        ],
+        "note": "分经济复杂性与GDP两个预测终点，共用数据准备。m07236只引用时间关系分项，移除专利、机构与C/D/E部署串题。GDP项为待验证方向，未把链条推断写为实验。"
+      },
+      {
+        "oldId": "network-entropy-q1",
+        "action": "bound_entropy_hypothesis_with_data_audit",
+        "newIds": [
+          "network-entropy-q1",
+          "network-entropy-q1-trend-audit"
+        ],
+        "note": "跨库现象先转数据核验；保留增长机制主问并限定度分布熵。m05906/m05810推导归q2，对数底数复算记已有进展；不沿用含糊“本期”。"
+      },
+      {
+        "oldId": "network-entropy-q2",
+        "action": "split_mathematical_objects_and_material_dependency",
+        "newIds": [
+          "network-entropy-q2",
+          "network-entropy-q2-node-degree",
+          "network-entropy-q2-effective-diameter"
+        ],
+        "note": "度分布熵、节点度熵、有效直径分别验收。原 ID 保留候选度分布熵推导；附件上传不抬高研究问题日期。缺失的 BA 概率方程推广稿仅作为原推导问题的背景证据和恢复依赖，不建立独立页面。"
+      },
+      {
+        "oldId": "network-entropy-kqi-q1",
+        "action": "refine",
+        "newIds": [
+          "network-entropy-kqi-q1"
+        ],
+        "note": "保留理论命题；权重与归一化不机械拆页。"
+      },
+      {
+        "oldId": "network-entropy-kqi-q2",
+        "action": "split",
+        "newIds": [
+          "network-entropy-kqi-q2",
+          "network-entropy-kqi-q2-node-copy-audit",
+          "network-entropy-kqi-q2-k2-proof-audit"
+        ],
+        "note": "定义主问保留；节点复制转数据核验，阶段证明转成果核验，缺稿仅作资料依赖。"
+      },
+      {
+        "oldId": "network-entropy-kqi-q3",
+        "action": "refine",
+        "newIds": [
+          "network-entropy-kqi-q3"
+        ],
+        "note": "保持同一命题，状态为提出但未见执行。"
+      },
+      {
+        "oldId": "wiki-evolution-q1",
+        "action": "refine",
+        "newIds": [
+          "wiki-evolution-q1"
+        ],
+        "note": "撤去机制解释的越级暗示；时间修订指令不作新实验结果。"
+      },
+      {
+        "oldId": "wiki-evolution-q2",
+        "action": "refine",
+        "newIds": [
+          "wiki-evolution-q2"
+        ],
+        "note": "分布和年代变化仍同组，删除 m06005 的无实质支持。"
+      },
+      {
+        "oldId": "computing-growth-q1",
+        "action": "refine",
+        "newIds": [
+          "computing-growth-q1"
+        ],
+        "note": "量纲核验作为前置，不预设确定年份。"
+      },
+      {
+        "oldId": "computing-growth-q2",
+        "action": "reclassify",
+        "newIds": [
+          "computing-growth-q2"
+        ],
+        "note": "转数据口径核验，保留已有概念澄清。"
+      },
+      {
+        "oldId": "software-compression-q1",
+        "action": "split",
+        "newIds": [
+          "software-compression-q1",
+          "software-compression-q1-runtime-audit"
+        ],
+        "note": "压缩体积与语料对照保留主问，耗时独立工程任务，文件分布归 q2。"
+      },
+      {
+        "oldId": "software-compression-q2",
+        "action": "split",
+        "newIds": [
+          "software-compression-q2",
+          "software-compression-q2-file-size-distribution",
+          "software-compression-q2-call-graph-audit"
+        ],
+        "note": "理论、文件分布、工程准确性各自验收；m09032 分项引用。"
+      },
+      {
+        "oldId": "science-migration-q1",
+        "action": "section-and-reclassify",
+        "newIds": [
+          "science-migration-q1"
+        ],
+        "note": "同页共享框架，三个对象分别验收，转数据核验。"
+      },
+      {
+        "oldId": "science-funding-q1",
+        "action": "split-and-reclassify",
+        "newIds": [
+          "science-funding-q1",
+          "science-funding-q1-entity-resolution"
+        ],
+        "note": "PI 链路和候选人物匹配分别记日期，均为数据核验；移除外加因果历史任务。"
+      },
+      {
+        "oldId": "metapedia-ontology-q1",
+        "action": "split",
+        "newIds": [
+          "metapedia-ontology-q1",
+          "metapedia-ontology-q1-product-audit",
+          "metapedia-ontology-q1-technical-disclosure"
+        ],
+        "note": "迁移质量、百科树产品验收、本体技术交底分开；授权缺口和综合导航站不作迁移证据。"
+      }
+    ],
+    "datePolicy": "lastDiscussedAt tracks direct discussion; lastProgressAt tracks substantive progress; lastArtifactAt never refreshes the discussion date."
+  }
 }

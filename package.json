@@ -8,7 +8,7 @@
     "start": "node scripts/serve.mjs",
     "build": "node scripts/build.mjs",
     "data": "node scripts/sync-data.mjs",
-    "check": "node scripts/check.mjs"
+    "check": "node scripts/check.mjs && node scripts/check-backlog.mjs"
   },
   "engines": { "node": ">=20" }
 }
