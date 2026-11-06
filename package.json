@@ -8,7 +8,20 @@
     "start": "node scripts/serve.mjs",
     "build": "node scripts/build.mjs",
     "data": "node scripts/sync-data.mjs",
-    "check": "node scripts/check.mjs && node scripts/check-backlog.mjs"
+    "check": "node scripts/check.mjs && node scripts/check-backlog.mjs",
+    "agent:build": "node scripts/build-agent.mjs",
+    "agent:preview": "node scripts/preview-agent.mjs",
+    "agent:check": "node --test agent/tests/*.test.mjs",
+    "agent:dev": "wrangler dev --config agent/worker/wrangler.jsonc",
+    "agent:bundle": "wrangler deploy --dry-run --config agent/worker/wrangler.example.jsonc --outdir .local/worker-bundle"
   },
-  "engines": { "node": ">=20" }
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "miniflare": "4.20260730.0",
+    "playwright": "^1.65.0",
+    "wrangler": "4.158.0"
+  }
 }

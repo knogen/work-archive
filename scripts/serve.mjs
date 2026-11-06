@@ -8,6 +8,8 @@ const mime={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8',
 http.createServer(async(req,res)=>{
   try{
     const pathname=decodeURIComponent(new URL(req.url,'http://localhost').pathname);
+    const publicFiles=new Set(['/','/index.html','/styles.css','/app.js','/agent-config.js','/agent-widget.js','/agent-widget.css']);
+    if(pathname.split('/').some(part=>part.startsWith('.'))||(!publicFiles.has(pathname)&&!/^\/(?:data|assets)\//.test(pathname))){res.writeHead(404);return res.end('Not found');}
     const file=path.resolve(root,'.'+(pathname==='/'?'/index.html':pathname));
     if(!file.startsWith(root+path.sep)){res.writeHead(403);return res.end('Forbidden');}
     const bytes=await fs.readFile(file);

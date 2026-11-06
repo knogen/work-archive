@@ -22,7 +22,11 @@
 
 ## 本地查看
 
-无需安装依赖，Node.js 20 或更高版本即可。
+已增加独立的档案问答模块，保留现有静态站点。Worker 代码在同一仓库的 `agent/worker/`，单独部署到 Cloudflare；默认每日 OpenAI 预算为 1 美元，北京时间零点恢复。密钥、模型、费率和部署参数由所有者最后填写，未配置时不会调用模型。
+
+先运行 `npm ci`、`npm run agent:build`、`npm run agent:preview`，打开 `http://127.0.0.1:4174` 可以立即查看“解析 → 时间/主题召回 → 证据 → 预算 → 生成”的工作过程。预览使用真实检索和 SQLite 预算账本，OpenAI 回答明确模拟，不调用外部 API。生产接入、最小 key 权限、KV 上传和首次 CF 部署步骤见 [docs/agent-deploy.md](docs/agent-deploy.md)，数据范围见 [docs/agent-data.md](docs/agent-data.md)。
+
+仅静态浏览无需安装依赖，Node.js 22 或更高版本即可；问答开发与验证需要先安装开发依赖。
 
 ```sh
 npm start

@@ -1,0 +1,27 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "work-archive-agent",
+  "main": "index.mjs",
+  "compatibility_date": "2026-07-01",
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [],
+  "observability": { "enabled": false },
+  "vars": {
+    "DAILY_BUDGET_USD": "1",
+    "AUTH_MODE": "token",
+    "ALLOWED_ORIGINS": "",
+    "CORPUS_VERSION": "",
+    "OPENAI_MODEL": "",
+    "INPUT_USD_PER_MILLION": "",
+    "OUTPUT_USD_PER_MILLION": ""
+  },
+  "kv_namespaces": [{ "binding": "ARCHIVE_CORPUS", "id": "FILL_KV_NAMESPACE_ID" }],
+  "durable_objects": { "bindings": [{ "name": "BUDGET_LEDGER", "class_name": "BudgetLedger" }] },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["BudgetLedger"] }]
+  // Replace routes above with your CF-managed custom domain or zone route.
+  // Without a custom domain, explicitly set workers_dev: true for an initial trial.
+  // Set secrets with wrangler secret put, never inside this file:
+  // OPENAI_API_KEY, AGENT_ACCESS_TOKEN (24+ characters).
+  // Public Turnstile mode: AUTH_MODE=turnstile, TURNSTILE_SECRET_KEY instead of access token.
+}

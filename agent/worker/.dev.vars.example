@@ -1,0 +1,4 @@
+# Local development only. Copy to .dev.vars (ignored). Never put an OpenAI key in frontend files.
+OPENAI_API_KEY=
+AGENT_ACCESS_TOKEN=
+# TURNSTILE_SECRET_KEY=

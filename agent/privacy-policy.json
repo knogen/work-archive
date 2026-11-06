@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "excludedEvidenceIds": ["m00370", "m08504", "m08510", "m08511", "m09650"],
+  "excludedRecordIds": [],
+  "privateTerms": [],
+  "topicAliases": {
+    "wiki-platform": ["维基平台", "维基百科平台", "维基学科", "维基百科"],
+    "science-atlas": ["科学图谱", "知识融通", "两种文化", "学科关系图谱"],
+    "disruption": ["颠覆性指标", "颠覆指数", "CD 指标"],
+    "gpc": ["GPC语义", "GPC距离", "GPC推理", "类比距离", "ku2ku"],
+    "knowledge-complexity": ["知识复杂性", "国家排名", "国家学科复杂性"],
+    "network-entropy": ["网络熵", "度熵", "BA 模型", "结构熵复杂度"],
+    "wiki-evolution": ["维基演化", "维基百科演化", "维基百科", "知识增长"],
+    "computing-growth": ["摩尔", "算力增长", "计算效率"],
+    "software-compression": ["跨语料压缩", "软件压缩", "软件重用"],
+    "science-migration": ["科学迁徙", "知识地图", "科学迁移"]
+  },
+  "note": "仅从现有已审阅 archive.json 生成问答语料；不读取原始聊天、editorial、附件正文或图片。额外排除规则放在忽略的 .local/agent-privacy.json。"
+}
