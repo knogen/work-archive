@@ -30,6 +30,19 @@ for(const f of a.library){
   assert.ok(f.versions.every(v=>v.available),'missing documents must not appear in library version lists');
 }
 assert.equal(new Set(a.library.map(f=>f.sourceSha256)).size,a.library.length,'identical document copies must share one library entry');
+const outputCatalog=JSON.parse(await fs.readFile(new URL('../data/output-catalog.json',import.meta.url),'utf8'));
+assert.equal(new Set(a.outputs.map(o=>o.id)).size,a.outputs.length,'unique current output ids');
+for(const output of a.outputs){
+  const link=new URL(output.href);
+  assert.equal(link.origin,'https://discipline-network-research.nikepai.com','current outputs use the supplied public platform');
+  assert.ok(!link.username&&!link.password&&!link.search&&!link.hash,'plain public output URLs only');
+  assert.ok(outputCatalog.paths.includes(link.pathname),`output route absent from the reviewed upstream catalog: ${output.id}`);
+  assert.ok(output.projectIds.length&&output.projectIds.every(id=>projects.has(id)),`unknown output project: ${output.id}`);
+  assert.ok(output.evidence.length&&output.scope?.trim()&&output.description?.trim(),`output requires matching evidence and scope: ${output.id}`);
+  assert.equal(output.id,link.pathname.split('/').at(-1),'stable output id matches route');
+}
+assert.equal(a.outputs.find(o=>o.id==='openalex-entropy')?.href,'https://discipline-network-research.nikepai.com/charts/openalex-entropy','preserve the supplied OpenAlex chart entry');
+assert.ok(!a.outputs.find(o=>o.id==='degree-distributions').evidence.includes('m05272'),'MAG/WM distributions must not replace the historical Wikipedia distribution');
 for(const id of ['m00370','m08504','m08510','m08511','m09650'])assert.ok(!a.evidence[id],`private source leaked ${id}`);
 for(const [id,m] of Object.entries(a.evidence)){
   assert.ok(!/(?<!\d)1[3-9]\d{9}(?!\d)/.test(m.text.replace(/https?:\/\/[^\s<>]+/g,'')),`unredacted mobile number ${id}`);
@@ -40,4 +53,4 @@ const math=a.questions.find(q=>q.title.includes('去掉代数'));
 for(const q of a.questions)assert.equal(new Set(q.attempts.map(t=>t.text)).size,q.attempts.length,`duplicate attempts ${q.id}`);
 assert.ok(math.attempts.some(t=>t.evidence.includes('m00340')),'preserve 2019 preliminary answer');
 assert.ok(math.evidence.includes('m10010'),'preserve 2026 reopened question');
-console.log(`OK: ${a.projects.length} projects, ${a.events.length} events, ${a.questions.length} questions, ${citations} citations, ${files} asset links`);
+console.log(`OK: ${a.projects.length} projects, ${a.events.length} events, ${a.questions.length} questions, ${citations} citations, ${files} asset links, ${a.outputs.length} current output links`);

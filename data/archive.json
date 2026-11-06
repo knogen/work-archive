@@ -19259,5 +19259,459 @@
         }
       ]
     }
-  }
+  },
+  "outputPlatform": {
+    "title": "Discipline Atlas · 研究数据图表",
+    "href": "https://discipline-network-research.nikepai.com/charts",
+    "repository": "https://github.com/ider-zh/discipline-network-research-website",
+    "checkedOn": "2026-11-06",
+    "note": "图表已迁移到研究数据平台；部分年份、学科和交互范围以新页面说明为准。"
+  },
+  "outputs": [
+    {
+      "id": "wikipedia-network",
+      "title": "Wikipedia 学科关系最小生成树",
+      "href": "https://discipline-network-research.nikepai.com/charts/wikipedia-network",
+      "projectIds": [
+        "wiki-platform"
+      ],
+      "evidence": [
+        "m00034",
+        "m00036",
+        "m04576"
+      ],
+      "description": "查看顶级学科之间的距离关系，拖动节点并缩放网络。",
+      "scope": "当前入口保留最小生成树展示，不等同于旧版全部年份、距离阈值和 3D 动画。",
+      "legacyPaths": [
+        "/wikipedia-build/wikiGraph"
+      ]
+    },
+    {
+      "id": "wikipedia-article-count",
+      "title": "Wikipedia 学科文章数与增量",
+      "href": "https://discipline-network-research.nikepai.com/charts/wikipedia-article-count",
+      "projectIds": [
+        "wiki-platform",
+        "wiki-evolution"
+      ],
+      "evidence": [
+        "m00362",
+        "m03599"
+      ],
+      "description": "按学科比较月度文章总量与净增量。",
+      "scope": "本页对应文章规模统计；旧页面中的单篇长度和 dx 分析不在此入口中。",
+      "legacyPaths": [
+        "/wikipedia/SubjectArticleCount"
+      ]
+    },
+    {
+      "id": "wikipedia-network-profile",
+      "title": "Wikipedia 小世界与网络联通统计",
+      "href": "https://discipline-network-research.nikepai.com/charts/wikipedia-network-profile",
+      "projectIds": [
+        "wiki-platform"
+      ],
+      "evidence": [
+        "m04941",
+        "m04994",
+        "m05047"
+      ],
+      "description": "比较季度最短路径、聚类、联通文章数和网络覆盖。",
+      "scope": "当前页合并多个统计面板，年份与网络层次以页面选择器为准。",
+      "legacyPaths": [
+        "/wikipedia-build/smallworld",
+        "/wikipedia-build/smallworld_20211103"
+      ]
+    },
+    {
+      "id": "wikipedia-degree-entropy",
+      "title": "Wikipedia 度分布熵",
+      "href": "https://discipline-network-research.nikepai.com/charts/wikipedia-degree-entropy",
+      "projectIds": [
+        "network-entropy"
+      ],
+      "evidence": [
+        "m05562",
+        "m05564"
+      ],
+      "description": "查看 Wikipedia 季度度分布熵，比较入链、出链和分类层次。",
+      "scope": "保留度分布熵口径，不能与节点度概率定义的结构熵混用。",
+      "legacyPaths": [
+        "/wikipedia-build/wikipediaNetworkEntropy"
+      ]
+    },
+    {
+      "id": "wikipedia-structural-entropy",
+      "title": "Wikipedia 结构熵与网络密度",
+      "href": "https://discipline-network-research.nikepai.com/charts/wikipedia-structural-entropy",
+      "projectIds": [
+        "network-entropy"
+      ],
+      "evidence": [
+        "m05207",
+        "m05208",
+        "m05267",
+        "m05273"
+      ],
+      "description": "比较两层、三层学科网络的结构熵与网络密度。",
+      "scope": "图表为迁移后的历史快照；结构熵曲线不代表质量假说已获验证。",
+      "legacyPaths": [
+        "/wikipedia-build/entropy",
+        "/wikipedia-build/wikipediaEntropy"
+      ]
+    },
+    {
+      "id": "wikipedia-global-evolution",
+      "title": "Wikipedia 总体演化与拟合统计",
+      "href": "https://discipline-network-research.nikepai.com/charts/snapshots/wikipedia-global-evolution",
+      "projectIds": [
+        "wiki-evolution",
+        "wiki-platform"
+      ],
+      "evidence": [
+        "m00521",
+        "m03557",
+        "m04494",
+        "m05428",
+        "m06157"
+      ],
+      "description": "查看规模、编辑、作者和内容长度等十二项总体指标。",
+      "scope": "保留历史拟合与统计口径，不把预测当作后来年份的实际观测。",
+      "legacyPaths": [
+        "/wikipedia-build/WikiNiHe"
+      ]
+    },
+    {
+      "id": "wikipedia-article-length",
+      "title": "Wikipedia 文章长度分布",
+      "href": "https://discipline-network-research.nikepai.com/charts/snapshots/wikipedia-article-length",
+      "projectIds": [
+        "wiki-evolution"
+      ],
+      "evidence": [
+        "m05428",
+        "m06466",
+        "m06485"
+      ],
+      "description": "按线性或对数分箱查看文章字数分布。",
+      "scope": "长度为字数口径；不是原始文件的字节大小。",
+      "legacyPaths": [
+        "/wikipedia-build/articleLength"
+      ]
+    },
+    {
+      "id": "wikipedia-self-citation",
+      "title": "Wikipedia 学科内部链接比例",
+      "href": "https://discipline-network-research.nikepai.com/charts/snapshots/wikipedia-self-citation",
+      "projectIds": [
+        "wiki-platform"
+      ],
+      "evidence": [
+        "m03336",
+        "m03337"
+      ],
+      "description": "按网络方向与分类深度比较学科内部链接占比。",
+      "scope": "对应历史讨论中的学科“自恋度”，不表示作者个人自引。",
+      "legacyPaths": []
+    },
+    {
+      "id": "wikipedia-directed-distance",
+      "title": "Wikipedia 学科有向距离",
+      "href": "https://discipline-network-research.nikepai.com/charts/snapshots/wikipedia-directed-distance",
+      "projectIds": [
+        "wiki-platform"
+      ],
+      "evidence": [
+        "m00848",
+        "m01547",
+        "m01552"
+      ],
+      "description": "比较 Biology 与其他学科的双向路径及方向差。",
+      "scope": "当前快照仅保留 Biology 与四个学科的比较，不复现旧 Core v2 的全部网络规模与任意学科查询。",
+      "legacyPaths": []
+    },
+    {
+      "id": "mag-small-world",
+      "title": "MAG 小世界网络统计",
+      "href": "https://discipline-network-research.nikepai.com/charts/snapshots/mag-small-world",
+      "projectIds": [
+        "science-atlas"
+      ],
+      "evidence": [
+        "m00717",
+        "m01439",
+        "m01599",
+        "m02102"
+      ],
+      "description": "比较年度小世界指标、头部排名规模与实际联通规模。",
+      "scope": "保留主要学科的导出快照；旧版四十年活跃窗口等组合以新页面实际提供的选择为准。",
+      "legacyPaths": [
+        "/SmallWorldUndirected",
+        "/MagDirectNetV4"
+      ]
+    },
+    {
+      "id": "mag-distance-bubbles",
+      "title": "MAG 学科距离气泡图",
+      "href": "https://discipline-network-research.nikepai.com/charts/snapshots/mag-distance-bubbles",
+      "projectIds": [
+        "science-atlas"
+      ],
+      "evidence": [
+        "m02802",
+        "m02808"
+      ],
+      "description": "以 Biology 和 Physics 为双轴，观察学科距离与文章规模。",
+      "scope": "保留历史快照；气泡大小表示文章数量，双轴表示与指定学科的距离。",
+      "legacyPaths": [
+        "/mag2020/BubbleDistance"
+      ]
+    },
+    {
+      "id": "mag-distance-network",
+      "title": "MAG 学科距离网络",
+      "href": "https://discipline-network-research.nikepai.com/charts/snapshots/mag-distance-network",
+      "projectIds": [
+        "science-atlas"
+      ],
+      "evidence": [
+        "m02802",
+        "m02895",
+        "m02898"
+      ],
+      "description": "按年份和最大距离观察学科规模与邻近关系。",
+      "scope": "旧版 3D 引力图转为二维网络，保留八个历史快照，不复现全部旧动画。",
+      "legacyPaths": [
+        "/mag2020/MagGoogleDistance_2020_V3",
+        "/mag2020/MagGraph"
+      ]
+    },
+    {
+      "id": "discipline-dependency",
+      "title": "MAG / Wikipedia 学科依赖关系",
+      "href": "https://discipline-network-research.nikepai.com/charts/snapshots/discipline-dependency",
+      "projectIds": [
+        "science-atlas",
+        "wiki-platform"
+      ],
+      "evidence": [
+        "m02194",
+        "m02210",
+        "m02211",
+        "m02397"
+      ],
+      "description": "比较 Biology 与其他学科的入链、出链和净依赖关系。",
+      "scope": "当前导出以 Biology 为中心；历史名称“因果图”不等同于因果识别。",
+      "legacyPaths": []
+    },
+    {
+      "id": "mag-disruption-structure",
+      "title": "MAG 颠覆度分位与引用流",
+      "href": "https://discipline-network-research.nikepai.com/charts/mag-disruption-structure",
+      "projectIds": [
+        "disruption"
+      ],
+      "evidence": [
+        "m02470",
+        "m02544",
+        "m02548",
+        "m02550"
+      ],
+      "description": "查看不同论文百分位的颠覆度，以及跨学科引用流。",
+      "scope": "展示历史指标与样本，不代表对颠覆度有效性的质疑已解决。",
+      "legacyPaths": [
+        "/MagDisruption"
+      ]
+    },
+    {
+      "id": "mag-disruption-trend",
+      "title": "MAG 颠覆度年度趋势",
+      "href": "https://discipline-network-research.nikepai.com/charts/snapshots/mag-disruption-trend",
+      "projectIds": [
+        "disruption"
+      ],
+      "evidence": [
+        "m03603",
+        "m03606",
+        "m03796",
+        "m04213"
+      ],
+      "description": "比较颠覆、中性、巩固区间的逐年论文数量。",
+      "scope": "仅收录已核验的历史缓存组合，不支持把未恢复的查询组合当作零结果。",
+      "legacyPaths": [
+        "/mag2020/DisruptionTrendByYear"
+      ]
+    },
+    {
+      "id": "mag-subject-entropy",
+      "title": "MAG 分学科网络熵",
+      "href": "https://discipline-network-research.nikepai.com/charts/mag-subject-entropy",
+      "projectIds": [
+        "network-entropy"
+      ],
+      "evidence": [
+        "m05564",
+        "m05744"
+      ],
+      "description": "查看 MAG 分学科的熵、平均度和网络规模。",
+      "scope": "历史快照覆盖 1900—2020 年；不同熵指标的定义以图表说明为准。",
+      "legacyPaths": [
+        "/mag2020/networkEntropy",
+        "/mag2020/MAGSubjectEntropy"
+      ]
+    },
+    {
+      "id": "mag-reference-age-average",
+      "title": "MAG 平均引用时间距离",
+      "href": "https://discipline-network-research.nikepai.com/charts/snapshots/mag-reference-age-average",
+      "projectIds": [
+        "science-atlas"
+      ],
+      "evidence": [
+        "m05538",
+        "m05987",
+        "m05988"
+      ],
+      "description": "比较各学科出链所指论文的平均年龄。",
+      "scope": "对应 linksout 的平均引用寿命，不是累计引用半衰期。",
+      "legacyPaths": [
+        "/mag2020/LinksoutAvgAge"
+      ]
+    },
+    {
+      "id": "mag-degree-exponent",
+      "title": "MAG 学科幂律指数",
+      "href": "https://discipline-network-research.nikepai.com/charts/snapshots/mag-degree-exponent",
+      "projectIds": [
+        "science-atlas"
+      ],
+      "evidence": [
+        "m01439",
+        "m03260"
+      ],
+      "description": "查看六个主要学科幂律指数的年度变化。",
+      "scope": "与 Wiki 的 core 文章幂律不是同一数据集，不能互相替代。",
+      "legacyPaths": []
+    },
+    {
+      "id": "mag-article-totals",
+      "title": "MAG 分学科论文数量",
+      "href": "https://discipline-network-research.nikepai.com/charts/snapshots/mag-article-totals",
+      "projectIds": [
+        "science-atlas"
+      ],
+      "evidence": [
+        "m03260"
+      ],
+      "description": "切换年度数量与累计论文规模。",
+      "scope": "只对应 MAG 论文规模，不替代旧页面中的 Wikipedia 或 WM 数量。",
+      "legacyPaths": []
+    },
+    {
+      "id": "mag-self-citation-ranking",
+      "title": "MAG 头部论文内部引用比例",
+      "href": "https://discipline-network-research.nikepai.com/charts/snapshots/mag-self-citation-ranking",
+      "projectIds": [
+        "science-atlas"
+      ],
+      "evidence": [
+        "m02397",
+        "m03260"
+      ],
+      "description": "按每增加 5,000 篇头部论文比较学科内部引用比例。",
+      "scope": "迁移数据截至 2019 年；保留学科内部引用口径，不表示个人自引。",
+      "legacyPaths": []
+    },
+    {
+      "id": "openalex-node-edge",
+      "title": "OpenAlex 点边与学科规模",
+      "href": "https://discipline-network-research.nikepai.com/charts/openalex-node-edge",
+      "projectIds": [
+        "science-atlas"
+      ],
+      "evidence": [
+        "m07653"
+      ],
+      "description": "比较逐年节点、边、学科数与联通子网规模。",
+      "scope": "原记录为计算完成、尚待部署；当前入口补充展示，不改写当时完成状态。",
+      "legacyPaths": []
+    },
+    {
+      "id": "openalex-entropy",
+      "title": "OpenAlex 网络熵",
+      "href": "https://discipline-network-research.nikepai.com/charts/openalex-entropy",
+      "projectIds": [
+        "network-entropy",
+        "science-atlas"
+      ],
+      "evidence": [
+        "m07654",
+        "m09604",
+        "m09605"
+      ],
+      "description": "按学科和方向查看度分布熵、结构熵、标准结构熵与网络节点数。",
+      "scope": "当前快照覆盖 1900—2022 年，不等同于全部后续 KQI 或高维熵实验。",
+      "legacyPaths": []
+    },
+    {
+      "id": "wm-network-scale",
+      "title": "WM 网络点边与增长统计",
+      "href": "https://discipline-network-research.nikepai.com/charts/snapshots/wm-network-scale",
+      "projectIds": [
+        "disruption"
+      ],
+      "evidence": [
+        "m06611"
+      ],
+      "description": "查看 WM 网络的节点数、边数、比值和年度增量。",
+      "scope": "仅对应 WM 统计；不以图表上线推断历史待计算项已在当时完成。",
+      "legacyPaths": []
+    },
+    {
+      "id": "wm-disruption",
+      "title": "WM 分学科颠覆度",
+      "href": "https://discipline-network-research.nikepai.com/charts/wm-disruption",
+      "projectIds": [
+        "disruption"
+      ],
+      "evidence": [
+        "m06611"
+      ],
+      "description": "查看分学科年度颠覆度与相关论文规模。",
+      "scope": "沿用新平台 WM 数据口径，不将 WM、E1200 和完整 Web of Science 数据量视为相同集合。",
+      "legacyPaths": []
+    },
+    {
+      "id": "degree-distributions",
+      "title": "MAG / WM 度分布",
+      "href": "https://discipline-network-research.nikepai.com/charts/snapshots/degree-distributions",
+      "projectIds": [
+        "science-atlas",
+        "disruption"
+      ],
+      "evidence": [
+        "m01439",
+        "m06611"
+      ],
+      "description": "对比 MAG 与 WM 的 2020 年度分布样本。",
+      "scope": "本页不含 Wikipedia 度分布，不用于替代 Wikipedia 旧版 DegreeDistribution。",
+      "legacyPaths": []
+    },
+    {
+      "id": "wikipedia-reference-patterns",
+      "title": "Wikipedia 引用学科与时间分布",
+      "href": "https://discipline-network-research.nikepai.com/charts/snapshots/wikipedia-reference-patterns",
+      "projectIds": [
+        "disruption",
+        "wiki-evolution"
+      ],
+      "evidence": [
+        "m06437",
+        "m06576"
+      ],
+      "description": "比较 MAG 论文在 Wikipedia 中的学科引用趋势与时间滞后分布。",
+      "scope": "用于回看历史引用窗口和滞后分布，不将探索性拟合写为已确定规律。",
+      "legacyPaths": []
+    }
+  ]
 }
